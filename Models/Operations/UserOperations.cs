@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using API.Models;
 using Models;
 
@@ -7,7 +8,7 @@ namespace API.Operations
     public class UserOperations : IDisposable
     {
         private AppContext _context;
-        private bool _externalContext = false;
+        private bool _isExternalContext = false;
 
         public UserOperations()
         {
@@ -17,25 +18,17 @@ namespace API.Operations
         public UserOperations(AppContext context)
         {
             _context = context;
-            _externalContext = true;
+            _isExternalContext = true;
         }
 
         public User GetUserByToken(string token)
         {
-            //TODO: найти пользователя по токену в реальном хранилище
-            if (token == "ABRAKADABRA")
-            {
-                return new User {AuthToken = token, Email = "var@33kita.ru", Role = Role.PortalAdmin};
-            }
-            else
-            {
-                return null;
-            }
+            return _context.Users.FirstOrDefault(u => u.AuthToken == token);
         }
 
         public void Dispose()
         {
-            if (_externalContext)
+            if (_isExternalContext)
             {
                 _context?.Dispose();
             }
