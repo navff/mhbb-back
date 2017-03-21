@@ -204,7 +204,6 @@
     <Content Include="Areas\HelpPage\Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Areas\HelpPage\Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
