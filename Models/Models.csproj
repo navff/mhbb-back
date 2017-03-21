@@ -62,6 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
+    <Compile Include="Entities\Activity.cs" />
+    <Compile Include="Entities\City.cs" />
+    <Compile Include="Entities\Organizer.cs" />
     <Compile Include="Migrations\201703210543097_initial.cs" />
     <Compile Include="Migrations\201703210543097_initial.Designer.cs">
       <DependentUpon>201703210543097_initial.cs</DependentUpon>
