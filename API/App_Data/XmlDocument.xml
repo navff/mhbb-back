@@ -481,6 +481,18 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:API.Common.RESTAuthorizeAttribute.OnAuthorization(System.Web.Http.Controllers.HttpActionContext)">
+            <summary>
+            Вызывается каждый раз при поступлении запроса
+            </summary>
+            <param name="actionContext"></param>
+        </member>
+        <member name="M:API.Common.Security.GenerateToken">
+            <summary>
+            Генерит случайный токен по алгоритму SHA256
+            </summary>
+            <returns>Хэш-строка, длиной 64 символа</returns>
+        </member>
         <member name="M:API.Controllers.ValuesController.Get">
             <summary>
             Документация
