@@ -63,8 +63,13 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="Entities\Activity.cs" />
+    <Compile Include="Entities\ActivityUserVoice.cs" />
     <Compile Include="Entities\City.cs" />
+    <Compile Include="Entities\Interest.cs" />
     <Compile Include="Entities\Organizer.cs" />
+    <Compile Include="Entities\Picture.cs" />
+    <Compile Include="Entities\Review.cs" />
+    <Compile Include="Entities\Reservation.cs" />
     <Compile Include="Migrations\201703210543097_initial.cs" />
     <Compile Include="Migrations\201703210543097_initial.Designer.cs">
       <DependentUpon>201703210543097_initial.cs</DependentUpon>

@@ -18,5 +18,7 @@ namespace Models.Entities
         [ForeignKey("City")]
         public int CityId { get; set; }
         public virtual City City { get; set; }
+
+        public bool Sobriety { get; set; }
     }
 }

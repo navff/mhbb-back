@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -25,19 +26,13 @@ namespace Models.Entities
 
         public string Prices { get; set; }
 
-        public bool Sobriety { get; set; }
-
         public string Mentor { get; set; }
 
         public string Description { get; set; }
 
-        //========================================
-        public int GetRaiting()
-        {
-            //TODO: для рейтинга использовать отдельную табличку. ActivityUsersVoices
-            throw new NotImplementedException();
-        }
+        public virtual Interest Interest { get; set; }
 
+        public bool IsChecked { get; set; }
 
     }
 }
