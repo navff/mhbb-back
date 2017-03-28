@@ -16,13 +16,13 @@ namespace API.Models
         public string Phone { get; set; }
 
         [ForeignKey("Picture")]
-        public int PictureId { get; set; }
+        public int? PictureId { get; set; }
         public virtual Picture Picture { get; set; }
 
         public Role Role { get; set; }
 
         [ForeignKey("City")]
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
         public virtual City City { get; set; }
     }
 

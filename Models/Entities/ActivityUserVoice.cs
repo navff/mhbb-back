@@ -18,7 +18,7 @@ namespace Models.Entities
         /// Ссылка на пользователя, который голосует
         /// </summary>
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public virtual User User { get; set; }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using API.Models;
+using Models.Entities;
 using Models.Migrations;
 
 namespace Models
@@ -45,6 +46,14 @@ namespace Models
         }
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Activity> Activities { get; set; }
+        public virtual DbSet<ActivityUserVoice> ActivityUserVoices { get; set; }
+        public virtual DbSet<Interest> Interests { get; set; }
+        public virtual DbSet<Organizer> Organizers { get; set; }
+        public virtual DbSet<Picture> Pictures { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

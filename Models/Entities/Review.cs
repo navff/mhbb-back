@@ -15,7 +15,7 @@ namespace Models.Entities
         public int Id { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public virtual User User { get; set; }
 
         [ForeignKey("Activity")]
@@ -27,7 +27,7 @@ namespace Models.Entities
         public DateTime DateCreated { get; set; }
 
         [ForeignKey("ReplyTo")]
-        public int ReplyToReviewId { get; set; }
+        public int? ReplyToReviewId { get; set; }
         public Review ReplyTo { get; set; }
 
         /// <summary>

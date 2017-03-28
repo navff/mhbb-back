@@ -22,7 +22,7 @@ namespace Models.Entities
 
         public string Phones { get; set; }
 
-        public StringInfo Address { get; set; }
+        public string Address { get; set; }
 
         public string Prices { get; set; }
 
@@ -30,6 +30,8 @@ namespace Models.Entities
 
         public string Description { get; set; }
 
+        [ForeignKey("Interest")]
+        public int? InterestId { get; set; }
         public virtual Interest Interest { get; set; }
 
         public bool IsChecked { get; set; }

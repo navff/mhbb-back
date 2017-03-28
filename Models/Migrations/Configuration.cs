@@ -10,7 +10,7 @@ namespace Models.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true; // јвтомиграции примен¤тс¤, даже если это приведЄт к потер¤м данных
+            AutomaticMigrationDataLossAllowed = true; // автомиграции примен¤тс¤, даже если это приведЄт к потер¤м данных
         }
 
         protected override void Seed(Models.AppContext context)

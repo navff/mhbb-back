@@ -17,16 +17,14 @@ namespace Models.Entities
         public virtual Activity Activity { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public virtual User User { get; set; }
 
         public string Name { get; set; }
 
         public string Phone { get; set; }
 
-        public string Email { get; set; }
-
-        public string Comments { get; set; }
+        public string Comment { get; set; }
 
 
     }

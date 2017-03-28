@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=6.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.0.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -70,10 +70,6 @@
     <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\Review.cs" />
     <Compile Include="Entities\Reservation.cs" />
-    <Compile Include="Migrations\201703210543097_initial.cs" />
-    <Compile Include="Migrations\201703210543097_initial.Designer.cs">
-      <DependentUpon>201703210543097_initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\UserOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,11 +80,6 @@
     <None Include="App.config" />
     <None Include="nlog.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703210543097_initial.resx">
-      <DependentUpon>201703210543097_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
