@@ -24,7 +24,6 @@ namespace Models
 
             #endregion
 
-
             #region USERS
 
             if (!context.Users.Any())
@@ -161,8 +160,6 @@ namespace Models
 
             #endregion
 
-
-
             #region PICTURES
 
             
@@ -201,7 +198,6 @@ namespace Models
             }
 
             #endregion
-
 
             #region RESERVATIONS
 

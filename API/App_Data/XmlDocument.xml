@@ -4,6 +4,17 @@
         <name>API</name>
     </assembly>
     <members>
+        <member name="T:API.BundleConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API.BundleConfig.RegisterBundles(System.Web.Optimization.BundleCollection)">
+            <summary>
+            
+            </summary>
+            <param name="bundles"></param>
+        </member>
         <member name="M:API.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
             Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
@@ -481,11 +492,38 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:API.Common.RESTAuthorizeAttribute">
+            <summary>
+            Аффтаризовывает пользователя по токену в http-заголовке «Authorization»
+            </summary>
+        </member>
+        <member name="M:API.Common.RESTAuthorizeAttribute.#ctor">
+            <summary>
+            Позволяет заходить всем зарегистрированным пользователям
+            </summary>
+        </member>
+        <member name="M:API.Common.RESTAuthorizeAttribute.#ctor(System.String[])">
+            <summary>
+            Аффтаризация. Принимает массив ролей в строках
+            </summary>
+            <param name="roles"></param>
+        </member>
+        <member name="M:API.Common.RESTAuthorizeAttribute.#ctor(API.Models.Role[])">
+            <summary>
+            /// Аффтаризация. Принимает массив ролей в енумах
+            </summary>
+            <param name="roles"></param>
+        </member>
         <member name="M:API.Common.RESTAuthorizeAttribute.OnAuthorization(System.Web.Http.Controllers.HttpActionContext)">
             <summary>
             Вызывается каждый раз при поступлении запроса
             </summary>
             <param name="actionContext"></param>
+        </member>
+        <member name="M:API.Common.RESTAuthorizeAttribute.Dispose">
+            <summary>
+            Убивает связанные ресурсы
+            </summary>
         </member>
         <member name="M:API.Common.Security.GenerateToken">
             <summary>
@@ -493,11 +531,161 @@
             </summary>
             <returns>Хэш-строка, длиной 64 символа</returns>
         </member>
-        <member name="M:API.Controllers.ValuesController.Get">
+        <member name="M:API.Controllers.ICrudController.Get(System.Int32)">
             <summary>
-            Документация
+            Получает сущность по её Id
+            </summary>
+            <param name="id">Id сущности</param>
+        </member>
+        <member name="M:API.Controllers.ICrudController.Put(System.Int32,System.Object)">
+            <summary>
+            Сохраняет объект
+            </summary>
+            <param name="id">Id редактируемого объекта</param>
+            <param name="putViewModel"></param>
+        </member>
+        <member name="M:API.Controllers.ICrudController.Post(System.Object)">
+            <summary>
+            Сохраняет объект
+            </summary>
+            <param name="postViewModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ICrudController.Delete(System.Int32)">
+            <summary>
+            Удаляет объект
+            </summary>
+            <param name="id">ID удаляемого объекта</param>
+        </member>
+        <member name="T:API.Controllers.UserController">
+            <summary>
+            Управление пользователями
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UserController.Get(System.String)">
+            <summary>
+            Получает пользователя по его email
+            </summary>
+            <param name="email"></param>
+        </member>
+        <member name="M:API.Controllers.UserController.Put(System.String,System.Object)">
+            <summary>
+            Обновляет данные пользователя
+            </summary>
+            <param name="email"></param>
+            <param name="putViewModel"></param>
+        </member>
+        <member name="M:API.Controllers.UserController.Post(System.Object)">
+            <summary>
+            Добавляет нового пользователя
+            </summary>
+            <param name="postViewModel"></param>
+        </member>
+        <member name="M:API.Controllers.UserController.Delete(System.String)">
+            <summary>
+            Удаляет пользователя
+            </summary>
+            <param name="email"></param>
+        </member>
+        <member name="M:API.Controllers.UserController.Register(API.ViewModels.UserRegisterViewModel)">
+            <summary>
+            Регистрирует пользователя
+            </summary>
+            <param name="viewModel"></param>
+        </member>
+        <member name="M:API.Controllers.UserController.GetUser">
+            <summary>
+            Получает данные пользователя по его токену в заголовке
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:API.Controllers.UserController.Search(System.String)">
+            <summary>
+            Ищет пользователей по ключу
+            </summary>
+            <param name="word"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API.ViewModels.PictureViewModelGet">
+            <summary>
+            Картинка
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.PictureViewModelGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.PictureViewModelGet.Description">
+            <summary>
+            Описание. Можно использовать в ALT
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.PictureViewModelGet.Extension">
+            <summary>
+            Расширение
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.PictureViewModelGet.IsMain">
+            <summary>
+            Главная картинка объекта
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.PictureViewModelGet.LinkedObjectId">
+            <summary>
+            Ссылка на объект
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.PictureViewModelGet.LinkedObjectType">
+            <summary>
+            Тип объекта
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.UserViewModelGet">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.Email">
+            <summary>
+            Электропочта
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.AuthToken">
+            <summary>
+            Токен для аффтаризации. Кладётся в заголовок «Authorization»
+            со значением «Token [tokenValue]»
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.Name">
+            <summary>
+            Человеческое имя
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.Phone">
+            <summary>
+            Номер телефона
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.Picture">
+            <summary>
+            Аватарка
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.RoleName">
+            <summary>
+            Название роли
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.CityId">
+            <summary>
+            Id города
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelGet.CityName">
+            <summary>
+            Название города
+            </summary>
         </member>
     </members>
 </doc>

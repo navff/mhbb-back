@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using API.Models;
 using Models;
 
@@ -21,10 +23,42 @@ namespace API.Operations
             _isExternalContext = true;
         }
 
-        public User GetUserByToken(string token)
+        public async Task<User> GetUserByTokenAsync(string token)
         {
-            return _context.Users.FirstOrDefault(u => u.AuthToken == token);
+            return await _context.Users.FirstOrDefaultAsync(u => u.AuthToken == token);
         }
+
+        public async Task<User> GetAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<User> UpdateAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<User> AddAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task RegisterAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEquatable<User>> SearchAsync(string word)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         public void Dispose()
         {
@@ -32,7 +66,8 @@ namespace API.Operations
             {
                 _context?.Dispose();
             }
-            
         }
+
+
     }
 }

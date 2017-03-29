@@ -14,7 +14,7 @@ namespace Tests.Operations
             var token = _context.Users.First().AuthToken;
 
             var userOperations = new UserOperations(_context);
-            var user = userOperations.GetUserByToken(token);
+            var user = userOperations.GetUserByTokenAsync(token).Result;
 
             Assert.IsNotNull(user);
             Assert.AreEqual(token, user.AuthToken);
@@ -25,7 +25,7 @@ namespace Tests.Operations
         {
 
             var userOperations = new UserOperations(_context);
-            var user = userOperations.GetUserByToken("hooy");
+            var user = userOperations.GetUserByTokenAsync("hooy");
 
             Assert.IsNull(user);
         }

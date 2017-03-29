@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -6,21 +7,49 @@ using System.Security.Principal;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using API.Common;
+using API.Models;
 using API.Operations;
 
 namespace API.Common
 {
+    /// <summary>
+    /// Аффтаризовывает пользователя по токену в http-заголовке «Authorization»
+    /// </summary>
     public class RESTAuthorizeAttribute : AuthorizationFilterAttribute, IDisposable
     {
         private string[] _roles;
         private UserOperations _userOperations = new UserOperations();
 
+        /// <summary>
+        /// Позволяет заходить всем зарегистрированным пользователям
+        /// </summary>
+        public RESTAuthorizeAttribute()
+        {
+        }
 
+        /// <summary>
+        /// Аффтаризация. Принимает массив ролей в строках
+        /// </summary>
+        /// <param name="roles"></param>
         public RESTAuthorizeAttribute(params  string[] roles)
         {
             this._roles = roles;
         }
-        
+
+        /// <summary>
+        /// /// Аффтаризация. Принимает массив ролей в енумах
+        /// </summary>
+        /// <param name="roles"></param>
+        public RESTAuthorizeAttribute(params Role[] roles)
+        {
+            var rolesList = new List<string>();
+            foreach (Role role in roles)
+            {
+                rolesList.Add(role.ToString());
+            }
+            this._roles = rolesList.ToArray();
+        }
+
 
         /// <summary>
         /// Вызывается каждый раз при поступлении запроса
@@ -29,7 +58,7 @@ namespace API.Common
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             var token = actionContext.Request.Headers.Authorization?.Parameter;
-            var user = _userOperations.GetUserByToken(token);
+            var user = _userOperations.GetUserByTokenAsync(token).Result;
 
             if (user==null) 
             {
@@ -40,19 +69,25 @@ namespace API.Common
                 return;
             }
 
-            if (!this._roles.Contains(user.Role.ToString()))
+            if (_roles != null)
             {
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                if (!_roles.Contains(user.Role.ToString()))
                 {
-                    Content = new StringContent("Your role is too small")
-                };
-                return;
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    {
+                        Content = new StringContent("Your role is too small")
+                    };
+                    return;
+                }
             }
 
             var identity = new Identity {Name = user.Email, IsAuthenticated = true};
             actionContext.RequestContext.Principal = new GenericPrincipal(identity, new[] { user.Role.ToString()});
         }
 
+        /// <summary>
+        /// Убивает связанные ресурсы
+        /// </summary>
         public void Dispose()
         {
             _userOperations.Dispose();
