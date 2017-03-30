@@ -23,16 +23,31 @@ namespace API.Operations
             _isExternalContext = true;
         }
 
+        /// <summary>
+        /// Получение пользователя по токену
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public async Task<User> GetUserByTokenAsync(string token)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.AuthToken == token);
         }
 
+        /// <summary>
+        /// Получение пользователя по электронной почте
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public async Task<User> GetAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        /// <summary>
+        /// Обновление пользователя
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<User> UpdateAsync(User user)
         {
             throw new NotImplementedException();

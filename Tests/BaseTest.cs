@@ -12,8 +12,7 @@ namespace Tests
     {
         protected AppContext _context;
 
-        [TestInitialize]
-        public void Init()
+        public BaseTest()
         {
             _context = new AppContext();
         }
