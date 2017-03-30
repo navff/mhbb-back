@@ -52,5 +52,19 @@ namespace Tests.Operations
             var result = _userOperations.GetAsync("piska").Result;
             Assert.IsNull(result);
         }
+
+        [TestMethod]
+        public void Update_Ok_Test()
+        {
+            var randomString = Guid.NewGuid().ToString();
+            var user = _context.Users.First();
+            user.Name = randomString;
+            user.Phone = randomString;
+            var result = _userOperations.UpdateAsync(user).Result;
+
+            Assert.AreEqual(randomString, result.Name);
+            Assert.AreEqual(randomString, result.Phone);
+        }
+
     }
 }
