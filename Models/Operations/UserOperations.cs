@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
+using Camps.Tools;
 using Models;
 
 namespace API.Operations
@@ -50,17 +51,37 @@ namespace API.Operations
         /// <returns></returns>
         public async Task<User> UpdateAsync(User user)
         {
-            throw new NotImplementedException();
+            var userInDb = await _context.Users.FindAsync(user.Email);
+            Contracts.Assert(userInDb!=null);
+
+            userInDb.Name = user.Name;
+            userInDb.CityId = user.CityId;
+            userInDb.Phone = user.Phone;
+            userInDb.PictureId = user.PictureId;
+
+            await _context.SaveChangesAsync();
+            return userInDb;
         }
 
         public async Task<User> AddAsync(User user)
         {
-            throw new NotImplementedException();
+            Contracts.Assert(user!=null);
+            Contracts.Assert(!String.IsNullOrEmpty(user.AuthToken));
+            Contracts.Assert(!String.IsNullOrEmpty(user.Email));
+            Contracts.Assert(!String.IsNullOrEmpty(user.Phone));
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
         }
 
         public async Task DeleteAsync(string email)
         {
-            throw new NotImplementedException();
+            var user = _context.Users.Find(email);
+            Contracts.Assert(user!=null);
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
         public async Task RegisterAsync(string email)

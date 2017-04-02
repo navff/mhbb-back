@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using API.Models;
 using API.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -64,6 +65,39 @@ namespace Tests.Operations
 
             Assert.AreEqual(randomString, result.Name);
             Assert.AreEqual(randomString, result.Phone);
+        }
+
+        [TestMethod]
+        public void Add_Ok_Test()
+        {
+            var city = _context.Cities.First();
+            var picture = _context.Pictures.First();
+
+            var randomString = Guid.NewGuid().ToString();
+            var user = new User
+            {
+                Name = randomString,
+                Phone = randomString,
+                Email = randomString + "@33kita.ru",
+                AuthToken = randomString,
+                CityId =  city.Id,
+                PictureId = picture.Id,
+                Role = Role.RegisteredUser
+            };
+            var result = _userOperations.AddAsync(user).Result;
+
+            Assert.AreEqual(randomString, result.Name);
+            Assert.AreEqual(randomString, result.Phone);
+        }
+
+        [TestMethod]
+        public void Delete_ok_Test()
+        {
+            var user = _context.Users.ToList().Last();
+            _userOperations.DeleteAsync(user.Email).Wait();
+
+            var deletedUser = _context.Users.Find(user.Email);
+            Assert.IsNull(deletedUser);
         }
 
     }
