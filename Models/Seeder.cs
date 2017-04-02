@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,38 +17,40 @@ namespace Models
 
             #region CITIES
 
-            City city = new City() {Name = "Череповец"};
-            if (!context.Cities.Any())
-            {
-                context.Cities.Add(city);
-                context.SaveChanges();
-            }
+            var city = context.Cities.FirstOrDefault(c => c.Name == "Череповец") 
+                     ?? new City {Name = "Череповец"};
+
+            context.Cities.AddOrUpdate(city);
+            context.SaveChanges();
 
             #endregion
 
             #region USERS
 
-            if (!context.Users.Any())
+
+            context.Users.AddOrUpdate(new User()
             {
+                AuthToken = "ABRAKADABRA",
+                Email = "var@33kita.ru",
+                Role = Role.PortalAdmin,
+                CityId = city.Id,
+                DateRegistered = DateTime.Now,
+                
+            });
 
-                context.Users.Add(new User()
-                {
-                    AuthToken = "ABRAKADABRA",
-                    Email = "var@33kita.ru",
-                    Role = Role.PortalAdmin,
-                    CityId = city.Id
-                });
+            Debug.WriteLine(city.Id);
 
-                context.Users.Add(new User()
-                {
-                    AuthToken = "test",
-                    Email = "test@33kita.ru",
-                    Role = Role.PortalAdmin,
-                    CityId = city.Id
-                });
+            context.Users.AddOrUpdate(new User()
+            {
+                AuthToken = "test",
+                Email = "test@33kita.ru",
+                Role = Role.PortalAdmin,
+                CityId = city.Id,
+                DateRegistered = DateTime.Now,
+                Name = "Морковка"
+            });
 
-                context.SaveChanges();
-            }
+            context.SaveChanges();
 
             #endregion
 

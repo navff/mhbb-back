@@ -96,5 +96,12 @@ namespace API.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpGet]
+        [RESTAuthorize]
+        public IHttpActionResult Logout()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

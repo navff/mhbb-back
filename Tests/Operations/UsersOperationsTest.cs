@@ -82,7 +82,8 @@ namespace Tests.Operations
                 AuthToken = randomString,
                 CityId =  city.Id,
                 PictureId = picture.Id,
-                Role = Role.RegisteredUser
+                Role = Role.RegisteredUser,
+                DateRegistered = DateTime.Now
             };
             var result = _userOperations.AddAsync(user).Result;
 
@@ -100,5 +101,48 @@ namespace Tests.Operations
             Assert.IsNull(deletedUser);
         }
 
+        [TestMethod]
+        public void Register_Existing_Test()
+        {
+            var result = _userOperations.RegisterAsync("var@33kita.ru").Result;
+            Assert.IsTrue(!String.IsNullOrEmpty(result.AuthToken));
+        }
+
+        [TestMethod]
+        public void Register_New_Test()
+        {
+            var result = _userOperations.RegisterAsync(Guid.NewGuid()+"@33kita.ru").Result;
+            Assert.IsTrue(!String.IsNullOrEmpty(result.AuthToken));
+        }
+
+        [TestMethod]
+        public void Search_ByEmail_Test()
+        {
+            var result = _userOperations.SearchAsync("var@33kita.ru").Result;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("var@33kita.ru", result.First().Email);
+        }
+
+        [TestMethod]
+        public void Search_ByWrongEmail_Test()
+        {
+            var result = _userOperations.SearchAsync("fsdjhkkjsdfsdfjkhdfskjhjdfskr@33kita.ru").Result;
+            Assert.IsTrue(!result.Any());
+        }
+
+        [TestMethod]
+        public void Search_ByName_Test()
+        {
+            var result = _userOperations.SearchAsync("Морк").Result;
+            Assert.IsNotNull(result);
+            Assert.AreEqual("test@33kita.ru", result.First().Email);
+        }
+
+        [TestMethod]
+        public void Search_ByWrongName_Test()
+        {
+            var result = _userOperations.SearchAsync("Моркккккккк!!!рол").Result;
+            Assert.IsTrue(!result.Any());
+        }
     }
 }

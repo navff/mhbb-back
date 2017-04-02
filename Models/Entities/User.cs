@@ -11,12 +11,17 @@ namespace API.Models
     {
         [Key]
         public string Email { get; set; }
+
+        [Required]
         public string AuthToken { get; set; }
+
         public string Name { get; set; }
+
         public string Phone { get; set; }
 
         [ForeignKey("Picture")]
         public int? PictureId { get; set; }
+
         public virtual Picture Picture { get; set; }
 
         public Role Role { get; set; }
@@ -24,6 +29,9 @@ namespace API.Models
         [ForeignKey("City")]
         public int? CityId { get; set; }
         public virtual City City { get; set; }
+
+        [Required]
+        public DateTime DateRegistered { get; set; }
     }
 
     public enum Role
