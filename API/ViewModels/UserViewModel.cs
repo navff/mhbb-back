@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using API.Models;
 
 namespace API.ViewModels
 {
@@ -50,6 +51,39 @@ namespace API.ViewModels
         /// Название города
         /// </summary>
         public string CityName { get; set; }
+    }
+
+    public class UserViewModelPut
+    {
+        /// <summary>
+        /// Электропочта
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Человеческое имя
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Номер телефона
+        /// </summary>
+        public string Phone { get; set; }
+
+        /// <summary>
+        /// Аватарка
+        /// </summary>
+        public virtual PictureViewModelGet Picture { get; set; }
+
+        /// <summary>
+        /// Роль
+        /// </summary>
+        public Role Role { get; set; }
+
+        /// <summary>
+        /// Id города
+        /// </summary>
+        public int? CityId { get; set; }
     }
 
     public class UserRegisterViewModel

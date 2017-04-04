@@ -15,6 +15,16 @@
             </summary>
             <param name="bundles"></param>
         </member>
+        <member name="T:API.MapperMappings">
+            <summary>
+            Маппинг для Automapper
+            </summary>
+        </member>
+        <member name="M:API.MapperMappings.Map">
+            <summary>
+            Главный метод
+            </summary>
+        </member>
         <member name="M:API.App_Start.NinjectWebCommon.Start">
             <summary>
             Starts the application
@@ -590,7 +600,7 @@
             </summary>
             <param name="email"></param>
         </member>
-        <member name="M:API.Controllers.UserController.Put(System.String,System.Object)">
+        <member name="M:API.Controllers.UserController.Put(System.String,API.ViewModels.UserViewModelPut)">
             <summary>
             Обновляет данные пользователя
             </summary>
@@ -707,6 +717,36 @@
         <member name="P:API.ViewModels.UserViewModelGet.CityName">
             <summary>
             Название города
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelPut.Email">
+            <summary>
+            Электропочта
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelPut.Name">
+            <summary>
+            Человеческое имя
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelPut.Phone">
+            <summary>
+            Номер телефона
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelPut.Picture">
+            <summary>
+            Аватарка
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelPut.Role">
+            <summary>
+            Роль
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserViewModelPut.CityId">
+            <summary>
+            Id города
             </summary>
         </member>
     </members>

@@ -6,10 +6,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 using API.Common;
 using API.Models;
 using API.Operations;
 using API.ViewModels;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -45,10 +47,22 @@ namespace API.Controllers
         /// <param name="putViewModel"></param>
         [HttpPut]
         [ResponseType(typeof(UserViewModelGet))]
-        public IHttpActionResult Put([FromUri] string email, [FromBody] object putViewModel)
+        [RESTAuthorize]
+        public async Task<IHttpActionResult> Put([FromUri] string email, [FromBody] UserViewModelPut putViewModel)
         {
-            //TODO: проверить, сам себя редактирует, или вредничает
-            throw new NotImplementedException();
+            if ((!User.IsInRole("PortalAdmin"))  
+                  && (User.Identity.Name!=email))
+            {
+                return new ResponseMessageResult(new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("You cannot edit another users")
+                });
+
+            }
+
+            var userEntity = Mapper.Map<Models.User>(putViewModel);
+            await _userOperations.UpdateAsync(userEntity);
+            return await Get(email);
         }
 
         /// <summary>
