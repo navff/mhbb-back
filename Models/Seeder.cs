@@ -35,6 +35,8 @@ namespace Models
                 Role = Role.PortalAdmin,
                 CityId = city.Id,
                 DateRegistered = DateTime.Now,
+                Name = "Вова Петросян",
+                Phone = "+79062990044"
                 
             });
 
