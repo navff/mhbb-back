@@ -9,6 +9,7 @@ using System.Web.Http.Filters;
 using API.Common;
 using API.Models;
 using API.Operations;
+using Models;
 
 namespace API.Common
 {
@@ -18,12 +19,13 @@ namespace API.Common
     public class RESTAuthorizeAttribute : AuthorizationFilterAttribute, IDisposable
     {
         private string[] _roles;
-        private UserOperations _userOperations = new UserOperations();
+        private AppContext _context = new AppContext();
+        private UserOperations _userOperations;
 
         /// <summary>
         /// Позволяет заходить всем зарегистрированным пользователям
         /// </summary>
-        public RESTAuthorizeAttribute()
+        public RESTAuthorizeAttribute() : this(Role.PortalAdmin, Role.PortalManager, Role.RegisteredUser)
         {
         }
 
@@ -34,6 +36,7 @@ namespace API.Common
         public RESTAuthorizeAttribute(params  string[] roles)
         {
             this._roles = roles;
+            _userOperations = new UserOperations(_context);
         }
 
         /// <summary>
@@ -48,6 +51,7 @@ namespace API.Common
                 rolesList.Add(role.ToString());
             }
             this._roles = rolesList.ToArray();
+            _userOperations = new UserOperations(_context);
         }
 
 
@@ -91,6 +95,7 @@ namespace API.Common
         public void Dispose()
         {
             _userOperations.Dispose();
+            _context.Dispose();
         }
     }
 }

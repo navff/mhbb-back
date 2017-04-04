@@ -18,11 +18,6 @@ namespace API.Operations
         private AppContext _context;
         private bool _isExternalContext = false;
 
-        public UserOperations()
-        {
-            _context  = new AppContext();
-        }
-
         public UserOperations(AppContext context)
         {
             _context = context;

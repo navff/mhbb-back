@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API.Common;
 using API.Models;
+using API.Operations;
 using API.ViewModels;
 
 namespace API.Controllers
@@ -17,15 +19,23 @@ namespace API.Controllers
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
+        private UserOperations _userOperations;
+
+        public UserController(UserOperations userOperations)
+        {
+            _userOperations = userOperations;
+        }
+
         /// <summary>
         /// Получает пользователя по его email
         /// </summary>
         /// <param name="email"></param>
         [HttpGet]
         [ResponseType(typeof(UserViewModelGet))]
-        public IHttpActionResult Get(string email)
+        public async Task<IHttpActionResult> Get(string email)
         {
-            return Ok(email);
+            var result = await _userOperations.GetAsync(email);
+            return Ok(result);
         }
 
         /// <summary>
