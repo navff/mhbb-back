@@ -151,5 +151,10 @@ namespace API.Controllers
         {
             return Ok("Logout");
         }
+
+        public new void Dispose()
+        {
+            _userOperations.Dispose();
+        }
     }
 }

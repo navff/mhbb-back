@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,12 +17,11 @@ namespace API.Operations
     public class UserOperations : IDisposable
     {
         private AppContext _context;
-        private bool _isExternalContext = false;
 
         public UserOperations(AppContext context)
         {
+            Debug.WriteLine("Creating UserOperations");
             _context = context;
-            _isExternalContext = true;
         }
 
         /// <summary>
@@ -169,10 +169,7 @@ namespace API.Operations
 
         public void Dispose()
         {
-            if (_isExternalContext)
-            {
-                _context?.Dispose();
-            }
+            Debug.WriteLine("Disposing UserOperations");
         }
 
 

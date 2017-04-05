@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http.Dependencies;
 using API.Operations;
+using Models;
 using Ninject;
 using Ninject.Web.Common;
 
@@ -32,6 +33,7 @@ namespace API.Common
         private void AddBindings()
         {
             kernel.Bind<UserOperations>().ToSelf().InRequestScope();
+            kernel.Bind<AppContext>().ToSelf().InRequestScope();
         }
 
         public void Dispose()

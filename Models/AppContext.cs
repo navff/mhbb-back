@@ -23,7 +23,6 @@ namespace Models
         public AppContext(string connectionStringName)
             : base(connectionStringName)
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
 
 
@@ -38,8 +37,6 @@ namespace Models
             {
                 Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppContext, Configuration>());
             }
-            this.Configuration.ProxyCreationEnabled = false;
-
         }
 
         public new void Dispose()
