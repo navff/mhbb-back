@@ -121,7 +121,7 @@ namespace Tests.Controllers
         public void TestHttp()
         {
 
-            string baseAddress = "http://localhost/";
+            string baseAddress = "http://hooy/";
 
             HttpConfiguration config = new HttpConfiguration();
 
@@ -135,12 +135,9 @@ namespace Tests.Controllers
 
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Initialize(NinjectWebCommon.CreateKernel);
-            config.DependencyResolver = new NinjectDependencyResolver(NinjectWebCommon.CreateKernel());
-
-            NinjectWebCommon.Start();
+            config.DependencyResolver = NinjectWebCommon.GetResolver();
 
             HttpServer server = new HttpServer(config);
-
 
             HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(server));
 

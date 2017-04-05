@@ -27,7 +27,6 @@ namespace API.Controllers
 
         public UserController(UserOperations userOperations)
         {
-            Debug.WriteLine("Creating controller with parameter");
             _userOperations = userOperations;
         }
 
@@ -35,7 +34,6 @@ namespace API.Controllers
         [Route("test")]
         public string Test()
         {
-            Debug.WriteLine("Go to method");
             return "Успех!";
         }
 
@@ -152,9 +150,5 @@ namespace API.Controllers
             return Ok("Logout");
         }
 
-        public new void Dispose()
-        {
-            _userOperations.Dispose();
-        }
     }
 }

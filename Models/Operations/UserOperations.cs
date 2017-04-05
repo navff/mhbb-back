@@ -14,13 +14,12 @@ using Models.Tools;
 
 namespace API.Operations
 {
-    public class UserOperations : IDisposable
+    public class UserOperations
     {
         private AppContext _context;
 
         public UserOperations(AppContext context)
         {
-            Debug.WriteLine("Creating UserOperations");
             _context = context;
         }
 
@@ -165,13 +164,6 @@ namespace API.Operations
             var hash = SHA256.Create().ComputeHash(bytes, 0, 32);
             return hash.Aggregate(string.Empty, (current, x) => current + $"{x:x2}");
         }
-
-
-        public void Dispose()
-        {
-            Debug.WriteLine("Disposing UserOperations");
-        }
-
 
     }
 }

@@ -103,7 +103,6 @@ namespace API.Common
         /// </summary>
         public void Dispose()
         {
-            _userOperations.Dispose();
             _context.Dispose();
         }
     }
