@@ -20,6 +20,8 @@ namespace API
                 
                 // Model to ViewModels
                 cfg.CreateMap<User, UserViewModelPut>();
+                cfg.CreateMap<User, UserViewModelGet>();
+                cfg.CreateMap<Picture, PictureViewModelGet>();
 
 
 

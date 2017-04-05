@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,6 +13,7 @@ using API.Models;
 using API.Operations;
 using API.ViewModels;
 using AutoMapper;
+using Models;
 
 namespace API.Controllers
 {
@@ -21,11 +23,20 @@ namespace API.Controllers
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
-        private UserOperations _userOperations;
+        private readonly UserOperations _userOperations;
 
         public UserController(UserOperations userOperations)
         {
+            Debug.WriteLine("Creating controller with parameter");
             _userOperations = userOperations;
+        }
+
+        [HttpGet]
+        [Route("test")]
+        public string Test()
+        {
+            Debug.WriteLine("Go to method");
+            return "Успех!";
         }
 
         /// <summary>
@@ -36,8 +47,18 @@ namespace API.Controllers
         [ResponseType(typeof(UserViewModelGet))]
         public async Task<IHttpActionResult> Get(string email)
         {
-            var result = await _userOperations.GetAsync(email);
-            return Ok(result);
+            try
+            {
+                var entity = await _userOperations.GetAsync(email);
+                var result = Mapper.Map<UserViewModelGet>(entity);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
         /// <summary>
@@ -59,22 +80,11 @@ namespace API.Controllers
                 });
 
             }
-
             var userEntity = Mapper.Map<Models.User>(putViewModel);
             await _userOperations.UpdateAsync(userEntity);
             return await Get(email);
         }
 
-        /// <summary>
-        /// Добавляет нового пользователя
-        /// </summary>
-        /// <param name="postViewModel"></param>
-        [HttpPost]
-        [ResponseType(typeof(UserViewModelGet))]
-        public IHttpActionResult Post(object postViewModel)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Удаляет пользователя
@@ -93,9 +103,20 @@ namespace API.Controllers
         /// </summary>
         /// <param name="viewModel"></param>
         [HttpPost]
-        public IHttpActionResult Register(UserRegisterViewModel viewModel)
+        public async Task<IHttpActionResult> Register(UserRegisterViewModel viewModel)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid) return BadRequest();
+
+            var existingUser = await _userOperations.GetAsync(viewModel.Email);
+
+            if (existingUser == null)
+            {
+                return Ok(await _userOperations.RegisterAsync(viewModel.Email));
+            }
+            else
+            {
+                return Ok(existingUser);
+            }
         }
 
         /// <summary>
@@ -104,9 +125,11 @@ namespace API.Controllers
         /// <returns></returns>
         [RESTAuthorize()]
         [ResponseType(typeof(UserViewModelGet))]
+        [HttpGet]
+        [Route("getuser")]
         public IHttpActionResult GetUser()
         {
-            throw new NotImplementedException();
+            return Ok("getuser");
         }
 
         /// <summary>
@@ -123,9 +146,10 @@ namespace API.Controllers
 
         [HttpGet]
         [RESTAuthorize]
+        [Route("logout")]
         public IHttpActionResult Logout()
         {
-            throw new NotImplementedException();
+            return Ok("Logout");
         }
     }
 }

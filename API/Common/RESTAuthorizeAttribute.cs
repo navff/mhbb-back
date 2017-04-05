@@ -62,6 +62,15 @@ namespace API.Common
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             var token = actionContext.Request.Headers.Authorization?.Parameter;
+            if (token == null)
+            {
+                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("Token is null")
+                };
+                return;
+            }
+
             var user = _userOperations.GetUserByTokenAsync(token).Result;
 
             if (user==null) 

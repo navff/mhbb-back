@@ -607,12 +607,6 @@
             <param name="email"></param>
             <param name="putViewModel"></param>
         </member>
-        <member name="M:API.Controllers.UserController.Post(System.Object)">
-            <summary>
-            Добавляет нового пользователя
-            </summary>
-            <param name="postViewModel"></param>
-        </member>
         <member name="M:API.Controllers.UserController.Delete(System.String)">
             <summary>
             Удаляет пользователя
