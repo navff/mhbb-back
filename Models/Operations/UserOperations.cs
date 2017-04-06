@@ -20,7 +20,6 @@ namespace API.Operations
 
         public UserOperations(AppContext context)
         {
-            Debug.WriteLine("Creating UserOperations");
             _context = context;
         }
 

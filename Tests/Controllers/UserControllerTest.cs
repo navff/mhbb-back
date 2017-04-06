@@ -121,43 +121,8 @@ namespace Tests.Controllers
         public void TestHttp()
         {
 
-            string baseAddress = "http://localhost/";
-
-            HttpConfiguration config = new HttpConfiguration();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
-            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
-
-            Bootstrapper bootstrapper = new Bootstrapper();
-            bootstrapper.Initialize(NinjectWebCommon.CreateKernel);
-            config.DependencyResolver = new NinjectDependencyResolver(NinjectWebCommon.CreateKernel());
-
-            NinjectWebCommon.Start();
-
-            HttpServer server = new HttpServer(config);
-
-
-            HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(server));
-
-            HttpRequestMessage request = new HttpRequestMessage();
-            //request.Content = new ObjectContent<Order>(requestOrder, new JsonMediaTypeFormatter());
-            request.RequestUri = new Uri(baseAddress + "api/user?email=var@33kita.ru");
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-            request.Method = HttpMethod.Get;
-
-            CancellationTokenSource cts = new CancellationTokenSource();
-
-            using (HttpResponseMessage response = messageInvoker.SendAsync(request, cts.Token).Result)
-            {
-                Assert.IsNotNull(response.Content);
-                var result = response.Content.ReadAsAsync<UserViewModelGet>().Result;
-                Assert.AreEqual("var@33kita.ru", result.Email);
-            }
+            var result = HttpGet<UserViewModelGet>("api/user?email=var@33kita.ru");
+            Assert.IsTrue(result.Email == "var@33kita.ru");
 
 
         }

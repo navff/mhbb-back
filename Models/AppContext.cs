@@ -15,7 +15,6 @@ namespace Models
         public AppContext()
             : base($"name=App")
         {
-            System.Diagnostics.Debug.WriteLine("Created AppContext");
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppContext, Configuration>());
             this.Configuration.ProxyCreationEnabled = false;
         }
@@ -41,7 +40,6 @@ namespace Models
 
         public new void Dispose()
         {
-            System.Diagnostics.Debug.WriteLine("Disposing AppContext");
             base.Dispose();
         }
 

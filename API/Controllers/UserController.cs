@@ -27,7 +27,6 @@ namespace API.Controllers
 
         public UserController(UserOperations userOperations)
         {
-            Debug.WriteLine("Creating controller with parameter");
             _userOperations = userOperations;
         }
 

@@ -40,7 +40,6 @@ namespace Models
                 
             });
 
-            Debug.WriteLine(city.Id);
 
             context.Users.AddOrUpdate(new User()
             {
