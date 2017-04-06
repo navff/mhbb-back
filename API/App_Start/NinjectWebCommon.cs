@@ -61,6 +61,19 @@ namespace API.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            kernel.Load(new BlubbModule());
+
+            System.Web.Mvc.DependencyResolver.SetResolver(new Common.NinjectDependencyResolver(kernel));
+        }
+
+        public class BlubbModule : GlobalKernelRegistrationModule<OnePerRequestHttpModule>
+        {
+            
+        }
+
+        public static System.Web.Http.Dependencies.IDependencyResolver GetResolver()
+        {
+            return (System.Web.Http.Dependencies.IDependencyResolver) System.Web.Mvc.DependencyResolver.Current;
+        }
     }
 }

@@ -40,7 +40,6 @@ namespace Models
                 
             });
 
-
             context.Users.AddOrUpdate(new User()
             {
                 AuthToken = "test",
