@@ -121,13 +121,13 @@ namespace API.Controllers
         /// Получает данные пользователя по его токену в заголовке
         /// </summary>
         /// <returns></returns>
-        [RESTAuthorize()]
+        [RESTAuthorize]
         [ResponseType(typeof(UserViewModelGet))]
         [HttpGet]
         [Route("getuser")]
         public IHttpActionResult GetUser()
         {
-            return Ok("getuser");
+            return Ok(User.Identity.Name);
         }
 
         /// <summary>

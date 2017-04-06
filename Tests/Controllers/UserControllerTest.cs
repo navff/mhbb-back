@@ -125,5 +125,12 @@ namespace Tests.Controllers
             Assert.AreEqual("var@33kita.ru", result.Email);
         }
 
+        [TestMethod]
+        public void HTTP_GetUserByToken_OK_Test()
+        {
+            var result = HttpGet<string>("api/user/getuser", "ABRAKADABRA");
+            Assert.AreEqual("var@33kita.ru", result);
+        }
+
     }
 }

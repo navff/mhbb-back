@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Text;
 using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -21,7 +24,7 @@ namespace Tests
 {
    public abstract class BaseControllerTest : BaseTest
     {
-        private string baseAddress = "http://localhost/";
+        private string baseAddress = "http://localhost:3105/";
         private Logger _logger;
 
         public BaseControllerTest()
@@ -58,8 +61,9 @@ namespace Tests
         /// </summary>
         /// <typeparam name="T">Возвращаемый тип объекта</typeparam>
         /// <param name="url">Относительный урл. Например: api/user?email=var@33kita.ru</param>
+        /// <param name="token">Токен авторизации</param>
         /// <returns></returns>
-        public T HttpGet<T>(string url)
+        public T HttpGet<T>(string url, string token = "")
         {
 
             HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
@@ -67,33 +71,42 @@ namespace Tests
             HttpRequestMessage request = new HttpRequestMessage();
             //request.Content = new ObjectContent<Order>(requestOrder, new JsonMediaTypeFormatter());
             request.RequestUri = new Uri(baseAddress +url);
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Add("Authorization", "Token "+token);
             request.Method = HttpMethod.Get;
 
             CancellationTokenSource cts = new CancellationTokenSource();
 
             _logger.Info(request.Method + ": " + request.RequestUri.AbsoluteUri);
+            Debug.WriteLine(request.Method + ": " + request.RequestUri.AbsoluteUri);
+
             using (HttpResponseMessage response = messageInvoker.SendAsync(request, cts.Token).Result)
             {
                 Assert.IsNotNull(response.Content);
-                try
+                if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<T>().Result;
                 }
-                catch (Exception ex)
+                else
                 {
                     string message = "";
                     try
                     {
-                        message  = response.Content.ReadAsStringAsync().Result;
+                        HttpError httpError  = response.Content.ReadAsAsync<HttpError>().Result;
+                        message = httpError.ExceptionMessage + " " + httpError.Message + " " + httpError.StackTrace;
+                        ErrorLogger.ThrowAndLog(message, new Exception(httpError.InnerException?.Message));
                     }
-                    catch (Exception inner)
+                    catch (Exception ex)
                     {
                         message = ex.Message;
+                        ErrorLogger.ThrowAndLog(message, ex);
                     }
-                    ErrorLogger.ThrowAndLog(message, ex);
+                    
                     return default(T);
                 }
+                
+                    
+                
                 
             }
         }
@@ -104,7 +117,7 @@ namespace Tests
 
             config.Routes.MapHttpRoute(
                name: "DefaultApi",
-               routeTemplate: "api/{controller}/{id}",
+               routeTemplate: "api/{controller}/{action}/{id}",
                defaults: new { id = RouteParameter.Optional }
            );
 
