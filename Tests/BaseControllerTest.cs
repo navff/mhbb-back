@@ -85,8 +85,7 @@ namespace Tests
                     string message = "";
                     try
                     {
-                        HttpError error = response.Content.ReadAsAsync<HttpError>().Result;
-                        message = error.Message + error.MessageDetail + error.ExceptionMessage + error.StackTrace;
+                        message  = response.Content.ReadAsStringAsync().Result;
                     }
                     catch (Exception inner)
                     {
@@ -104,18 +103,16 @@ namespace Tests
             HttpConfiguration config = new HttpConfiguration();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+               name: "DefaultApi",
+               routeTemplate: "api/{controller}/{id}",
+               defaults: new { id = RouteParameter.Optional }
+           );
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Initialize(NinjectWebCommon.CreateKernel);
-            config.DependencyResolver = new NinjectDependencyResolver(NinjectWebCommon.CreateKernel());
-
-            NinjectWebCommon.Start();
+            config.DependencyResolver = NinjectWebCommon.GetResolver();
 
             return new HttpServer(config);
         }
