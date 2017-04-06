@@ -17,6 +17,7 @@ using API.Models;
 using API.Operations;
 using API.ViewModels;
 using Ninject.Web.Common;
+using NLog;
 
 namespace Tests.Controllers
 {
@@ -118,7 +119,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        public void TestHttp()
+        public void HTTP_GetByEmail_OK_Test()
         {
             var result = HttpGet<UserViewModelGet>("api/user?email=var@33kita.ru");
             Assert.AreEqual("var@33kita.ru", result.Email);
