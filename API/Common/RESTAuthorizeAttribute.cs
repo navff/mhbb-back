@@ -28,7 +28,6 @@ namespace API.Common
         /// </summary>
         public RESTAuthorizeAttribute() : this(Role.PortalAdmin, Role.PortalManager, Role.RegisteredUser)
         {
-            Debug.WriteLine("RESTAuthorizeAttribute 1");
         }
 
         /// <summary>
@@ -37,7 +36,6 @@ namespace API.Common
         /// <param name="roles"></param>
         public RESTAuthorizeAttribute(params  string[] roles)
         {
-            Debug.WriteLine("RESTAuthorizeAttribute 2");
             this._roles = roles;
             _userOperations = new UserOperations(_context);
         }
@@ -48,7 +46,6 @@ namespace API.Common
         /// <param name="roles"></param>
         public RESTAuthorizeAttribute(params Role[] roles)
         {
-            Debug.WriteLine("RESTAuthorizeAttribute 3");
             var rolesList = new List<string>();
             foreach (Role role in roles)
             {

@@ -88,12 +88,15 @@ namespace API.Controllers
         /// Удаляет пользователя
         /// </summary>
         /// <param name="email"></param>
-        [HttpDelete]
-        [RESTAuthorize]
+        //[HttpDelete]
+        [HttpGet]
+       // [RESTAuthorize]
+        [Route("delete/{email}")]
         public IHttpActionResult Delete(string email)
         {
+            return Ok(email);
             //TODO: проверить, сам себя удаляет или вредничает
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
         /// <summary>
@@ -124,7 +127,6 @@ namespace API.Controllers
         [RESTAuthorize]
         [ResponseType(typeof(UserViewModelGet))]
         [HttpGet]
-        [Route("getuser")]
         public IHttpActionResult GetUser()
         {
             return Ok(User.Identity.Name);

@@ -132,5 +132,11 @@ namespace Tests.Controllers
             Assert.AreEqual("var@33kita.ru", result);
         }
 
+        [TestMethod]
+        public void HTTP_Delete_OK_Test()
+        {
+            var result = HttpGet<string>("api/user/delete/111");
+            Assert.AreEqual("111", result);
+        }
     }
 }

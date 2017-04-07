@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -12,6 +13,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
+using API;
 using API.App_Start;
 using API.Common;
 using API.ViewModels;
@@ -34,9 +36,17 @@ namespace Tests
 
         protected void PrepareController(ApiController controller, string userName = null, string role=null)
         {
-            var config = new HttpConfiguration();
+            HttpConfiguration config = new HttpConfiguration();
+
+            var route = config.Routes.MapHttpRoute(
+               name: "DefaultApi",
+               routeTemplate: "api/{controller}/{id}",
+               defaults: new { id = RouteParameter.Optional }
+           );
+
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
             var request = new HttpRequestMessage(HttpMethod.Post, baseAddress);
-            var route = config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}");
             var routeData = new HttpRouteData(route, new HttpRouteValueDictionary { { "controller", "products" } });
 
             controller.ControllerContext = new HttpControllerContext(config, routeData, request);
@@ -44,9 +54,11 @@ namespace Tests
 
             if (role != null)
             {
-                Identity identity = new Identity();
-                identity.Name = userName;
-                identity.IsAuthenticated = true;
+                Identity identity = new Identity
+                {
+                    Name = userName,
+                    IsAuthenticated = true
+                };
 
                 controller.ControllerContext.RequestContext.Principal = 
                     new GenericPrincipal(identity, new string[] { role } );
@@ -75,6 +87,12 @@ namespace Tests
             request.Headers.Add("Authorization", "Token "+token);
             request.Method = HttpMethod.Get;
 
+            return SendRequest<T>(request, messageInvoker);
+
+        }
+
+        private T SendRequest<T>(HttpRequestMessage request, HttpMessageInvoker messageInvoker)
+        {
             CancellationTokenSource cts = new CancellationTokenSource();
 
             _logger.Info(request.Method + ": " + request.RequestUri.AbsoluteUri);
@@ -89,43 +107,48 @@ namespace Tests
                 }
                 else
                 {
-                    string message = "";
-                    try
-                    {
-                        HttpError httpError  = response.Content.ReadAsAsync<HttpError>().Result;
-                        message = httpError.ExceptionMessage + " " + httpError.Message + " " + httpError.StackTrace;
-                        ErrorLogger.ThrowAndLog(message, new Exception(httpError.InnerException?.Message));
-                    }
-                    catch (Exception ex)
-                    {
-                        message = ex.Message;
-                        ErrorLogger.ThrowAndLog(message, ex);
-                    }
-                    
+                    HandleError(response);
                     return default(T);
                 }
-                
-                    
-                
-                
             }
         }
 
-        public HttpServer PrepareServer()
+        private void HandleError(HttpResponseMessage response)
+        {
+            string message;
+
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                try
+                {
+                    HttpError httpError = response.Content.ReadAsAsync<HttpError>().Result;
+                    message = httpError.ExceptionMessage + " " + httpError.Message + " " + httpError.StackTrace;
+                    ErrorLogger.ThrowAndLog(message, new Exception(httpError.InnerException?.Message));
+                }
+                catch (Exception ex)
+                {
+                    message = ex.Message;
+                    ErrorLogger.ThrowAndLog(message, ex);
+                }
+            }
+            else
+            {
+                message = response.Content.ReadAsStringAsync().Result;
+                ErrorLogger.ThrowAndLog("ERROR IN HTTP REQUEST", new WebException(message));
+            }
+        }
+
+        private HttpServer PrepareServer()
         {
             HttpConfiguration config = new HttpConfiguration();
-
-            config.Routes.MapHttpRoute(
-               name: "DefaultApi",
-               routeTemplate: "api/{controller}/{action}/{id}",
-               defaults: new { id = RouteParameter.Optional }
-           );
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Initialize(NinjectWebCommon.CreateKernel);
             config.DependencyResolver = NinjectWebCommon.GetResolver();
+            WebApiConfig.Register(config);
+            config.EnsureInitialized();
 
             return new HttpServer(config);
         }
