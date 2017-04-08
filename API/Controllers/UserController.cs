@@ -30,13 +30,6 @@ namespace API.Controllers
             _userOperations = userOperations;
         }
 
-        [HttpGet]
-        [Route("test")]
-        public string Test()
-        {
-            return "Успех!";
-        }
-
         /// <summary>
         /// Получает пользователя по его email
         /// </summary>
@@ -88,15 +81,22 @@ namespace API.Controllers
         /// Удаляет пользователя
         /// </summary>
         /// <param name="email"></param>
-        //[HttpDelete]
-        [HttpGet]
-       // [RESTAuthorize]
-        [Route("delete/{email}")]
-        public IHttpActionResult Delete(string email)
+        [HttpDelete]
+        [RESTAuthorize]
+        [Route("delete")]
+        public async Task<IHttpActionResult> Delete(string email)
         {
-            return Ok(email);
-            //TODO: проверить, сам себя удаляет или вредничает
-            // throw new NotImplementedException();
+            if (!User.IsInRole("PortalAdmin") 
+                && !User.IsInRole("PortalManager")
+                && User.Identity.Name!=email)
+            {
+                return new ResponseMessageResult(new HttpResponseMessage(HttpStatusCode.Unauthorized)
+                {
+                    Content = new StringContent("You cannot delete another users")
+                });
+            }
+            await _userOperations.DeleteAsync(email);
+            return Ok("Deleted "+email);
         }
 
         /// <summary>

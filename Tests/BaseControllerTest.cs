@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -13,6 +14,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
+using System.Web.Script.Serialization;
 using API;
 using API.App_Start;
 using API.Common;
@@ -73,7 +75,7 @@ namespace Tests
         /// </summary>
         /// <typeparam name="T">Возвращаемый тип объекта</typeparam>
         /// <param name="url">Относительный урл. Например: api/user?email=var@33kita.ru</param>
-        /// <param name="token">Токен авторизации</param>
+        /// <param name="token">Токен аутентификации</param>
         /// <returns></returns>
         public T HttpGet<T>(string url, string token = "")
         {
@@ -90,6 +92,55 @@ namespace Tests
             return SendRequest<T>(request, messageInvoker);
 
         }
+
+        /// <summary>
+        /// Отправляет DELETE-запрос на указанный урл
+        /// </summary>
+        /// <typeparam name="T">Возвращаемый тип объекта</typeparam>
+        /// <param name="url">Относительный урл. Например: api/user?email=var@33kita.ru</param>
+        /// <param name="token">Токен аутентификации</param>
+        public T HttpDelete<T>(string url, string token = "")
+        {
+
+            HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
+
+            HttpRequestMessage request = new HttpRequestMessage();
+            request.RequestUri = new Uri(baseAddress + url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Add("Authorization", "Token " + token);
+            request.Method = HttpMethod.Delete;
+
+            return SendRequest<T>(request, messageInvoker);
+        }
+
+
+        /// <summary>
+        /// Отправляет PUT-запрос на указанный урл
+        /// </summary>
+        /// <typeparam name="T">Возвращаемый тип объекта</typeparam>
+        /// <param name="url">Относительный урл. Например: api/user?email=var@33kita.ru</param>
+        /// <param name="objectForSend">Отправляемый объект</param>
+        /// <param name="token">Токен аутентификации</param>
+        public T HttpPut<T>(string url, object objectForSend, string token = "")
+        {
+
+            HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
+            HttpRequestMessage request = new HttpRequestMessage();
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var json = js.Serialize(objectForSend);
+            Console.WriteLine(json);
+
+            request.Content = new StringContent(json);
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            request.RequestUri = new Uri(baseAddress + url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Add("Authorization", "Token " + token);
+            request.Method = HttpMethod.Put;
+
+            return SendRequest<T>(request, messageInvoker);
+        }
+
 
         private T SendRequest<T>(HttpRequestMessage request, HttpMessageInvoker messageInvoker)
         {

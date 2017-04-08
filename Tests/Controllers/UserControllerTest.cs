@@ -118,6 +118,9 @@ namespace Tests.Controllers
             Assert.IsNotNull(result);
         }
 
+
+        // =======================================================================================================
+
         [TestMethod]
         public void HTTP_GetByEmail_OK_Test()
         {
@@ -135,8 +138,69 @@ namespace Tests.Controllers
         [TestMethod]
         public void HTTP_Delete_OK_Test()
         {
-            var result = HttpGet<string>("api/user/delete/111");
-            Assert.AreEqual("111", result);
+            var user = _context.Users.First();
+            var result = HttpDelete<string>($"api/user/delete?email={user.Email}", user.AuthToken);
+            Assert.AreEqual("Deleted "+user.Email, result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void HTTP_Delete_WrongToken_Test()
+        {
+            var user = _context.Users.First();
+            HttpDelete<string>($"api/user/delete?email={user.Email}", "wrong_token");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void HTTP_Delete_AnotherUserToken_Test()
+        {
+            var user = _context.Users.First();
+            var anotherUser = _context.Users.Where(u => u.Role == Role.RegisteredUser).Take(2).ToList().Last();
+            HttpDelete<string>($"api/user/delete?email={user.Email}", anotherUser.AuthToken);
+        }
+
+        [TestMethod]
+        public void HTTP_Put_Ok_Test()
+        {
+            var user = _context.Users.First();
+            var rndString = Guid.NewGuid().ToString();
+
+            var viewModel = new UserViewModelPut
+            {
+                Email = user.Email,
+                Name = rndString,
+                Phone = rndString,
+                CityId = user.CityId,
+                Role = user.Role,
+            };
+
+            var result = HttpPut<UserViewModelGet>($"api/user?email={user.Email}", viewModel, "ABRAKADABRA");
+
+            Assert.AreEqual(rndString, result.Name);
+            Assert.AreEqual(rndString, result.Phone);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void HTTP_Put_AnotherUser_Test()
+        {
+            var user = _context.Users.First();
+            var anotherUser = _context.Users.Where(u => u.Role == Role.RegisteredUser).Take(2).ToList().Last();
+
+            var rndString = Guid.NewGuid().ToString();
+
+            var viewModel = new UserViewModelPut
+            {
+                Email = user.Email,
+                Name = rndString,
+                Phone = rndString,
+                CityId = user.CityId,
+                Role = user.Role,
+            };
+
+            HttpPut<UserViewModelGet>($"api/user?email={user.Email}", viewModel, anotherUser.AuthToken);
         }
     }
 }
