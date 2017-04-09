@@ -133,9 +133,13 @@ namespace Tests
             HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
             HttpRequestMessage request = new HttpRequestMessage();
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            var json = js.Serialize(objectForSend);
-            Console.WriteLine(json);
+            var json = "";
+            if (objectForSend != null)
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                json = js.Serialize(objectForSend);
+                Console.WriteLine(json);
+            }
 
             request.Content = new StringContent(json);
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");

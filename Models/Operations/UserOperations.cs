@@ -116,6 +116,18 @@ namespace API.Operations
             }
         }
 
+
+        public async Task<User> ResetTokenAsync(string userEmail)
+        {
+            var userInDb = await _context.Users.FindAsync(userEmail);
+            Contracts.Assert(userInDb != null);
+
+            userInDb.AuthToken = GenerateToken();
+
+            await _context.SaveChangesAsync();
+            return userInDb;
+        }
+
         public async Task<IEnumerable<User>> SearchAsync(string word)
         {
             var result = new List<User>();
@@ -131,6 +143,8 @@ namespace API.Operations
 
             return result;
         }
+
+        
 
 
         //=============================================================================================================

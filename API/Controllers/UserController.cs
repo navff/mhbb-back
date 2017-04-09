@@ -156,12 +156,13 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpPut]
         [RESTAuthorize]
         [Route("logout")]
-        public IHttpActionResult Logout()
+        public async Task<IHttpActionResult> Logout()
         {
-            return Ok("Logout");
+            await _userOperations.ResetTokenAsync(User.Identity.Name);
+            return Ok("Logout succeeded");
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,6 +18,7 @@ using API.Controllers;
 using API.Models;
 using API.Operations;
 using API.ViewModels;
+using Models;
 using Ninject.Web.Common;
 using NLog;
 using Tests.Helpers;
@@ -161,6 +163,27 @@ namespace Tests.Controllers
                 Email = ""
             };
             HttpPost<UserViewModelGet>($"api/user", viewModel);
+        }
+
+        [TestMethod]
+        public void HTTP_Logout_Test()
+        {
+            var user = _context.Users.First();
+            var oldToken = user.AuthToken;
+
+            HttpPut<string>($"api/user/logout", null, oldToken);
+
+            _context.Entry(user).State = EntityState.Modified;
+
+            using (var context = new AppContext())
+            {
+                var updatedUserToken = context.Users.First(u => u.Email == user.Email).AuthToken;
+                Assert.AreNotEqual(oldToken, updatedUserToken);
+            }
+
+            
+
+            
         }
     }
 }
