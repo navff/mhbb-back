@@ -210,6 +210,7 @@
     <Compile Include="Common\NinjectDependencyScope.cs" />
     <Compile Include="Common\RESTAuthorizeAttribute.cs" />
     <Compile Include="Common\Security.cs" />
+    <Compile Include="Common\ValidateModelAttribute.cs" />
     <Compile Include="Controllers\ICrudController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">

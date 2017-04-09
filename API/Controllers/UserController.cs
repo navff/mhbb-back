@@ -106,8 +106,6 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Register(UserRegisterViewModel viewModel)
         {
-            if (!ModelState.IsValid) return BadRequest();
-
             var existingUser = await _userOperations.GetAsync(viewModel.Email);
 
             if (existingUser == null)

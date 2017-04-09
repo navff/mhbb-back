@@ -18,6 +18,7 @@ using API.Operations;
 using API.ViewModels;
 using Ninject.Web.Common;
 using NLog;
+using Tests.Helpers;
 
 namespace Tests.Controllers
 {
@@ -33,93 +34,6 @@ namespace Tests.Controllers
             MapperMappings.Map();
         }
 
-        [TestMethod]
-        public void GetByEmail_Ok_Test()
-        {
-            var user = _context.Users.First();
-            var result = _controller.Get(user.Email).Result;
-            var userFromResult = ( (OkNegotiatedContentResult<UserViewModelGet>) result).Content;
-            Assert.IsNotNull(userFromResult);
-            Assert.AreEqual(user.Email, userFromResult.Email);
-            Assert.AreEqual(user.AuthToken, userFromResult.AuthToken);
-            Assert.AreEqual(user.CityId, userFromResult.CityId);
-            Assert.AreEqual(user.Phone, userFromResult.Phone);
-        }
-
-        [TestMethod]
-        public void Put_Ok_Test()
-        {
-            PrepareController(_controller, userName:"var@33kita.ru", role:"PortalAdmin");
-            var user = _context.Users.First();
-            var rndString = Guid.NewGuid().ToString();
-
-            var result = _controller.Put(user.Email, new UserViewModelPut
-            {
-                Email = user.Email,
-                Name = rndString,
-                Phone = rndString,
-                Role = Role.PortalAdmin,
-                CityId = user.CityId
-            }).Result;
-
-            var userFromResult = ((OkNegotiatedContentResult<UserViewModelGet>)result).Content;
-            Assert.IsNotNull(userFromResult);
-            Assert.AreEqual(user.Email, userFromResult.Email);
-            Assert.AreEqual(user.AuthToken, userFromResult.AuthToken);
-            Assert.AreEqual(user.CityId, userFromResult.CityId);
-            Assert.AreEqual(rndString, userFromResult.Phone);
-        }
-
-        [TestMethod]
-        public void Put_WrongUser_Test()
-        {
-            PrepareController(_controller, userName: "sdsdsdsdsdsd@33kita.ru", role: "RegisteredUser");
-            var user = _context.Users.First();
-            var rndString = Guid.NewGuid().ToString();
-
-            var result = _controller.Put(user.Email, new UserViewModelPut
-            {
-                Email = user.Email,
-                Name = rndString,
-                Phone = rndString,
-                Role = Role.PortalAdmin,
-                CityId = user.CityId
-            }).Result;
-
-            Assert.IsInstanceOfType(result, typeof(ResponseMessageResult));
-            var responseMessageResult = (ResponseMessageResult) result;
-            Assert.IsTrue(responseMessageResult.Response.StatusCode == HttpStatusCode.Unauthorized); 
-
-        }
-
-        [TestMethod]
-        public void Register_Ok_User()
-        {
-            var rndString = Guid.NewGuid().ToString();
-
-            var result = _controller.Register(new UserRegisterViewModel
-            {
-                Email = rndString + "@33kita.ru"
-            }).Result;
-
-            var userFromResult = ((OkNegotiatedContentResult<User>)result).Content;
-            Assert.IsNotNull(userFromResult);
-            Assert.AreEqual(rndString+"@33kita.ru", userFromResult.Email);
-        }
-
-        [TestMethod]
-        public void Register_EmptyEmail_User()
-        {
-            var result = _controller.Register(new UserRegisterViewModel
-            {
-                Email = ""
-            }).Result;
-
-            Assert.IsNotNull(result);
-        }
-
-
-        // =======================================================================================================
 
         [TestMethod]
         public void HTTP_GetByEmail_OK_Test()
@@ -201,6 +115,30 @@ namespace Tests.Controllers
             };
 
             HttpPut<UserViewModelGet>($"api/user?email={user.Email}", viewModel, anotherUser.AuthToken);
+        }
+
+        [TestMethod]
+        public void HTTP_Post_Ok_Test()
+        {
+            var rndString = Guid.NewGuid().ToString();
+            var viewModel = new UserRegisterViewModel
+            {
+                Email = rndString+"@33kita.ru"
+            };
+            var result = HttpPost<UserViewModelGet>($"api/user", viewModel);
+
+            Assert.AreEqual(rndString+"@33kita.ru", result.Email);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void HTTP_Post_EmptyEmail_Test()
+        {
+            var viewModel = new UserRegisterViewModel
+            {
+                Email = ""
+            };
+            HttpPost<UserViewModelGet>($"api/user", viewModel);
         }
     }
 }

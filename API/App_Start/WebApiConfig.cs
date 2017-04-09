@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using API.Common;
 
 namespace API
 {
@@ -19,7 +20,7 @@ namespace API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
+            config.Filters.Add(new ValidateModelAttribute());
             MapperMappings.Map();
         }
     }

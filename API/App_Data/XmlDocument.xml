@@ -563,6 +563,11 @@
             </summary>
             <returns>Хэш-строка, длиной 64 символа</returns>
         </member>
+        <member name="T:API.Common.ValidateModelAttribute">
+            <summary>
+            Проверяет ошибки в ModelState и выдаёт их в response
+            </summary>
+        </member>
         <member name="M:API.Controllers.ICrudController.Get(System.Int32)">
             <summary>
             Получает сущность по её Id

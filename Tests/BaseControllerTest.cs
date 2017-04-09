@@ -14,6 +14,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
+using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using API;
 using API.App_Start;
@@ -23,6 +24,7 @@ using Camps.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject.Web.Common;
 using NLog;
+using UrlHelper = System.Web.Http.Routing.UrlHelper;
 
 namespace Tests
 {
@@ -70,6 +72,8 @@ namespace Tests
             controller.Url.Request = request;
         }
 
+
+
         /// <summary>
         /// Отправляет HTTP-запрос на in-memory http-сервер
         /// </summary>
@@ -79,19 +83,10 @@ namespace Tests
         /// <returns></returns>
         public T HttpGet<T>(string url, string token = "")
         {
-
-            HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
-
-            HttpRequestMessage request = new HttpRequestMessage();
-            //request.Content = new ObjectContent<Order>(requestOrder, new JsonMediaTypeFormatter());
-            request.RequestUri = new Uri(baseAddress +url);
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Headers.Add("Authorization", "Token "+token);
-            request.Method = HttpMethod.Get;
-
-            return SendRequest<T>(request, messageInvoker);
-
+            return GetOrDeleteRequest<T>(url, HttpMethod.Get, token);
         }
+
+
 
         /// <summary>
         /// Отправляет DELETE-запрос на указанный урл
@@ -101,17 +96,9 @@ namespace Tests
         /// <param name="token">Токен аутентификации</param>
         public T HttpDelete<T>(string url, string token = "")
         {
-
-            HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
-
-            HttpRequestMessage request = new HttpRequestMessage();
-            request.RequestUri = new Uri(baseAddress + url);
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Headers.Add("Authorization", "Token " + token);
-            request.Method = HttpMethod.Delete;
-
-            return SendRequest<T>(request, messageInvoker);
+            return GetOrDeleteRequest<T>(url, HttpMethod.Delete, token);
         }
+
 
 
         /// <summary>
@@ -123,7 +110,26 @@ namespace Tests
         /// <param name="token">Токен аутентификации</param>
         public T HttpPut<T>(string url, object objectForSend, string token = "")
         {
+            return PostOrPutRequest<T>(url, objectForSend, HttpMethod.Put, token);
+        }
 
+
+
+        /// <summary>
+        /// Отправляет POST-запрос на указанный урл
+        /// </summary>
+        /// <typeparam name="T">Возвращаемый тип объекта</typeparam>
+        /// <param name="url">Относительный урл. Например: api/user?email=var@33kita.ru</param>
+        /// <param name="objectForSend">Отправляемый объект</param>
+        /// <param name="token">Токен аутентификации</param>
+        public T HttpPost<T>(string url, object objectForSend, string token = "")
+        {
+            return PostOrPutRequest<T>(url, objectForSend, HttpMethod.Post, token);
+        }
+
+
+        private T PostOrPutRequest<T>(string url, object objectForSend, HttpMethod method, string token = "")
+        {
             HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
             HttpRequestMessage request = new HttpRequestMessage();
 
@@ -136,7 +142,20 @@ namespace Tests
             request.RequestUri = new Uri(baseAddress + url);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             request.Headers.Add("Authorization", "Token " + token);
-            request.Method = HttpMethod.Put;
+            request.Method = method;
+
+            return SendRequest<T>(request, messageInvoker);
+        }
+
+        private T GetOrDeleteRequest<T>(string url, HttpMethod method, string token ="")
+        {
+            HttpMessageInvoker messageInvoker = new HttpMessageInvoker(new InMemoryHttpContentSerializationHandler(PrepareServer()));
+
+            HttpRequestMessage request = new HttpRequestMessage();
+            request.RequestUri = new Uri(baseAddress + url);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.Add("Authorization", "Token " + token);
+            request.Method = method;
 
             return SendRequest<T>(request, messageInvoker);
         }
@@ -151,7 +170,7 @@ namespace Tests
 
             using (HttpResponseMessage response = messageInvoker.SendAsync(request, cts.Token).Result)
             {
-                Assert.IsNotNull(response.Content);
+                //Assert.IsNotNull(response.Content);
                 if (response.IsSuccessStatusCode)
                 {
                     return response.Content.ReadAsAsync<T>().Result;
@@ -182,11 +201,16 @@ namespace Tests
                     ErrorLogger.ThrowAndLog(message, ex);
                 }
             }
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                message = $"Status code: {response.StatusCode}.";
+            }
             else
             {
                 message = response.Content.ReadAsStringAsync().Result;
-                ErrorLogger.ThrowAndLog("ERROR IN HTTP REQUEST", new WebException(message));
             }
+            Debug.WriteLine(message);
+            ErrorLogger.ThrowAndLog("ERROR IN HTTP REQUEST", new WebException(message));
         }
 
         private HttpServer PrepareServer()
