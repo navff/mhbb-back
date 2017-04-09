@@ -42,6 +42,8 @@ namespace API.Controllers
             {
                 var entity = await _userOperations.GetAsync(email);
                 var result = Mapper.Map<UserViewModelGet>(entity);
+                result.CityName = entity.City?.Name;
+                result.RoleName = entity.Role.ToString();
                 return Ok(result);
             }
             catch (Exception e)
@@ -125,21 +127,33 @@ namespace API.Controllers
         [RESTAuthorize]
         [ResponseType(typeof(UserViewModelGet))]
         [HttpGet]
-        public IHttpActionResult GetUser()
+        public async Task<IHttpActionResult> GetMe()
         {
-            return Ok(User.Identity.Name);
+            return await Get(User.Identity.Name);
         }
 
         /// <summary>
-        /// Ищет пользователей по ключу
+        /// Ищет пользователей по электропочте, имени или номеру телефона
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
         [HttpGet]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
-        public IHttpActionResult Search(string word)
+        [ResponseType(typeof(IEnumerable<UserViewModelGet>))]
+        public async Task<IHttpActionResult> Search(string word)
         {
-            throw new NotImplementedException();
+            var users = await _userOperations.SearchAsync(word);
+            var result = new List<UserViewModelGet>();
+
+            foreach (var user in users)
+            {
+                var userViewModel = Mapper.Map<UserViewModelGet>(user);
+                userViewModel.CityName = user.City?.Name;
+                userViewModel.RoleName = user.Role.ToString();
+
+                result.Add(userViewModel);
+            }
+            return Ok(result);
         }
 
         [HttpGet]

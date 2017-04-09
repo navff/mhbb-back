@@ -50,6 +50,36 @@ namespace Models
                 Name = "Морковка"
             });
 
+            context.Users.AddOrUpdate(new User()
+            {
+                AuthToken = "registered_user_token1",
+                Email = "registered_user1@33kita.ru",
+                Role = Role.RegisteredUser,
+                CityId = city.Id,
+                DateRegistered = DateTime.Now,
+                Name = "Зарегистрированный пользователь1"
+            });
+
+            context.Users.AddOrUpdate(new User()
+            {
+                AuthToken = "registered_user_token2",
+                Email = "registered_user2@33kita.ru",
+                Role = Role.RegisteredUser,
+                CityId = city.Id,
+                DateRegistered = DateTime.Now,
+                Name = "Зарегистрированный пользователь2"
+            });
+
+            context.Users.AddOrUpdate(new User()
+            {
+                AuthToken = "registered_user_token3",
+                Email = "registered_user3@33kita.ru",
+                Role = Role.RegisteredUser,
+                CityId = city.Id,
+                DateRegistered = DateTime.Now,
+                Name = "Зарегистрированный пользователь3"
+            });
+
             context.SaveChanges();
 
             #endregion

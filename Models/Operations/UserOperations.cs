@@ -40,7 +40,7 @@ namespace API.Operations
         /// <returns></returns>
         public async Task<User> GetAsync(string email)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.Include(u => u.City).FirstOrDefaultAsync(u => u.Email == email);
         }
 
         /// <summary>
@@ -125,6 +125,9 @@ namespace API.Operations
 
             var usersByName = await _context.Users.Where(u => u.Name.Contains(word)).ToListAsync();
             result.AddRange(usersByName);
+
+            var usersByPhone = await _context.Users.Where(u => u.Phone.Contains(word)).ToListAsync();
+            result.AddRange(usersByPhone);
 
             return result;
         }

@@ -62,7 +62,6 @@ namespace API.Common
         /// <param name="actionContext"></param>
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            Debug.WriteLine("OnAuthorization");
             var token = actionContext.Request.Headers.Authorization?.Parameter;
             if (token == null)
             {

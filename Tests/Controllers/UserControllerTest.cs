@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -43,10 +44,31 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        public void HTTP_GetUserByToken_OK_Test()
+        public void HTTP_GetMe_OK_Test()
         {
-            var result = HttpGet<string>("api/user/getuser", "ABRAKADABRA");
-            Assert.AreEqual("var@33kita.ru", result);
+            var result = HttpGet<UserViewModelGet>("api/user/getme", "ABRAKADABRA");
+            Assert.AreEqual("var@33kita.ru", result.Email);
+        }
+
+        [TestMethod]
+        public void HTTP_Search_OK_Test()
+        {
+            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=var@33kita.ru", "ABRAKADABRA");
+            Assert.AreEqual("var@33kita.ru", result.First().Email);
+        }
+
+        [TestMethod]
+        public void HTTP_SearchByPhone_OK_Test()
+        {
+            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=0044", "ABRAKADABRA");
+            Assert.AreEqual("var@33kita.ru", result.First().Email);
+        }
+
+        [TestMethod]
+        public void HTTP_SearchByPhone_WrongText_Test()
+        {
+            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=idbdjdjdd93hbhsbishjs", "ABRAKADABRA");
+            Assert.IsFalse(result.Any());
         }
 
         [TestMethod]
