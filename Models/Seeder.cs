@@ -21,6 +21,11 @@ namespace Models
                      ?? new City {Name = "Череповец"};
 
             context.Cities.AddOrUpdate(city);
+
+            context.Cities.AddOrUpdate(c => c.Name, new City() {Name = "Новгород"});
+            context.Cities.AddOrUpdate(c => c.Name, new City() { Name = "Псков" });
+            context.Cities.AddOrUpdate(c => c.Name, new City() { Name = "Вологда" });
+
             context.SaveChanges();
 
             #endregion

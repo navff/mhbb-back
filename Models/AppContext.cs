@@ -68,6 +68,11 @@ namespace Models
                 .HasForeignKey(r => r.UserEmail)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Review>()
+                .HasOptional(r => r.ReplyTo)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
         }
     }
 }
