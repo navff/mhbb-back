@@ -20,7 +20,6 @@ namespace Camps.Tools
             }
             var logger = LogManager.GetLogger(loggerName);
             logger.Error(message + " | " + exception.StackTrace);
-            throw new Exception(message, exception);
         }
     }
 }

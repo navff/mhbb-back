@@ -196,13 +196,20 @@ namespace Tests
                 try
                 {
                     HttpError httpError = response.Content.ReadAsAsync<HttpError>().Result;
-                    message = httpError.ExceptionMessage + " " + httpError.Message + " " + httpError.StackTrace;
-                    ErrorLogger.ThrowAndLog(message, new Exception(httpError.InnerException?.Message));
+                    string inner = httpError.ContainsKey("InnerException") ? httpError["InnerException"].ToString() : "";
+
+                    message = httpError.ExceptionMessage + " " 
+                            + httpError.Message + " " 
+                            + httpError.StackTrace + " " 
+                            + httpError.InnerException?.Message
+                            + inner;
+                    throw new Exception(message);
                 }
                 catch (Exception ex)
                 {
                     message = ex.Message;
                     ErrorLogger.ThrowAndLog(message, ex);
+                    throw;
                 }
             }
             else if (response.StatusCode == HttpStatusCode.BadRequest)
@@ -214,7 +221,11 @@ namespace Tests
                 message = response.Content.ReadAsStringAsync().Result;
             }
             Debug.WriteLine(message);
-            ErrorLogger.ThrowAndLog("ERROR IN HTTP REQUEST", new WebException(message));
+            var exception = new WebException(message);
+            ErrorLogger.ThrowAndLog("ERROR IN HTTP REQUEST", exception);
+            throw exception;
+
+
         }
 
         private HttpServer PrepareServer()

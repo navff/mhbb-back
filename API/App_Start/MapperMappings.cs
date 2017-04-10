@@ -22,6 +22,7 @@ namespace API
                 cfg.CreateMap<User, UserViewModelPut>();
                 cfg.CreateMap<User, UserViewModelGet>();
                 cfg.CreateMap<Picture, PictureViewModelGet>();
+                cfg.CreateMap<City, CityViewModelGet>();
 
 
 

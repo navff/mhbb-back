@@ -73,6 +73,12 @@ namespace Models
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<User>()
+                .HasOptional(u => u.City)
+                .WithMany()
+                .HasForeignKey(u => u.CityId)
+                .WillCascadeOnDelete(false);
+
         }
     }
 }

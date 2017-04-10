@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Camps.Tools;
 using Models.Entities;
 
 namespace Models.Operations
@@ -40,8 +41,29 @@ namespace Models.Operations
         public async Task DeleteAsync(int id)
         {
             var city = await _context.Cities.FirstAsync(c => c.Id == id);
+
+            // Сбрасываем город для пользователей
+            var users = _context.Users.Where(u => u.CityId == city.Id);
+            foreach (var user in users)
+            {
+                user.City = null;
+                user.CityId = null;
+            }
+
+            // Удаляем город
             _context.Cities.Remove(city);
-            await _context.SaveChangesAsync();
+
+            // сохраняем изменения
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.ThrowAndLog("CANNOT DELETE CITY", ex);
+                throw;
+            }
+            
         }
 
         public async Task<IEnumerable<City>> SearchAsync(string word)

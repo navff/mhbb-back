@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using API.Models;
 using Camps.Tools;
 using Models;
+using Models.Operations;
 using Models.Tools;
 
 namespace API.Operations
@@ -17,10 +18,12 @@ namespace API.Operations
     public class UserOperations
     {
         private AppContext _context;
+        private ReviewOperations _reviewsOperations;
 
         public UserOperations(AppContext context)
         {
             _context = context;
+            _reviewsOperations = new ReviewOperations(_context);
         }
 
         /// <summary>
@@ -78,6 +81,12 @@ namespace API.Operations
         {
             var user = _context.Users.Find(email);
             Contracts.Assert(user!=null);
+
+            var reviews = await _reviewsOperations.GetByUserEmailAsync(user.Email);
+            foreach (var review in reviews)
+            {
+                await _reviewsOperations.DeleteAsync(review.Id);
+            }
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();

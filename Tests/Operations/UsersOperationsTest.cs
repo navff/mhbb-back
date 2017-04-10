@@ -58,7 +58,7 @@ namespace Tests.Operations
         public void Update_Ok_Test()
         {
             var randomString = Guid.NewGuid().ToString();
-            var user = _context.Users.First();
+            var user = _context.Users.First(u => u.Role != Role.PortalAdmin);
             user.Name = randomString;
             user.Phone = randomString;
             var result = _userOperations.UpdateAsync(user).Result;
@@ -94,7 +94,7 @@ namespace Tests.Operations
         [TestMethod]
         public void Delete_ok_Test()
         {
-            var user = _context.Users.ToList().Last();
+            var user = _context.Users.Where(u => u.Role == Role.RegisteredUser).ToList().Last();
             _userOperations.DeleteAsync(user.Email).Wait();
 
             var deletedUser = _context.Users.Find(user.Email);

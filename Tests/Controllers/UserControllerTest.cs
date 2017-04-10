@@ -41,48 +41,53 @@ namespace Tests.Controllers
         [TestMethod]
         public void HTTP_GetByEmail_OK_Test()
         {
-            var result = HttpGet<UserViewModelGet>("api/user?email=var@33kita.ru");
-            Assert.AreEqual("var@33kita.ru", result.Email);
+            var user = _context.Users.First();
+            var result = HttpGet<UserViewModelGet>($"api/user?email={user.Email}");
+            Assert.AreEqual(user.Email, result.Email);
         }
 
         [TestMethod]
         public void HTTP_GetMe_OK_Test()
         {
-            var result = HttpGet<UserViewModelGet>("api/user/getme", "ABRAKADABRA");
-            Assert.AreEqual("var@33kita.ru", result.Email);
+            var user = _context.Users.First();
+            var result = HttpGet<UserViewModelGet>("api/user/getme", user.AuthToken);
+            Assert.AreEqual(user.Email, result.Email);
         }
 
         [TestMethod]
         public void HTTP_Search_OK_Test()
         {
-            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=var@33kita.ru", "ABRAKADABRA");
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=var@33kita.ru", user.AuthToken);
             Assert.AreEqual("var@33kita.ru", result.First().Email);
         }
 
         [TestMethod]
         public void HTTP_SearchByPhone_OK_Test()
         {
-            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=0044", "ABRAKADABRA");
-            Assert.AreEqual("var@33kita.ru", result.First().Email);
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            var result = HttpGet<IEnumerable<UserViewModelGet>>($"api/user/search?word={user.Phone.Substring(2)}", user.AuthToken);
+            Assert.AreEqual(user.Email, result.First().Email);
         }
 
         [TestMethod]
         public void HTTP_SearchByPhone_WrongText_Test()
         {
-            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=idbdjdjdd93hbhsbishjs", "ABRAKADABRA");
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=idbdjdjdd93hbhsbishjs", user.AuthToken);
             Assert.IsFalse(result.Any());
         }
 
         [TestMethod]
         public void HTTP_Delete_OK_Test()
         {
-            var user = _context.Users.First();
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
             var result = HttpDelete<string>($"api/user/delete?email={user.Email}", user.AuthToken);
             Assert.AreEqual("Deleted "+user.Email, result);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void HTTP_Delete_WrongToken_Test()
         {
             var user = _context.Users.First();
@@ -90,7 +95,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void HTTP_Delete_AnotherUserToken_Test()
         {
             var user = _context.Users.First();
@@ -113,7 +118,7 @@ namespace Tests.Controllers
                 Role = user.Role,
             };
 
-            var result = HttpPut<UserViewModelGet>($"api/user?email={user.Email}", viewModel, "ABRAKADABRA");
+            var result = HttpPut<UserViewModelGet>($"api/user?email={user.Email}", viewModel, user.AuthToken);
 
             Assert.AreEqual(rndString, result.Name);
             Assert.AreEqual(rndString, result.Phone);
@@ -121,7 +126,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void HTTP_Put_AnotherUser_Test()
         {
             var user = _context.Users.First();
@@ -155,7 +160,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void HTTP_Post_EmptyEmail_Test()
         {
             var viewModel = new UserRegisterViewModel

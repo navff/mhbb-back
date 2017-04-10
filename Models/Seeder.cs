@@ -52,6 +52,7 @@ namespace Models
                 Role = Role.PortalAdmin,
                 CityId = city.Id,
                 DateRegistered = DateTime.Now,
+                Phone = "+79062990077",
                 Name = "Морковка"
             });
 

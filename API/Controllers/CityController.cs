@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 using API.ViewModels;
 using AutoMapper;
 using Camps.Tools;
 using Models.Entities;
 using Models.Operations;
+using API.Common;
+using API.Models;
 
 namespace API.Controllers
 {
@@ -35,13 +41,19 @@ namespace API.Controllers
             try
             {
                 var city = await _cityOperations.GetAsync(id);
+                if (city == null)
+                {
+                    return this.Result404("City is not found");
+                }
+                
+
                 var result =  Mapper.Map<CityViewModelGet>(city);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 ErrorLogger.ThrowAndLog("CANNOT GET CITY", ex);
-                return null;
+                throw ;
             }
         }
 
@@ -49,6 +61,9 @@ namespace API.Controllers
         /// Изменяет название города
         /// </summary>
         [ResponseType(typeof(CityViewModelGet))]
+        [RESTAuthorize(Role.PortalManager, Role.PortalAdmin)]
+        [HttpPut]
+        [Route("{id}")]
         public async Task<IHttpActionResult> Put(int id, CityViewModelPost putViewModel)
         {
             try
@@ -58,14 +73,14 @@ namespace API.Controllers
                     Name = putViewModel.Name,
                     Id = id
                 };
-                await _cityOperations.AddAsync(city);
+                await _cityOperations.UpdateAsync(city);
                 return await Get(id);
 
             }
             catch (Exception ex)
             {
                 ErrorLogger.ThrowAndLog("CANNOT PUT CITY", ex);
-                return null;
+                throw;
             }
         }
 
@@ -73,6 +88,7 @@ namespace API.Controllers
         /// Добавление города
         /// </summary>
         [ResponseType(typeof(CityViewModelGet))]
+        [RESTAuthorize(Role.PortalManager, Role.PortalAdmin)]
         public async  Task<IHttpActionResult> Post(CityViewModelPost postViewModel)
         {
 
@@ -89,13 +105,16 @@ namespace API.Controllers
             catch (Exception ex)
             {
                 ErrorLogger.ThrowAndLog("CANNOT POST CITY", ex);
-                return null;
+                throw;
             }
         }
 
         /// <summary>
         /// Удаление города
         /// </summary>
+        [HttpDelete]
+        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
+        [Route("{id}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
             try
@@ -106,7 +125,7 @@ namespace API.Controllers
             catch (Exception ex)
             {
                 ErrorLogger.ThrowAndLog("CANNOT DELETE CITY", ex);
-                return null;
+                throw;
             }
         }
 
@@ -114,18 +133,21 @@ namespace API.Controllers
         /// Поиск городов по названию. 
         /// </summary>
         /// <param name="word">Часть названия города</param>
+        [Route("search")]
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<CityViewModelGet>))]
         public async Task<IHttpActionResult> Search(string word)
         {
             try
             {
                 var entities = await _cityOperations.SearchAsync(word);
-                var result = Mapper.Map<CityViewModelGet>(entities);
+                var result = Mapper.Map<IEnumerable<CityViewModelGet>>(entities);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 ErrorLogger.ThrowAndLog("CANNOT SEARCH CITIES", ex);
-                return null;
+                throw;
             }
 
         }

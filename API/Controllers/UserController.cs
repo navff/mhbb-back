@@ -42,6 +42,11 @@ namespace API.Controllers
             try
             {
                 var entity = await _userOperations.GetAsync(email);
+                if (entity == null)
+                {
+                    return new NotFoundResult(new HttpRequestMessage
+                        { Content = new StringContent("User is not found") });
+                }
                 var result = Mapper.Map<UserViewModelGet>(entity);
                 result.CityName = entity.City?.Name;
                 result.RoleName = entity.Role.ToString();
@@ -50,7 +55,7 @@ namespace API.Controllers
             catch (Exception e)
             {
                 ErrorLogger.ThrowAndLog("CANNOT GET USER", e);
-                return null;
+                throw;
             }
             
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using API;
@@ -34,7 +35,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void Get_WrongId_Test()
         {
             HttpGet<CityViewModelGet>($"api/city/99999");
@@ -49,8 +50,8 @@ namespace Tests.Controllers
             {
                 Name    = rndString
             };
-
-            var result = HttpPut<CityViewModelGet>($"api/city/{city.Id}", viewModel, "ABRAKADABRA");
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            var result = HttpPut<CityViewModelGet>($"api/city/{city.Id}", viewModel, user.AuthToken);
             Assert.AreEqual(rndString, result.Name);
         }
 
@@ -62,11 +63,12 @@ namespace Tests.Controllers
             {
                 Name = "Hooy"
             };
-            HttpPut<CityViewModelGet>($"api/city/99999", viewModel, "ABRAKADABRA");
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            HttpPut<CityViewModelGet>($"api/city/99999", viewModel, user.AuthToken);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void Put_NoAdmin_Test()
         {
             var user = _context.Users.First(u => u.Role != Role.PortalAdmin);
@@ -88,13 +90,13 @@ namespace Tests.Controllers
             {
                 Name = rndString
             };
-
-            var result = HttpPost<CityViewModelGet>($"api/city", viewModel, "ABRAKADABRA");
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            var result = HttpPost<CityViewModelGet>($"api/city", viewModel, user.AuthToken);
             Assert.AreEqual(rndString, result.Name);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void Post_NoAdmin_Test()
         {
             var user = _context.Users.First(u => u.Role != Role.PortalAdmin);
@@ -110,8 +112,9 @@ namespace Tests.Controllers
         [TestMethod]
         public void Delete_Ok_Test()
         {
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
             var city = _context.Cities.Take(2).ToList().Last();
-            HttpDelete<string>($"api/city/{city.Id}", "ABRAKADABRA");
+            HttpDelete<string>($"api/city/{city.Id}", user.AuthToken);
 
             using (var context = new AppContext())
             {
@@ -123,10 +126,12 @@ namespace Tests.Controllers
         [ExpectedException(typeof(Exception))]
         public void Delete_WrongId_Test()
         {
-            HttpDelete<string>($"api/city/999999", "ABRAKADABRA");
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            HttpDelete<string>($"api/city/999999", user.AuthToken);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(WebException))]
         public void Delete_NoAdmin_Test()
         {
             var user = _context.Users.First(u => u.Role != Role.PortalAdmin);

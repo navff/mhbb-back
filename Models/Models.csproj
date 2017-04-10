@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\CityOperations.cs" />
+    <Compile Include="Operations\ReviewOperations.cs" />
     <Compile Include="Operations\UserOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
