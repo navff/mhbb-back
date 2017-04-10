@@ -568,6 +568,38 @@
             Проверяет ошибки в ModelState и выдаёт их в response
             </summary>
         </member>
+        <member name="T:API.Controllers.CityController">
+            <summary>
+            Управление городами
+            </summary>
+        </member>
+        <member name="M:API.Controllers.CityController.Get(System.Int32)">
+            <summary>
+            Получает город по его Id
+            </summary>
+            <param name="id">Id города</param>
+        </member>
+        <member name="M:API.Controllers.CityController.Put(System.Int32,API.ViewModels.CityViewModelPost)">
+            <summary>
+            Изменяет название города
+            </summary>
+        </member>
+        <member name="M:API.Controllers.CityController.Post(API.ViewModels.CityViewModelPost)">
+            <summary>
+            Добавление города
+            </summary>
+        </member>
+        <member name="M:API.Controllers.CityController.Delete(System.Int32)">
+            <summary>
+            Удаление города
+            </summary>
+        </member>
+        <member name="M:API.Controllers.CityController.Search(System.String)">
+            <summary>
+            Поиск городов по названию. 
+            </summary>
+            <param name="word">Часть названия города</param>
+        </member>
         <member name="M:API.Controllers.ICrudController.Get(System.Int32)">
             <summary>
             Получает сущность по её Id

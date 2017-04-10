@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="BaseControllerTest.cs" />
     <Compile Include="BaseTest.cs" />
+    <Compile Include="Controllers\CityControllerTest.cs" />
     <Compile Include="Helpers\TestHelpers.cs" />
     <Compile Include="InMemoryHttpContentSerializationHandler.cs" />
     <Compile Include="Operations\CityOperationsTest.cs" />
@@ -155,9 +156,7 @@
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Http\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

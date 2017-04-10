@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -13,26 +14,26 @@ namespace API.Controllers
         /// Получает сущность по её Id
         /// </summary>
         /// <param name="id">Id сущности</param>
-        IHttpActionResult Get(int id);
+        Task<IHttpActionResult> Get(int id);
 
         /// <summary>
         /// Сохраняет объект
         /// </summary>
         /// <param name="id">Id редактируемого объекта</param>
         /// <param name="putViewModel"></param>
-        IHttpActionResult Put(int id, object putViewModel);
+        Task<IHttpActionResult> Put(int id, object putViewModel);
 
         /// <summary>
         /// Сохраняет объект
         /// </summary>
         /// <param name="postViewModel"></param>
         /// <returns></returns>
-        IHttpActionResult Post(object postViewModel);
+        Task<IHttpActionResult> Post(object postViewModel);
 
         /// <summary>
         /// Удаляет объект
         /// </summary>
         /// <param name="id">ID удаляемого объекта</param>
-        IHttpActionResult Delete(int id);
+        Task<IHttpActionResult> Delete(int id);
     }
 }

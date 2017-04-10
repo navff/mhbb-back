@@ -13,6 +13,7 @@ using API.Models;
 using API.Operations;
 using API.ViewModels;
 using AutoMapper;
+using Camps.Tools;
 using Models;
 
 namespace API.Controllers
@@ -48,8 +49,8 @@ namespace API.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                ErrorLogger.ThrowAndLog("CANNOT GET USER", e);
+                return null;
             }
             
         }
