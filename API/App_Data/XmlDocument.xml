@@ -626,6 +626,30 @@
             </summary>
             <param name="id">ID удаляемого объекта</param>
         </member>
+        <member name="M:API.Controllers.OrganizerController.Get(System.Int32)">
+            <summary>
+            Получат организатора
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.OrganizerController.Put(System.Int32,System.Object)">
+            <summary>
+            Изменение организатора
+            </summary>
+        </member>
+        <member name="M:API.Controllers.OrganizerController.Post(System.Object)">
+            <summary>
+            Добавление организатора
+            </summary>
+            <param name="postViewModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.OrganizerController.Delete(System.Int32)">
+            <summary>
+            Удаление организатора
+            </summary>
+        </member>
         <member name="T:API.Controllers.UserController">
             <summary>
             Управление пользователями
@@ -668,6 +692,56 @@
             </summary>
             <param name="word"></param>
             <returns></returns>
+        </member>
+        <member name="T:API.ViewModels.OrganizerViewModelGet">
+            <summary>
+            Организатор
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelGet.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelGet.CityId">
+            <summary>
+            ID города
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelGet.City">
+            <summary>
+            Город полностью
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelGet.Sobriety">
+            <summary>
+            Трезвость (преподаватели вообще не пьют и не курят)
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.OrganizerViewModelPost">
+            <summary>
+            Организатор
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelPost.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelPost.CityId">
+            <summary>
+            Город
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelPost.Sobriety">
+            <summary>
+            Трезвость
+            </summary>
         </member>
         <member name="T:API.ViewModels.PictureViewModelGet">
             <summary>
