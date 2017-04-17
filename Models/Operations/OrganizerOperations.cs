@@ -62,13 +62,13 @@ namespace Models.Operations
             return result;
         }
 
-        public async Task<IEnumerable<Organizer>> GetAllAsync(int pageStart=1)
+        public async Task<IEnumerable<Organizer>> GetAllAsync(int page=1)
         {
-            Contracts.Assert(pageStart>=1);
+            Contracts.Assert(page>=1);
 
             var result = await _context.Organizers
                                     .OrderBy(o => o.Name)
-                                    .Skip((pageStart-1)*ModelsSettings.PAGE_SIZE)
+                                    .Skip((page-1)*ModelsSettings.PAGE_SIZE)
                                     .Take(ModelsSettings.PAGE_SIZE)
                                     .ToListAsync();
             return result;

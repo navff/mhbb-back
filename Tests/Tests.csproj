@@ -117,6 +117,7 @@
     <Compile Include="BaseControllerTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="Controllers\CityControllerTest.cs" />
+    <Compile Include="Controllers\OrganizerControllerTest.cs" />
     <Compile Include="Helpers\TestHelpers.cs" />
     <Compile Include="InMemoryHttpContentSerializationHandler.cs" />
     <Compile Include="Operations\CityOperationsTest.cs" />
