@@ -12,6 +12,7 @@ using Camps.Tools;
 using Models;
 using Models.Operations;
 using Models.Tools;
+using AppContext = Models.AppContext;
 
 namespace API.Operations
 {
