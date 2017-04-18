@@ -180,7 +180,7 @@ namespace Tests.Controllers
 
             _context.Entry(user).State = EntityState.Modified;
 
-            using (var context = new AppContext())
+            using (var context = new HobbyContext())
             {
                 var updatedUserToken = context.Users.First(u => u.Email == user.Email).AuthToken;
                 Assert.AreNotEqual(oldToken, updatedUserToken);

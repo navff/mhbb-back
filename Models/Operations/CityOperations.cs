@@ -11,9 +11,9 @@ namespace Models.Operations
 {
     public class CityOperations
     {
-        private AppContext _context;
+        private HobbyContext _context;
 
-        public CityOperations(AppContext context)
+        public CityOperations(HobbyContext context)
         {
             _context = context;
         }

@@ -58,7 +58,7 @@ namespace Tests.Operations
             var city = _context.Cities.ToList().Take(2).Last();
             _cityOperations.DeleteAsync(city.Id).Wait();
 
-            using (var context = new AppContext())
+            using (var context = new HobbyContext())
             {
                 Assert.IsNull(context.Cities.FirstOrDefault(c => c.Id == city.Id));
             }

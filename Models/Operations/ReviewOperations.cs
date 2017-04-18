@@ -10,9 +10,9 @@ namespace Models.Operations
 {
     public class ReviewOperations
     {
-        private AppContext _context;
+        private HobbyContext _context;
 
-        public ReviewOperations(AppContext context)
+        public ReviewOperations(HobbyContext context)
         {
             _context = context;
         }

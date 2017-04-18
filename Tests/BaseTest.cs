@@ -10,11 +10,11 @@ namespace Tests
 {
     public class BaseTest
     {
-        protected AppContext _context;
+        protected HobbyContext _context;
 
         public BaseTest()
         {
-            _context = new AppContext();
+            _context = new HobbyContext();
         }
 
 

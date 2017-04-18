@@ -20,7 +20,7 @@ namespace API.Common
     public class RESTAuthorizeAttribute : AuthorizationFilterAttribute, IDisposable
     {
         private string[] _roles;
-        private AppContext _context = new AppContext();
+        private HobbyContext _context = new HobbyContext();
         private UserOperations _userOperations;
 
         /// <summary>

@@ -12,16 +12,15 @@ using Camps.Tools;
 using Models;
 using Models.Operations;
 using Models.Tools;
-using AppContext = Models.AppContext;
 
 namespace API.Operations
 {
     public class UserOperations
     {
-        private AppContext _context;
+        private HobbyContext _context;
         private ReviewOperations _reviewsOperations;
 
-        public UserOperations(AppContext context)
+        public UserOperations(HobbyContext context)
         {
             _context = context;
             _reviewsOperations = new ReviewOperations(_context);

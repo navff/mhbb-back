@@ -12,7 +12,7 @@ namespace Models
 {
     public static class Seeder
     {
-        public static void Seed(AppContext context)
+        public static void Seed(HobbyContext context)
         {
 
             #region CITIES

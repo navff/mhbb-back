@@ -33,7 +33,7 @@ namespace API.Common
         private void AddBindings()
         {
             kernel.Bind<UserOperations>().ToSelf().InRequestScope();
-            kernel.Bind<AppContext>().ToSelf().InRequestScope();
+            kernel.Bind<HobbyContext>().ToSelf().InRequestScope();
         }
 
         public void Dispose()

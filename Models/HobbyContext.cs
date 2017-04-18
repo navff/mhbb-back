@@ -10,31 +10,31 @@ using Models.Migrations;
 
 namespace Models
 {
-    public class AppContext : DbContext, IDisposable
+    public class HobbyContext : DbContext, IDisposable
     {
-        public AppContext()
+        public HobbyContext()
             : base($"name=App")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<HobbyContext, Configuration>());
             this.Configuration.ProxyCreationEnabled = false;
         }
 
-        public AppContext(string connectionStringName)
+        public HobbyContext(string connectionStringName)
             : base(connectionStringName)
         {
         }
 
 
-        public AppContext(string connectionStringName, bool dropDatabase)
+        public HobbyContext(string connectionStringName, bool dropDatabase)
             : base($"name={connectionStringName}")
         {
             if (dropDatabase)
             {
-                Database.SetInitializer(new DropCreateDatabaseAlways<AppContext>());
+                Database.SetInitializer(new DropCreateDatabaseAlways<HobbyContext>());
             }
             else
             {
-                Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppContext, Configuration>());
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<HobbyContext, Configuration>());
             }
         }
 

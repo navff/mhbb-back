@@ -116,7 +116,7 @@ namespace Tests.Controllers
             var city = _context.Cities.Take(2).ToList().Last();
             HttpDelete<string>($"api/city/{city.Id}", user.AuthToken);
 
-            using (var context = new AppContext())
+            using (var context = new HobbyContext())
             {
                 Assert.IsNull(context.Cities.FirstOrDefault(c => c.Id == city.Id));
             }
@@ -138,7 +138,7 @@ namespace Tests.Controllers
             var city = _context.Cities.Take(2).ToList().Last();
             HttpDelete<string>($"api/city/{city.Id}", user.AuthToken);
 
-            using (var context = new AppContext())
+            using (var context = new HobbyContext())
             {
                 Assert.IsNull(context.Cities.FirstOrDefault(c => c.Id == city.Id));
             }
