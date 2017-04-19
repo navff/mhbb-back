@@ -119,7 +119,7 @@ namespace API.Operations
                 }
                 catch (Exception ex)
                 {
-                    ErrorLogger.ThrowAndLog("Exception in UserService", ex);
+                    ErrorLogger.Log("Exception in UserService", ex);
                     return null;
                 }
             }

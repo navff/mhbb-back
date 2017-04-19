@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Camps.Tools;
 using Models.Entities;
@@ -23,7 +22,9 @@ namespace Models.Operations
 
         public async Task<Organizer> GetAsync(int organizerId)
         {
-            return await _context.Organizers.FirstOrDefaultAsync(o => o.Id == organizerId);
+            return await _context.Organizers
+                                 .Include(o => o.City)
+                                 .FirstOrDefaultAsync(o => o.Id == organizerId);
         }
 
         public async Task<Organizer> AddAsync(Organizer organizer)

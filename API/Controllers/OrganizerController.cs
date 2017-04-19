@@ -9,6 +9,9 @@ using System.Web.Security;
 using API.Common;
 using API.Models;
 using API.ViewModels;
+using AutoMapper;
+using Camps.Tools;
+using Models.Entities;
 using Models.Operations;
 
 namespace API.Controllers
@@ -31,9 +34,26 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(OrganizerViewModelGet))]
-        public Task<IHttpActionResult> Get(int id)
+        public async Task<IHttpActionResult> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var org = await _organizerOperations.GetAsync(id);
+                if (org == null)
+                {
+                    return this.Result404("Organizer is not found");
+                }
+
+                var result = Mapper.Map<OrganizerViewModelGet>(org);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT GET ORGANIZER", ex);
+                throw;
+            }
+
+            
         }
 
         /// <summary>
@@ -42,9 +62,29 @@ namespace API.Controllers
         [HttpPut]
         [ResponseType(typeof(OrganizerViewModelGet))]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
-        public Task<IHttpActionResult> Put(int id, object putViewModel)
+        public async Task<IHttpActionResult> Put(int id, OrganizerViewModelPost putViewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var org = await _organizerOperations.GetAsync(id);
+                if (org == null)
+                {
+                    return this.Result404("Organizer is not found");
+                }
+
+                org.CityId = putViewModel.CityId;
+                org.Name = putViewModel.Name;
+                org.Sobriety = putViewModel.Sobriety;
+
+                await _organizerOperations.UpdateAsync(org);
+                return await Get(id);
+
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT PUT ORGANIZER", ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -54,9 +94,19 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPost]
         [ResponseType(typeof(OrganizerViewModelGet))]
-        public Task<IHttpActionResult> Post(object postViewModel)
+        public async Task<IHttpActionResult> Post(OrganizerViewModelPost postViewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var org = Mapper.Map<Organizer>(postViewModel);
+                var result = await _organizerOperations.AddAsync(org);
+                return await Get(result.Id);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT POST ORGANIZER", ex);
+                throw;
+            }
         }
 
 
@@ -64,9 +114,23 @@ namespace API.Controllers
         /// Удаление организатора
         /// </summary>
         [HttpDelete]
-        public Task<IHttpActionResult> Delete(int id)
+        public async Task<IHttpActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var org = await _organizerOperations.GetAsync(id);
+                if (org == null)
+                {
+                    return this.Result404("Organizer is not found");
+                }
+                await _organizerOperations.DeleteAsync(id);
+                return Ok("Deleted");
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT DELETE ORGANIZER", ex);
+                throw;
+            }
         }
 
         [HttpGet]
@@ -74,7 +138,17 @@ namespace API.Controllers
         [Route("search")]
         public async Task<IHttpActionResult> Search(string word)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var orgs = await _organizerOperations.SearchAsync(word);
+                var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT SEARCH ORGANIZER", ex);
+                throw;
+            }
 
         }
 
@@ -83,7 +157,17 @@ namespace API.Controllers
         [Route("getall")]
         public async Task<IHttpActionResult> GetAll(int page)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var orgs = await _organizerOperations.GetAllAsync(page);
+                var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT GETALL ORGANIZERS", ex);
+                throw;
+            }
         }
     }
 }

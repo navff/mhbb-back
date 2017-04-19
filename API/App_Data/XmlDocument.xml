@@ -633,12 +633,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:API.Controllers.OrganizerController.Put(System.Int32,System.Object)">
+        <member name="M:API.Controllers.OrganizerController.Put(System.Int32,API.ViewModels.OrganizerViewModelPost)">
             <summary>
             Изменение организатора
             </summary>
         </member>
-        <member name="M:API.Controllers.OrganizerController.Post(System.Object)">
+        <member name="M:API.Controllers.OrganizerController.Post(API.ViewModels.OrganizerViewModelPost)">
             <summary>
             Добавление организатора
             </summary>

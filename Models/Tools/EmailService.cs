@@ -36,7 +36,7 @@ namespace Models.Tools
             }
             catch (SmtpException ex)
             {
-                ErrorLogger.ThrowAndLog("CANNOT SEND EMAIL", ex);
+                ErrorLogger.Log("CANNOT SEND EMAIL", ex);
                 return false;
             }
         }

@@ -52,7 +52,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLogger.ThrowAndLog("CANNOT GET CITY", ex);
+                ErrorLogger.Log("CANNOT GET CITY", ex);
                 throw ;
             }
         }
@@ -79,7 +79,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLogger.ThrowAndLog("CANNOT PUT CITY", ex);
+                ErrorLogger.Log("CANNOT PUT CITY", ex);
                 throw;
             }
         }
@@ -104,7 +104,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLogger.ThrowAndLog("CANNOT POST CITY", ex);
+                ErrorLogger.Log("CANNOT POST CITY", ex);
                 throw;
             }
         }
@@ -124,7 +124,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLogger.ThrowAndLog("CANNOT DELETE CITY", ex);
+                ErrorLogger.Log("CANNOT DELETE CITY", ex);
                 throw;
             }
         }
@@ -146,7 +146,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLogger.ThrowAndLog("CANNOT SEARCH CITIES", ex);
+                ErrorLogger.Log("CANNOT SEARCH CITIES", ex);
                 throw;
             }
 

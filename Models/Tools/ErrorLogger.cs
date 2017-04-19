@@ -9,7 +9,7 @@ namespace Camps.Tools
 {
     public class ErrorLogger
     {
-        public static void ThrowAndLog(string message, Exception exception)
+        public static void Log(string message, Exception exception)
         {
             Contracts.Assert(!String.IsNullOrEmpty(message), exception!=null);
 

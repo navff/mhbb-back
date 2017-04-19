@@ -208,7 +208,7 @@ namespace Tests
                 catch (Exception ex)
                 {
                     message = ex.Message;
-                    ErrorLogger.ThrowAndLog(message, ex);
+                    ErrorLogger.Log(message, ex);
                     throw;
                 }
             }
@@ -222,7 +222,7 @@ namespace Tests
             }
             Debug.WriteLine(message);
             var exception = new WebException(message);
-            ErrorLogger.ThrowAndLog("ERROR IN HTTP REQUEST", exception);
+            ErrorLogger.Log("ERROR IN HTTP REQUEST", exception);
             throw exception;
 
 

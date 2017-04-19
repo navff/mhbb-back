@@ -60,7 +60,7 @@ namespace Models.Operations
             }
             catch (Exception ex)
             {
-                ErrorLogger.ThrowAndLog("CANNOT DELETE CITY", ex);
+                ErrorLogger.Log("CANNOT DELETE CITY", ex);
                 throw;
             }
             

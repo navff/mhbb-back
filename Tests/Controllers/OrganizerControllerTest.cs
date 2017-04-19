@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using API.Models;
 using API.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using System.Data.Entity;
 
 namespace Tests.Controllers
 {
@@ -53,7 +52,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(WebException))]
+        [ExpectedException(typeof(Exception))]
         public void Post_InvalidModel_Test()
         {
             var city = _context.Cities.First();
@@ -70,7 +69,7 @@ namespace Tests.Controllers
         [TestMethod]
         public void Put_Ok_Test()
         {
-            var org = _context.Organizers.First();
+            var org = _context.Organizers.Include(o => o.City).First();
             var rndString = Guid.NewGuid().ToString();
             var viewModel = new OrganizerViewModelPost
             {
@@ -85,7 +84,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(WebException))]
+        [ExpectedException(typeof(Exception))]
         public void Put_InvalidModel_Test()
         {
             var org = _context.Organizers.First();
@@ -124,7 +123,7 @@ namespace Tests.Controllers
         {
             var org = _context.Organizers.First();
             var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/search?word={org.Name.Substring(2)}");
-            Assert.AreEqual(org.Name, result.Any(o => o.Name == org.Name));
+            Assert.AreEqual(org.Name, result.FirstOrDefault(o => o.Name == org.Name)?.Name);
         }
 
         [TestMethod]

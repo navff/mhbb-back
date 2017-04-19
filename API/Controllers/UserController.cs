@@ -54,7 +54,7 @@ namespace API.Controllers
             }
             catch (Exception e)
             {
-                ErrorLogger.ThrowAndLog("CANNOT GET USER", e);
+                ErrorLogger.Log("CANNOT GET USER", e);
                 throw;
             }
             
