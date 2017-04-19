@@ -125,6 +125,15 @@ namespace Models
                 context.Organizers.Add(orgBz);
                 context.Organizers.Add(orgOD);
                 context.Organizers.Add(orgMN);
+                for (int i = 0; i < 300; i++)
+                {
+                    context.Organizers.Add(new Organizer
+                    {
+                        Name = Guid.NewGuid().ToString(),
+                        CityId = city.Id,
+                        Sobriety = false
+                    });
+                }
 
                 context.SaveChanges();
             }

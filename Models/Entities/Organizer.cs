@@ -13,6 +13,9 @@ namespace Models.Entities
         [Key]
         public int Id { get; set; }
 
+        [Index]
+        [StringLength(150)]
+        [Required]
         public string Name { get; set; }
 
         [ForeignKey("City")]
