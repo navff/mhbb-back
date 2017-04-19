@@ -113,7 +113,7 @@ namespace Tests.Operations
             var org = _context.Organizers.Take(10).ToList().Last();
             _organizerOperations.DeleteAsync(org.Id).Wait();
 
-            using (var cntxt = new AppContext())
+            using (var cntxt = new HobbyContext())
             {
                 Assert.IsNull(cntxt.Cities.FirstOrDefault(o => o.Id == org.Id));
             }

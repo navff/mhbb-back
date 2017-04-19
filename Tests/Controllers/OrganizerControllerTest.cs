@@ -106,7 +106,7 @@ namespace Tests.Controllers
             var org = _context.Organizers.Take(10).ToList().Last();
             HttpDelete<string>($"api/organizer/{org.Id}", _admin_token);
 
-            using (var cntx = new AppContext())
+            using (var cntx = new HobbyContext())
             {
                 Assert.IsNull(cntx.Organizers.FirstOrDefault(o => o.Id == org.Id));
             }

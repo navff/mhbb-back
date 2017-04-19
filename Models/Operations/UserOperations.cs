@@ -33,7 +33,7 @@ namespace API.Operations
         /// <returns></returns>
         public async Task<User> GetUserByTokenAsync(string token)
         {
-            return _context.Users.FirstOrDefault(u => u.AuthToken == token);
+            return await _context.Users.FirstOrDefaultAsync(u => u.AuthToken == token);
         }
 
         /// <summary>

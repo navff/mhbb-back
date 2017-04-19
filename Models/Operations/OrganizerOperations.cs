@@ -14,9 +14,9 @@ namespace Models.Operations
 
     public class OrganizerOperations
     {
-        private AppContext _context;
+        private HobbyContext _context;
 
-        public OrganizerOperations(AppContext context)
+        public OrganizerOperations(HobbyContext context)
         {
             _context = context;
         }

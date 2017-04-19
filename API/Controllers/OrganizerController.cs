@@ -13,6 +13,7 @@ using Models.Operations;
 
 namespace API.Controllers
 {
+
     [RoutePrefix("api/organizer")]
     public class OrganizerController : ApiController
     {
