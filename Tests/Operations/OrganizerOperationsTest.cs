@@ -115,7 +115,7 @@ namespace Tests.Operations
 
             using (var cntxt = new HobbyContext())
             {
-                Assert.IsNull(cntxt.Cities.FirstOrDefault(o => o.Id == org.Id));
+                Assert.IsNull(cntxt.Organizers.FirstOrDefault(o => o.Id == org.Id));
             }
         }
 

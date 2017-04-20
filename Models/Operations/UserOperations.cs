@@ -115,6 +115,7 @@ namespace API.Operations
                 {
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
+                    SendEmail(user.AuthToken, user.Email);
                     return user;
                 }
                 catch (Exception ex)

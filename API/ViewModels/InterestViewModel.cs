@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Models.Entities
+namespace API.ViewModels
 {
-    public class Interest
+    public class InterestViewModelGet
     {
         public int Id { get; set; }
+        public string Name { get; set; }
+    }
 
+    public class InterestViewModelPost
+    {
         [Required]
-        [MinLength(2)]
         public string Name { get; set; }
     }
 }

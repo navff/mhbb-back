@@ -626,6 +626,31 @@
             </summary>
             <param name="id">ID удаляемого объекта</param>
         </member>
+        <member name="M:API.Controllers.InterestController.Get(System.Int32)">
+            <summary>
+            Получает интерес по ID
+            </summary>
+        </member>
+        <member name="M:API.Controllers.InterestController.Put(System.Int32,API.ViewModels.InterestViewModelPost)">
+            <summary>
+            Обновление интереса
+            </summary>
+        </member>
+        <member name="M:API.Controllers.InterestController.Post(API.ViewModels.InterestViewModelPost)">
+            <summary>
+            Добавление интереса
+            </summary>
+        </member>
+        <member name="M:API.Controllers.InterestController.Delete(System.Int32)">
+            <summary>
+            Удаление интереса
+            </summary>
+        </member>
+        <member name="M:API.Controllers.InterestController.GetAll">
+            <summary>
+            Получение всех возможных интересов
+            </summary>
+        </member>
         <member name="M:API.Controllers.OrganizerController.Get(System.Int32)">
             <summary>
             Получат организатора
