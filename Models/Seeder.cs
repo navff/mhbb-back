@@ -219,28 +219,28 @@ namespace Models
                 context.Pictures.Add(new Picture
                 {
                     LinkedObjectType = LinkedObjectType.Activity,
-                    Description = "Главная картинка",
-                    Extension = "jpg",
                     IsMain = true,
-                    LinkedObjectId = activityId
+                    LinkedObjectId = activityId,
+                    Data = new byte[] {0,0,0},
+                    Filename = "filename1.jpg"
                 });
 
                 context.Pictures.Add(new Picture
                 {
                     LinkedObjectType = LinkedObjectType.Activity,
-                    Description = "Неглавная картинка",
-                    Extension = "jpg",
                     IsMain = false,
-                    LinkedObjectId = activityId
+                    LinkedObjectId = activityId,
+                    Data = new byte[] { 0, 0, 0 },
+                    Filename = "filename1.jpg"
                 });
 
                 context.Pictures.Add(new Picture
                 {
                     LinkedObjectType = LinkedObjectType.Activity,
-                    Description = "Ещё одна картинка",
-                    Extension = "jpg",
                     IsMain = false,
-                    LinkedObjectId = activityId
+                    LinkedObjectId = activityId,
+                    Data = new byte[] { 0, 0, 0 },
+                    Filename = "filename1.jpg"
                 });
 
                 context.SaveChanges();

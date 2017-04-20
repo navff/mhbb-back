@@ -9,20 +9,21 @@ namespace Models.Entities
 {
     public class Picture
     {
+        [Key]
         public int Id { get; set; }
 
-        public string Description { get; set; }
-
         [Required]
-        [StringLength(10)]
-        public string Extension { get; set; }
+        [StringLength(100)]
+        public string Filename { get; set; }
 
         public bool IsMain { get; set; }
        
-
         public int? LinkedObjectId { get; set; }
 
         public LinkedObjectType LinkedObjectType { get; set; }
+
+        [Required]
+        public byte[] Data { get; set; }
     }
 
     public enum LinkedObjectType
