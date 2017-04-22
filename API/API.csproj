@@ -214,6 +214,7 @@
     <Compile Include="Controllers\ICrudController.cs" />
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\OrganizerController.cs" />
+    <Compile Include="Controllers\TempFileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
