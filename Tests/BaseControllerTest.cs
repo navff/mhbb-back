@@ -177,6 +177,10 @@ namespace Tests
                 //Assert.IsNotNull(response.Content);
                 if (response.IsSuccessStatusCode)
                 {
+                    if (response.Content.Headers.ContentType.MediaType.Contains("image"))
+                    {
+                        return default(T);
+                    }
                     return response.Content.ReadAsAsync<T>().Result;
                 }
                 else

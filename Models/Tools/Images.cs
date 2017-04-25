@@ -44,7 +44,43 @@ namespace Models.Tools
         /// <param name="imageInBytes">Картинка в байтовом виде</param>
         public static byte[] Resize(int width, byte[] imageInBytes)
         {
-            throw new NotImplementedException();
+            MemoryStream ms = new MemoryStream(imageInBytes, 0, imageInBytes.Length);
+            ms.Write(imageInBytes, 0, imageInBytes.Length);
+            var image = Image.FromStream(ms, true);
+            image = ScaleImage(image, width, width);
+            return ImageToByteArray(image);
+        }
+
+        public static Image ScaleImage(Image image, int maxWidth, int maxHeight)
+        {
+            // Если обе стороны вписались 
+            if ((image.Height < maxHeight) && (image.Width < maxWidth))
+            {
+                return image;
+            }
+
+            var ratioX = (double)maxWidth / image.Width;
+            var ratioY = (double)maxHeight / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+
+            using (var graphics = Graphics.FromImage(newImage))
+                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+
+            return newImage;
+        }
+
+        public static byte[] ImageToByteArray(Image imageIn)
+        {
+            using (var ms = new MemoryStream())
+            {
+                imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                return ms.ToArray();
+            }
         }
     }
 }

@@ -105,6 +105,10 @@
     <Compile Include="Migrations\201704201340251_add_temp_files.Designer.cs">
       <DependentUpon>201704201340251_add_temp_files.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704251356247_remove_session_id_from_tempFile.cs" />
+    <Compile Include="Migrations\201704251356247_remove_session_id_from_tempFile.Designer.cs">
+      <DependentUpon>201704251356247_remove_session_id_from_tempFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\CityOperations.cs" />
     <Compile Include="Operations\InterestOperations.cs" />
@@ -150,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704201340251_add_temp_files.resx">
       <DependentUpon>201704201340251_add_temp_files.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251356247_remove_session_id_from_tempFile.resx">
+      <DependentUpon>201704251356247_remove_session_id_from_tempFile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

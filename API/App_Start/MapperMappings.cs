@@ -25,6 +25,7 @@ namespace API
                 cfg.CreateMap<City, CityViewModelGet>();
                 cfg.CreateMap<Organizer, OrganizerViewModelGet>();
                 cfg.CreateMap<Interest, InterestViewModelGet>();
+                cfg.CreateMap<TempFile, TempFileViewModelGet>();
 
 
 
@@ -33,6 +34,7 @@ namespace API
                 cfg.CreateMap<PictureViewModelGet, Picture>();
                 cfg.CreateMap<OrganizerViewModelPost, Organizer>();
                 cfg.CreateMap<InterestViewModelPost, Interest>();
+                cfg.CreateMap<TempFileViewModelPost, TempFile>();
             });
         }
     }

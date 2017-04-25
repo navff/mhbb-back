@@ -803,6 +803,36 @@
             Тип объекта
             </summary>
         </member>
+        <member name="P:API.ViewModels.TempFileViewModelGet.Id">
+            <summary>
+            ID файла
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.TempFileViewModelGet.FormId">
+            <summary>
+            Id формы, на которой закачали файл
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.TempFileViewModelGet.Filename">
+            <summary>
+            Имя файла с расширением
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.TempFileViewModelPost.FormId">
+            <summary>
+            Id формы, на которой закачали файл
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.TempFileViewModelPost.Filename">
+            <summary>
+            Имя файла с расширением
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.TempFileViewModelPost.Data">
+            <summary>
+            Двоичные данные файла
+            </summary>
+        </member>
         <member name="T:API.ViewModels.UserViewModelGet">
             <summary>
             Пользователь

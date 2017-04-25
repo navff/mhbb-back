@@ -224,6 +224,7 @@
     <Compile Include="ViewModels\InterestViewModel.cs" />
     <Compile Include="ViewModels\OrganizerViewModel.cs" />
     <Compile Include="ViewModels\PictureViewModel.cs" />
+    <Compile Include="ViewModels\TempFileViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
