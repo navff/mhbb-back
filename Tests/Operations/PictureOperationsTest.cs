@@ -74,7 +74,7 @@ namespace Tests.Operations
             Assert.IsTrue(result.First().LinkedObjectId == activityId);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void DeleteByLinkedObject_Ok_Test()
         {
             var activityId = _context.Pictures.Where(p => (p.LinkedObjectType == LinkedObjectType.Activity))

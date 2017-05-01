@@ -220,6 +220,10 @@ namespace Tests
             {
                 message = $"Status code: {response.StatusCode}.";
             }
+            else if (response.StatusCode == HttpStatusCode.Gone)
+            {
+                message = $"Status code: {response.StatusCode}.";
+            }
             else
             {
                 message = response.Content.ReadAsStringAsync().Result;

@@ -675,6 +675,61 @@
             Удаление организатора
             </summary>
         </member>
+        <member name="M:API.Controllers.PictureController.GetAsync(System.Int32)">
+            <summary>
+            Получает файл картинки
+            </summary>
+        </member>
+        <member name="M:API.Controllers.PictureController.GetInfo(System.Int32)">
+            <summary>
+            Получение информации о картинке
+            </summary>
+        </member>
+        <member name="M:API.Controllers.PictureController.GetByActivityAsync(System.Int32)">
+            <summary>
+            Получает картинки по активности
+            </summary>
+        </member>
+        <member name="M:API.Controllers.PictureController.GetByOrganizerAsync(System.Int32)">
+            <summary>
+            Получает картинки организатора
+            </summary>
+        </member>
+        <member name="T:API.Controllers.TempFileController">
+            <summary>
+            Работа с временными файлами. Сначала картинки загружаются как временные файлы с уникальным FormId.
+            Затем после сохранения формы они сохраняются как картинки в Picture.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.TempFileController.Get(System.Int32)">
+            <summary>
+            Получение картинки
+            </summary>
+        </member>
+        <member name="M:API.Controllers.TempFileController.GetInfo(System.Int32)">
+            <summary>
+            Получение информации о временном файле
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.TempFileController.Post(API.ViewModels.TempFileViewModelPost)">
+            <summary>
+            Добавление временного файла
+            </summary>
+        </member>
+        <member name="M:API.Controllers.TempFileController.Delete(System.Int32)">
+            <summary>
+            Удаление
+            </summary>
+        </member>
+        <member name="M:API.Controllers.TempFileController.GetByFormId(System.String)">
+            <summary>
+            Получение всех временных файлов по FormId
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:API.Controllers.UserController">
             <summary>
             Управление пользователями
@@ -778,14 +833,9 @@
             ID
             </summary>
         </member>
-        <member name="P:API.ViewModels.PictureViewModelGet.Description">
+        <member name="P:API.ViewModels.PictureViewModelGet.Filename">
             <summary>
-            Описание. Можно использовать в ALT
-            </summary>
-        </member>
-        <member name="P:API.ViewModels.PictureViewModelGet.Extension">
-            <summary>
-            Расширение
+            Имя файла
             </summary>
         </member>
         <member name="P:API.ViewModels.PictureViewModelGet.IsMain">

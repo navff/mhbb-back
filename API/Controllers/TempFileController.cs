@@ -18,6 +18,10 @@ using Models.Operations;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Работа с временными файлами. Сначала картинки загружаются как временные файлы с уникальным FormId.
+    /// Затем после сохранения формы они сохраняются как картинки в Picture.
+    /// </summary>
     [RoutePrefix("api/tempfile")]
     public class TempFileController: ApiController
     {
@@ -28,6 +32,9 @@ namespace API.Controllers
             _tempFileOperations = tempFileOperations;
         }
 
+        /// <summary>
+        /// Получение картинки
+        /// </summary>
         [Route("{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(int id)
@@ -50,6 +57,12 @@ namespace API.Controllers
             return new ResponseMessageResult(result);
         }
 
+
+        /// <summary>
+        /// Получение информации о временном файле
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("getinfo/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetInfo(int id)
@@ -60,6 +73,10 @@ namespace API.Controllers
             return Ok(result);
         }
 
+
+        /// <summary>
+        /// Добавление временного файла
+        /// </summary>
         [HttpPost]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         public async  Task<IHttpActionResult> Post(TempFileViewModelPost postViewModel)
@@ -69,6 +86,9 @@ namespace API.Controllers
             return await GetInfo(result.Id);
         }
 
+        /// <summary>
+        /// Удаление
+        /// </summary>
         [HttpDelete]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         [Route("{id}")]
@@ -78,6 +98,11 @@ namespace API.Controllers
             return Ok("Deleted");
         }
 
+        /// <summary>
+        /// Получение всех временных файлов по FormId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("byformid/{id}")]
         public async Task<IHttpActionResult> GetByFormId(string id)

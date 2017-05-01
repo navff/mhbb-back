@@ -17,14 +17,9 @@ namespace API.ViewModels
         public int Id { get; set; }
 
         /// <summary>
-        /// Описание. Можно использовать в ALT
+        /// Имя файла
         /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Расширение
-        /// </summary>
-        public string Extension { get; set; }
+        public string Filename { get; set; }
 
         /// <summary>
         /// Главная картинка объекта
@@ -40,5 +35,7 @@ namespace API.ViewModels
         /// Тип объекта
         /// </summary>
         public LinkedObjectType LinkedObjectType { get; set; }
+
+        public string Url { get; set; }
     }
 }
