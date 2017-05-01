@@ -125,6 +125,7 @@
     <Compile Include="Operations\CityOperationsTest.cs" />
     <Compile Include="Operations\InterestOperationsTest.cs" />
     <Compile Include="Operations\OrganizerOperationsTest.cs" />
+    <Compile Include="Operations\PictureOperationsTest.cs" />
     <Compile Include="Operations\TempFileOperationsTest.cs" />
     <Compile Include="Operations\UsersOperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -18,7 +18,7 @@ namespace Models.Entities
 
         public bool IsMain { get; set; }
        
-        public int? LinkedObjectId { get; set; }
+        public int LinkedObjectId { get; set; }
 
         public LinkedObjectType LinkedObjectType { get; set; }
 

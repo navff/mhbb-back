@@ -25,7 +25,7 @@ namespace Models.Operations
         {
             try
             {
-                return _context.TempFiles.FirstOrDefault(tf => tf.Id == id);
+                return await _context.TempFiles.FirstOrDefaultAsync(tf => tf.Id == id);
             }
             catch (Exception ex)
             {

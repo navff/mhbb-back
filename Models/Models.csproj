@@ -109,10 +109,15 @@
     <Compile Include="Migrations\201704251356247_remove_session_id_from_tempFile.Designer.cs">
       <DependentUpon>201704251356247_remove_session_id_from_tempFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705010534554_made_linked_object_required_for_picture.cs" />
+    <Compile Include="Migrations\201705010534554_made_linked_object_required_for_picture.Designer.cs">
+      <DependentUpon>201705010534554_made_linked_object_required_for_picture.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\CityOperations.cs" />
     <Compile Include="Operations\InterestOperations.cs" />
     <Compile Include="Operations\OrganizerOperations.cs" />
+    <Compile Include="Operations\PictureOperations.cs" />
     <Compile Include="Operations\ReviewOperations.cs" />
     <Compile Include="Operations\TempFileOperations.cs" />
     <Compile Include="Operations\UserOperations.cs" />
@@ -157,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704251356247_remove_session_id_from_tempFile.resx">
       <DependentUpon>201704251356247_remove_session_id_from_tempFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705010534554_made_linked_object_required_for_picture.resx">
+      <DependentUpon>201705010534554_made_linked_object_required_for_picture.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
