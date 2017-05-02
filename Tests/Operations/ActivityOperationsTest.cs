@@ -64,7 +64,7 @@ namespace Tests.Operations
         public void SearchByInterest_Ok_Test()
         {
             var activity = _context.Activities.First();
-            var result = _activityOperations.SearchAsync(interestIds: new [] {activity.InterestId}).Result;
+            var result = _activityOperations.SearchAsync(interestId: activity.InterestId).Result;
             Assert.IsTrue(result.Any());
 
         }
@@ -82,7 +82,7 @@ namespace Tests.Operations
             var activity = _context.Activities.Include(a => a.Organizer).First();
             var result = _activityOperations.SearchAsync(word: activity.Name.Substring(2),
                                                          age:10, 
-                                                         interestIds: new[] { activity.InterestId },
+                                                         interestId: activity.InterestId,
                                                          cityId: activity.Organizer.CityId,
                                                          sobriety:true,
                                                          free:true,

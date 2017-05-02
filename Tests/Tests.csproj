@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="BaseControllerTest.cs" />
     <Compile Include="BaseTest.cs" />
+    <Compile Include="Controllers\ActivityControllerTest.cs" />
     <Compile Include="Controllers\CityControllerTest.cs" />
     <Compile Include="Controllers\InterestControllerTest.cs" />
     <Compile Include="Controllers\OrganizerControllerTest.cs" />

@@ -33,7 +33,7 @@ namespace Models.Operations
 
         public async Task<IEnumerable<Activity>> SearchAsync(String word=null, 
                                                              int? age = null, 
-                                                             int?[] interestIds = null, 
+                                                             int? interestId = null, 
                                                              int? cityId = null, 
                                                              bool? sobriety = null, 
                                                              bool? free = null, 

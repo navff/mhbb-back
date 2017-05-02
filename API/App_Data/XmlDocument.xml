@@ -568,6 +568,42 @@
             Проверяет ошибки в ModelState и выдаёт их в response
             </summary>
         </member>
+        <member name="M:API.Controllers.ActivityController.Get(System.Int32)">
+            <summary>
+            Ищет активность по ID
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ActivityController.Search(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32})">
+            <summary>
+            Ищет активности по параметрам
+            </summary>
+            <param name="word">Поисковое слово</param>
+            <param name="age">Возраст</param>
+            <param name="interestId">Интерес</param>
+            <param name="cityId">Город</param>
+            <param name="sobriety">Трезвые преподаватели</param>
+            <param name="free">Бесплатно</param>
+            <param name="page">Страница пагинации</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ActivityController.Put(System.Int32,API.ViewModels.ActivityViewModelPost)">
+            <summary>
+            Обновление активности
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ActivityController.Post(API.ViewModels.ActivityViewModelPost)">
+            <summary>
+            Добавление активности
+            </summary>
+            <param name="postViewModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ActivityController.Delete(System.Int32)">
+            <summary>
+            Удаление активности
+            </summary>
+        </member>
         <member name="T:API.Controllers.CityController">
             <summary>
             Управление городами
