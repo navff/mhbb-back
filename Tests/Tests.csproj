@@ -123,6 +123,7 @@
     <Compile Include="Controllers\TempFileControllerTest.cs" />
     <Compile Include="Helpers\TestHelpers.cs" />
     <Compile Include="InMemoryHttpContentSerializationHandler.cs" />
+    <Compile Include="Operations\ActivityOperationsTest.cs" />
     <Compile Include="Operations\CityOperationsTest.cs" />
     <Compile Include="Operations\InterestOperationsTest.cs" />
     <Compile Include="Operations\OrganizerOperationsTest.cs" />

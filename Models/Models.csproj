@@ -114,6 +114,7 @@
       <DependentUpon>201705010534554_made_linked_object_required_for_picture.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Operations\ActivityOperations.cs" />
     <Compile Include="Operations\CityOperations.cs" />
     <Compile Include="Operations\InterestOperations.cs" />
     <Compile Include="Operations\OrganizerOperations.cs" />
