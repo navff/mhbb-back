@@ -889,6 +889,16 @@
             Тип объекта
             </summary>
         </member>
+        <member name="P:API.ViewModels.PictureViewModelShortGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.PictureViewModelShortGet.Url">
+            <summary>
+            УРЛ с картинкой
+            </summary>
+        </member>
         <member name="P:API.ViewModels.TempFileViewModelGet.Id">
             <summary>
             ID файла

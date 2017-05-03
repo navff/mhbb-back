@@ -33,6 +33,34 @@ namespace API.ViewModels
         public bool IsChecked { get; set; }
     }
 
+    public class ActivityViewModelShortGet
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public virtual OrganizerViewModelGet Organizer { get; set; }
+
+        public int AgeFrom { get; set; }
+
+        public int AgeTo { get; set; }
+
+        public string Phones { get; set; }
+
+        public string Address { get; set; }
+
+        public string Prices { get; set; }
+
+        public string Mentor { get; set; }
+
+        public string Description { get; set; }
+
+        public virtual InterestViewModelGet Interest { get; set; }
+
+        public bool IsChecked { get; set; }
+
+        public PictureViewModelShortGet MainPicture { get; set; }
+    }
+
     public class ActivityViewModelPost
     {
         public string Name { get; set; }

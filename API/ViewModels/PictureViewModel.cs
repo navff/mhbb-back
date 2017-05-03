@@ -38,4 +38,17 @@ namespace API.ViewModels
 
         public string Url { get; set; }
     }
+
+    public class PictureViewModelShortGet
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// УРЛ с картинкой
+        /// </summary>
+        public string Url { get; set; }
+    }
 }

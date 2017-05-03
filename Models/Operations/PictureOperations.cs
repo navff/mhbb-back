@@ -99,6 +99,20 @@ namespace Models.Operations
             }
         }
 
+        public async Task<Picture> GetMainByLinkedObject(LinkedObjectType type, int linkedObjectId)
+        {
+            try
+            {
+                var pictures = (await GetByLinkedObject(type, linkedObjectId)).ToList();
+                return pictures.FirstOrDefault(p => p.IsMain) ?? pictures.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT GET PICTURE", ex);
+                throw;
+            }
+        }
+
         public async Task DeleteByLinkedObject(LinkedObjectType type, int linkedObjectId)
         {
             try

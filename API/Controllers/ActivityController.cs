@@ -18,10 +18,12 @@ namespace API.Controllers
     public class ActivityController : ApiController
     {
         private ActivityOperations _activityOperations;
+        private PictureOperations _pictureOperations;
 
-        public ActivityController(ActivityOperations activityOperations)
+        public ActivityController(ActivityOperations activityOperations, PictureOperations pictureOperations)
         {
             _activityOperations = activityOperations;
+            _pictureOperations = pictureOperations;
         }
 
         /// <summary>
@@ -76,7 +78,19 @@ namespace API.Controllers
             {
                 var activities = await _activityOperations.SearchAsync(word, age, interestId,
                                                                        cityId, sobriety, free, page);
-                var result = Mapper.Map<IEnumerable<ActivityViewModelGet>>(activities);
+                var result = Mapper.Map<IEnumerable<ActivityViewModelShortGet>>(activities).ToList();
+
+                foreach (var viewModel in result)
+                {
+                    var picture = (await _pictureOperations.GetMainByLinkedObject(LinkedObjectType.Activity, viewModel.Id));
+                    var pictureViewModel = Mapper.Map<PictureViewModelShortGet>(picture);
+                    if (pictureViewModel != null)
+                    {
+                        pictureViewModel.Url = Url.Content($"~/api/picture/{picture.Id}");
+                    }
+                    viewModel.MainPicture = pictureViewModel;
+                }
+
                 return Ok(result);
             }
             catch (Exception ex)

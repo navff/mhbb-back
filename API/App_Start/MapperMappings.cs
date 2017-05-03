@@ -22,11 +22,13 @@ namespace API
                 cfg.CreateMap<User, UserViewModelPut>();
                 cfg.CreateMap<User, UserViewModelGet>();
                 cfg.CreateMap<Picture, PictureViewModelGet>();
+                cfg.CreateMap<Picture, PictureViewModelShortGet>();
                 cfg.CreateMap<City, CityViewModelGet>();
                 cfg.CreateMap<Organizer, OrganizerViewModelGet>();
                 cfg.CreateMap<Interest, InterestViewModelGet>();
                 cfg.CreateMap<TempFile, TempFileViewModelGet>();
                 cfg.CreateMap<Activity, ActivityViewModelGet>();
+                cfg.CreateMap<Activity, ActivityViewModelShortGet>();
 
 
 
