@@ -43,6 +43,18 @@ namespace API.Controllers
 
                 }
                 var result = Mapper.Map<ActivityViewModelGet>(activity);
+                var pictures = await _pictureOperations.GetByLinkedObject(LinkedObjectType.Activity, id);
+                var picturesVirewModels = new List<PictureViewModelShortGet>(); 
+                foreach (var picture in pictures)
+                {
+                    picturesVirewModels.Add(new PictureViewModelShortGet
+                    {
+                        Id = picture.Id,
+                        Url = Url.Content($"~/api/picture/{picture.Id}"),
+                        IsMain = picture.IsMain
+                });
+                }
+                result.Pictures = picturesVirewModels;
                 return Ok(result);
             }
             catch (Exception ex)

@@ -49,6 +49,10 @@ namespace Tests.Operations
                 var deletedTempFile = cntxt.TempFiles.FirstOrDefaultAsync(tf => tf.Id == tempFile.Id).Result;
                 Assert.IsNull(deletedTempFile);
             }
+
+            var tempFileTest = new TempFileOperationsTest();
+            tempFileTest.Add_Ok_Test();
+            tempFileTest.Add_Ok_Test();
         }
 
         [TestMethod]
@@ -89,6 +93,15 @@ namespace Tests.Operations
                 Assert.IsFalse(pictures.Any());
             }
         }
+
+        [TestMethod]
+        public void GetMainByLinkedObject_Ok_Test()
+        {
+            var picture = _context.Pictures.First(p => p.IsMain);
+            var result = _pictureOperations.GetMainByLinkedObject(LinkedObjectType.Activity, picture.LinkedObjectId).Result;
+            Assert.AreEqual(picture.Id, result.Id);
+        }
+
 
 
 

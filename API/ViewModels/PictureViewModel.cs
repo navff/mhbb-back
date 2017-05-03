@@ -50,5 +50,10 @@ namespace API.ViewModels
         /// УРЛ с картинкой
         /// </summary>
         public string Url { get; set; }
+
+        /// <summary>
+        /// Картинка главная для объекта
+        /// </summary>
+        public bool IsMain { get; set; }
     }
 }

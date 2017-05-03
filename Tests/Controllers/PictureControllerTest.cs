@@ -45,6 +45,10 @@ namespace Tests.Controllers
             var picture = _context.Pictures.Take(10).ToList().Last();
             string url = $"api/picture/{picture.Id}";
             HttpDelete<string>(url, user.AuthToken);
+
+            //Восстанавливаем всё как было
+            _context.Pictures.Add(picture);
+            _context.SaveChanges();
         }
 
         [TestMethod]

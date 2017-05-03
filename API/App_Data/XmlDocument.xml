@@ -899,6 +899,11 @@
             УРЛ с картинкой
             </summary>
         </member>
+        <member name="P:API.ViewModels.PictureViewModelShortGet.IsMain">
+            <summary>
+            Картинка главная для объекта
+            </summary>
+        </member>
         <member name="P:API.ViewModels.TempFileViewModelGet.Id">
             <summary>
             ID файла

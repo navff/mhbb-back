@@ -31,6 +31,7 @@ namespace API.ViewModels
         public virtual InterestViewModelGet Interest { get; set; }
 
         public bool IsChecked { get; set; }
+        public IEnumerable<PictureViewModelShortGet> Pictures { get; set; }
     }
 
     public class ActivityViewModelShortGet

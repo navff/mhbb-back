@@ -52,6 +52,10 @@ namespace Tests.Controllers
             var tempFile = _context.TempFiles.Take(10).ToList().Last();
             string url = $"/api/tempfile/{tempFile.Id}";
             HttpDelete<string>(url, user.AuthToken);
+
+            //Восстанавливаем всё как было
+            _context.TempFiles.Add(tempFile);
+            _context.SaveChanges();
         }
 
         [TestMethod]
