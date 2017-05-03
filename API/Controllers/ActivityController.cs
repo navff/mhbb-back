@@ -5,14 +5,24 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using API.Common;
 using API.ViewModels;
+using AutoMapper;
 using Camps.Tools;
+using Models.Entities;
+using Models.Operations;
 
 namespace API.Controllers
 {
     [RoutePrefix("api/activity")]
     public class ActivityController : ApiController
     {
+        private ActivityOperations _activityOperations;
+
+        public ActivityController(ActivityOperations activityOperations)
+        {
+            _activityOperations = activityOperations;
+        }
 
         /// <summary>
         /// Ищет активность по ID
@@ -24,7 +34,14 @@ namespace API.Controllers
         {
             try
             {
-                throw new NotImplementedException();
+                var activity = await _activityOperations.GetAsync(id);
+                if (activity == null)
+                {
+                    return this.Result404("This activity is not found");
+
+                }
+                var result = Mapper.Map<ActivityViewModelGet>(activity);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -57,7 +74,10 @@ namespace API.Controllers
         {
             try
             {
-                throw new NotImplementedException();
+                var activities = await _activityOperations.SearchAsync(word, age, interestId,
+                                                                       cityId, sobriety, free, page);
+                var result = Mapper.Map<IEnumerable<ActivityViewModelGet>>(activities);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -77,7 +97,10 @@ namespace API.Controllers
         {
             try
             {
-                throw new NotImplementedException();
+                var activity = Mapper.Map<Activity>(putViewModel);
+                activity.Id = id;
+                await _activityOperations.UpdateAsync(activity);
+                return await Get(id);
             }
             catch (Exception ex)
             {
@@ -97,7 +120,9 @@ namespace API.Controllers
         {
             try
             {
-                throw new NotImplementedException();
+                var activity = Mapper.Map<Activity>(postViewModel);
+                var result = await _activityOperations.AddAsync(activity);
+                return await Get(result.Id);
             }
             catch (Exception ex)
             {
@@ -115,7 +140,8 @@ namespace API.Controllers
         {
             try
             {
-                throw new NotImplementedException();
+                await _activityOperations.DeleteAsync(id);
+                return Ok("Deleted");
             }
             catch (Exception ex)
             {

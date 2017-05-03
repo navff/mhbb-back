@@ -26,6 +26,7 @@ namespace API
                 cfg.CreateMap<Organizer, OrganizerViewModelGet>();
                 cfg.CreateMap<Interest, InterestViewModelGet>();
                 cfg.CreateMap<TempFile, TempFileViewModelGet>();
+                cfg.CreateMap<Activity, ActivityViewModelGet>();
 
 
 
@@ -35,6 +36,7 @@ namespace API
                 cfg.CreateMap<OrganizerViewModelPost, Organizer>();
                 cfg.CreateMap<InterestViewModelPost, Interest>();
                 cfg.CreateMap<TempFileViewModelPost, TempFile>();
+                cfg.CreateMap<ActivityViewModelPost, Activity>();
             });
         }
     }

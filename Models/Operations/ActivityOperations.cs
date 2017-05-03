@@ -42,7 +42,10 @@ namespace Models.Operations
             try
             {
                 // TODO: сделать нормальный поиск
-                return _context.Activities.ToList();
+                return _context.Activities
+                                .Include(a => a.Organizer)
+                                .Include(a => a.Interest)
+                                .ToList();
             }
             catch (Exception ex)
             {
