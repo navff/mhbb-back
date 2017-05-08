@@ -119,6 +119,7 @@
     <Compile Include="Operations\InterestOperations.cs" />
     <Compile Include="Operations\OrganizerOperations.cs" />
     <Compile Include="Operations\PictureOperations.cs" />
+    <Compile Include="Operations\ReservationOperations.cs" />
     <Compile Include="Operations\ReviewOperations.cs" />
     <Compile Include="Operations\TempFileOperations.cs" />
     <Compile Include="Operations\UserOperations.cs" />
