@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -86,5 +87,15 @@ namespace API.ViewModels
         public int? InterestId { get; set; }
 
         public bool IsChecked { get; set; }
+
+
+        /// <summary>
+        /// ID формы. По этому идентификатору связываются временные файлы
+        /// с активностями. После сохранения активности, все TempFile с указанным FormId
+        /// превратятся в Picture и привяжутся в данной активности.
+        /// </summary>
+        public string FormId { get; set; }
+
+
     }
 }

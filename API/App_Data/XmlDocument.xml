@@ -809,6 +809,13 @@
             <param name="word"></param>
             <returns></returns>
         </member>
+        <member name="P:API.ViewModels.ActivityViewModelPost.FormId">
+            <summary>
+            ID формы. По этому идентификатору связываются временные файлы
+            с активностями. После сохранения активности, все TempFile с указанным FormId
+            превратятся в Picture и привяжутся в данной активности.
+            </summary>
+        </member>
         <member name="T:API.ViewModels.OrganizerViewModelGet">
             <summary>
             Организатор

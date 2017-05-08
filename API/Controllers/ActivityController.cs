@@ -148,6 +148,7 @@ namespace API.Controllers
             {
                 var activity = Mapper.Map<Activity>(postViewModel);
                 var result = await _activityOperations.AddAsync(activity);
+                await _pictureOperations.SaveByFormIdAsync(postViewModel.FormId, result.Id, LinkedObjectType.Activity);
                 return await Get(result.Id);
             }
             catch (Exception ex)

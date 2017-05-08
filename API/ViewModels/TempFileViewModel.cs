@@ -25,6 +25,8 @@ namespace API.ViewModels
         public string Filename { get; set; }
 
         public string Url { get; set; }
+
+        public bool IsMain { get; set; }
     }
 
     public class TempFileViewModelPost
@@ -45,5 +47,7 @@ namespace API.ViewModels
         /// </summary>
         [Required]
         public byte[] Data { get; set; }
+
+        public bool IsMain { get; set; }
     }
 }

@@ -31,6 +31,11 @@ namespace Models.Entities
         /// </summary>
         [Required]
         public byte[] Data { get; set; }
+
+        /// <summary>
+        /// Главная картинка объекта
+        /// </summary>
+        public bool IsMain { get; set; }
     }
 
 }

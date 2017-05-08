@@ -94,6 +94,7 @@ namespace Tests.Controllers
             var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
             var interest = _context.Interests.First();
             var city = _context.Cities.First();
+            var tempFile = _context.TempFiles.FirstOrDefault(tf => tf.FormId != null);
 
             var viewModel = new ActivityViewModelPost
             {
@@ -107,7 +108,8 @@ namespace Tests.Controllers
                 Mentor = rndString,
                 Organizer = new OrganizerViewModelPost {CityId = city.Id, Name = rndString, Sobriety = true},
                 Phones = rndString,
-                Prices = rndString
+                Prices = rndString,
+                FormId = tempFile?.FormId
             };
             var result = HttpPost<ActivityViewModelGet>(url, viewModel, user.AuthToken);
 

@@ -131,5 +131,15 @@ namespace Models.Operations
             }
         }
 
+        public async Task SaveByFormIdAsync(string formId, int linkedObjectId, LinkedObjectType type)
+        {
+            var tempFileOperations = new TempFileOperations(_context);
+            var tempfiles = await tempFileOperations.GetByFormIdAsync(formId);
+            foreach (var tempfile in tempfiles)
+            {
+                await AddAsync(tempfile.Id, tempfile.IsMain, linkedObjectId, type);
+            }
+            await tempFileOperations.RemoveAllByFormIdAsync(formId);
+        }
     }
 }

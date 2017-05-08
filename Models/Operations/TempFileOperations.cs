@@ -99,11 +99,11 @@ namespace Models.Operations
             }
         }
 
-        public async Task RemoveAllByFormIdAsync(string sessionId)
+        public async Task RemoveAllByFormIdAsync(string formId)
         {
             try
             {
-                var files = await this.GetByFormIdAsync(sessionId);
+                var files = await this.GetByFormIdAsync(formId);
                 foreach (var tempFile in files)
                 {
                     _context.TempFiles.Remove(tempFile);
