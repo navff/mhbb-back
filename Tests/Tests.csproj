@@ -121,6 +121,7 @@
     <Compile Include="Controllers\InterestControllerTest.cs" />
     <Compile Include="Controllers\OrganizerControllerTest.cs" />
     <Compile Include="Controllers\PictureControllerTest.cs" />
+    <Compile Include="Controllers\ReservationControllerTest.cs" />
     <Compile Include="Controllers\TempFileControllerTest.cs" />
     <Compile Include="Helpers\TestHelpers.cs" />
     <Compile Include="InMemoryHttpContentSerializationHandler.cs" />

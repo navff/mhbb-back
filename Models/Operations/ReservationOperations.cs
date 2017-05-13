@@ -29,6 +29,7 @@ namespace Models.Operations
                     await userOperations.RegisterAsync(reservation.UserEmail);
                 }
 
+                reservation.Created = DateTime.Now;
                 _context.Reservations.Add(reservation);
                 await _context.SaveChangesAsync();
                 return await GetAsync(reservation.Id);
@@ -45,6 +46,7 @@ namespace Models.Operations
             try
             {
                 return await _context.Reservations.Include(r => r.User)
+                                                  .Include(r => r.Activity)
                                                   .FirstOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception ex)

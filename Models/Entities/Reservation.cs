@@ -34,6 +34,8 @@ namespace Models.Entities
 
         public string Comment { get; set; }
 
+        public DateTime Created { get; set; }
+
 
     }
 }

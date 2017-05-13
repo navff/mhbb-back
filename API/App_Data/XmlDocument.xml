@@ -731,6 +731,40 @@
             Получает картинки организатора
             </summary>
         </member>
+        <member name="T:API.Controllers.ReservationController">
+            <summary>
+            Заявки на бронирование активности. Людям нравится активность и они сообщают 
+            о том, что оно им надо.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ReservationController.Get(System.Int32)">
+            <summary>
+            Получение заявки
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ReservationController.Put(System.Int32,API.ViewModels.ReservationViewModelPost)">
+            <summary>
+            Обновление. Могут только менеджеры и админы портала
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ReservationController.Post(API.ViewModels.ReservationViewModelPost)">
+            <summary>
+            Добавление
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ReservationController.Delete(System.Int32)">
+            <summary>
+            Удаление
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ReservationController.Search(System.String)">
+            <summary>
+            Ищет по телефону, имени, email
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:API.Controllers.TempFileController">
             <summary>
             Работа с временными файлами. Сначала картинки загружаются как временные файлы с уникальным FormId.
@@ -909,6 +943,66 @@
         <member name="P:API.ViewModels.PictureViewModelShortGet.IsMain">
             <summary>
             Картинка главная для объекта
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelGet.ActivityId">
+            <summary>
+            ID активности, на которую чел  записывается
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelGet.UserEmail">
+            <summary>
+            Почта записываемого
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelGet.Name">
+            <summary>
+            Имя записываемого
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelGet.Phone">
+            <summary>
+            Телефон записываемого
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelGet.Comment">
+            <summary>
+            Коммент, который оставил записываемый
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelGet.Created">
+            <summary>
+            Время создания резервирования
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelPost.ActivityId">
+            <summary>
+            ID активности, на которую чел  записывается
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelPost.UserEmail">
+            <summary>
+            Почта записываемого
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelPost.Name">
+            <summary>
+            Имя записываемого
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelPost.Phone">
+            <summary>
+            Телефон записываемого
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReservationViewModelPost.Comment">
+            <summary>
+            Коммент, который оставил записываемый
             </summary>
         </member>
         <member name="P:API.ViewModels.TempFileViewModelGet.Id">

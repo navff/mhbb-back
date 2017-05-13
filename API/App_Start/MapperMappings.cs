@@ -29,6 +29,7 @@ namespace API
                 cfg.CreateMap<TempFile, TempFileViewModelGet>();
                 cfg.CreateMap<Activity, ActivityViewModelGet>();
                 cfg.CreateMap<Activity, ActivityViewModelShortGet>();
+                cfg.CreateMap<Reservation, ReservationViewModelGet>();
 
 
 
@@ -39,6 +40,7 @@ namespace API
                 cfg.CreateMap<InterestViewModelPost, Interest>();
                 cfg.CreateMap<TempFileViewModelPost, TempFile>();
                 cfg.CreateMap<ActivityViewModelPost, Activity>();
+                cfg.CreateMap<ReservationViewModelPost, Reservation>();
             });
         }
     }
