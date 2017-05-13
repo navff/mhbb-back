@@ -50,6 +50,7 @@ namespace API.Controllers
                 var result = Mapper.Map<UserViewModelGet>(entity);
                 result.CityName = entity.City?.Name;
                 result.RoleName = entity.Role.ToString();
+                result.AuthToken = "";
                 return Ok(result);
             }
             catch (Exception e)
@@ -114,16 +115,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Register(UserRegisterViewModel viewModel)
         {
-            var existingUser = await _userOperations.GetAsync(viewModel.Email);
+            var user = await _userOperations.RegisterAsync(viewModel.Email);
 
-            if (existingUser == null)
-            {
-                return Ok(await _userOperations.RegisterAsync(viewModel.Email));
-            }
-            else
-            {
-                return Ok(existingUser);
-            }
+            return await Get(user.Email);
         }
 
         /// <summary>

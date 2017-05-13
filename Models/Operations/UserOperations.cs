@@ -163,7 +163,7 @@ namespace API.Operations
         {
             var dto = new EmailMessage()
             {
-                From = "Моё хобби <site@orientirum.ru>",
+                From = "Моё хобби <site@mhbb.ru>",
                 To = to,
                 Body = GenerateEmailBody(token),
                 EmailSubject = UserMessages.SubjectConfirmEmail

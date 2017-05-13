@@ -27,7 +27,7 @@ namespace Models.Tools
                 msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message.Body, null, MediaTypeNames.Text.Plain));
                 msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message.Body, null, MediaTypeNames.Text.Html));
                 var smtpClient = new SmtpClient("smtp.yandex.ru", Convert.ToInt32(25));
-                var credentials = new NetworkCredential("site@orientirum.ru", "84nb844b6xb");
+                var credentials = new NetworkCredential("site@mhbb.ru", "84b4hebds7892");
                 smtpClient.Credentials = credentials;
                 smtpClient.EnableSsl = true;
                 smtpClient.Send(msg);
@@ -37,7 +37,7 @@ namespace Models.Tools
             catch (SmtpException ex)
             {
                 ErrorLogger.Log("CANNOT SEND EMAIL", ex);
-                return false;
+                throw;
             }
         }
     }
