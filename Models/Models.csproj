@@ -113,6 +113,10 @@
     <Compile Include="Migrations\201705010534554_made_linked_object_required_for_picture.Designer.cs">
       <DependentUpon>201705010534554_made_linked_object_required_for_picture.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705130330112_add_indexes_to_model.cs" />
+    <Compile Include="Migrations\201705130330112_add_indexes_to_model.Designer.cs">
+      <DependentUpon>201705130330112_add_indexes_to_model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\ActivityOperations.cs" />
     <Compile Include="Operations\CityOperations.cs" />
@@ -167,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705010534554_made_linked_object_required_for_picture.resx">
       <DependentUpon>201705010534554_made_linked_object_required_for_picture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705130330112_add_indexes_to_model.resx">
+      <DependentUpon>201705130330112_add_indexes_to_model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

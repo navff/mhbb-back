@@ -14,7 +14,27 @@ namespace Camps.Tools
             {
                 if (!condition)
                 {
-                    throw new ArgumentException("CONTRACT FAILED");
+                    throw new ArgumentException("[CONTRACT FAILED] ");
+                }
+            }
+        }
+
+        public static void Assert(string message, params Boolean[] conditions)
+        {
+            if (message == null)
+            {
+                message = "[CONTRACT FAILED] ";
+            }
+            else
+            {
+                message = "[CONTRACT FAILED] " + message;
+            }
+
+            foreach (bool condition in conditions)
+            {
+                if (!condition)
+                {
+                    throw new ArgumentException(message);
                 }
             }
         }

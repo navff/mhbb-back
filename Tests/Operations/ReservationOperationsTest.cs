@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using Models.Entities;
@@ -13,7 +10,7 @@ namespace Tests.Operations
     [TestClass]
     public class ReservationOperationsTest : BaseTest
     {
-        private ReservationOperations _reservationOperations;
+        private readonly ReservationOperations _reservationOperations;
 
         public ReservationOperationsTest()
         {
@@ -64,7 +61,7 @@ namespace Tests.Operations
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(AggregateException))]
         public void Add_WrongModel_Test()
         {
             _reservationOperations.AddAsync(new Reservation
@@ -113,11 +110,11 @@ namespace Tests.Operations
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(AggregateException))]
         public void Update_WrongModel_Test()
         {
             var reservation = _context.Reservations.First();
-            var result = _reservationOperations.UpdateAsync(new Reservation
+            _reservationOperations.UpdateAsync(new Reservation
             {
                 Name = "",
                 Id = reservation.Id,
@@ -125,7 +122,7 @@ namespace Tests.Operations
                 ActivityId = reservation.ActivityId,
                 Comment = "",
                 Phone = ""
-            }).Result;
+            }).Wait();
         }
 
         [TestMethod]
@@ -141,7 +138,7 @@ namespace Tests.Operations
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(AggregateException))]
         public void Delete_WrongId_Test()
         {
             _reservationOperations.DeleteAsync(9999).Wait();
