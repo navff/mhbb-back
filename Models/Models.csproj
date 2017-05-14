@@ -127,6 +127,7 @@
     <Compile Include="Operations\ReviewOperations.cs" />
     <Compile Include="Operations\TempFileOperations.cs" />
     <Compile Include="Operations\UserOperations.cs" />
+    <Compile Include="Operations\VoiceOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Seeder.cs" />

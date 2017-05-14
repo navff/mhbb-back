@@ -756,7 +756,7 @@
         </member>
         <member name="M:API.Controllers.ReservationController.Delete(System.Int32)">
             <summary>
-            Удаление
+            Удаление. Могут только менеджеры и админы портала
             </summary>
         </member>
         <member name="M:API.Controllers.ReservationController.Search(System.String)">
