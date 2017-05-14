@@ -219,6 +219,7 @@
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\TempFileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VoiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +232,7 @@
     <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="ViewModels\TempFileViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\ActivityUserVoiceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\XmlDocument.xml">

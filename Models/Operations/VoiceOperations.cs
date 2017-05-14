@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Models.Operations
             _context = context;
         }
 
-        public async Task<ActivityUserVoice> AddVoice(string email, VoiceValue voiceValue, int activityId)
+        public async Task<int> AddVoice(string email, VoiceValue voiceValue, int activityId)
         {
             var voice = _context.ActivityUserVoices
                             .FirstOrDefault(v => (v.ActivityId == activityId)
@@ -32,7 +33,21 @@ namespace Models.Operations
                 _context.ActivityUserVoices.Add(voice);
             }
             await _context.SaveChangesAsync();
-            return voice;
+            return await GetActivityVoices(activityId);
+        }
+
+        public async Task<int> GetActivityVoices(int activityId)
+        {
+            var voices = await _context.ActivityUserVoices
+                                 .Where(v => v.ActivityId == activityId)
+                                 .Select(v => v.VoiceValue).ToListAsync();
+
+            var result = 0;
+            foreach (var voice in voices)
+            {
+                result += (int) voice;
+            }
+            return result;
         }
     }
 }

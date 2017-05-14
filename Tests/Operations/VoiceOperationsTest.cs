@@ -22,9 +22,6 @@ namespace Tests.Operations
             var user = _context.Users.First();
             var activity = _context.Activities.First();
             var result = _voiceOperations.AddVoice(user.Email, VoiceValue.Positive, activity.Id).Result;
-            Assert.AreEqual(user.Email, result.UserEmail);
-            Assert.AreEqual(activity.Id, result.ActivityId);
-            Assert.AreEqual(VoiceValue.Positive, result.VoiceValue);
         }
 
         [TestMethod]
@@ -33,9 +30,6 @@ namespace Tests.Operations
             var user = _context.Users.First();
             var activity = _context.Activities.First();
             var result = _voiceOperations.AddVoice(user.Email, VoiceValue.Negative, activity.Id).Result;
-            Assert.AreEqual(user.Email, result.UserEmail);
-            Assert.AreEqual(activity.Id, result.ActivityId);
-            Assert.AreEqual(VoiceValue.Negative, result.VoiceValue);
         }
 
         

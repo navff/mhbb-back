@@ -843,6 +843,21 @@
             <param name="word"></param>
             <returns></returns>
         </member>
+        <member name="T:API.Controllers.VoiceController">
+             <summary>
+            Голосование пользователей за активности. 
+             </summary>
+        </member>
+        <member name="M:API.Controllers.VoiceController.Positive(System.Int32)">
+            <summary>
+            Проголосовать позитивно. Активность понравилась
+            </summary>
+        </member>
+        <member name="M:API.Controllers.VoiceController.Negative(System.Int32)">
+            <summary>
+            Проголосовать негативно. Активность не понравилась
+            </summary>
+        </member>
         <member name="P:API.ViewModels.ActivityViewModelPost.FormId">
             <summary>
             ID формы. По этому идентификатору связываются временные файлы
@@ -1109,6 +1124,21 @@
         <member name="P:API.ViewModels.UserViewModelPut.CityId">
             <summary>
             Id города
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityUserVoiceViewModel.UserEmail">
+            <summary>
+            Ссылка на пользователя, который голосует
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityUserVoiceViewModel.ActivityId">
+            <summary>
+            Ссылка на активность, за которую голосуем
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityUserVoiceViewModel.VoiceValue">
+            <summary>
+            Значение голоса: или -1, или +1
             </summary>
         </member>
     </members>
