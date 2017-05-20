@@ -143,17 +143,37 @@ namespace API.Operations
             return userInDb;
         }
 
-        public async Task<IEnumerable<User>> SearchAsync(string word)
+        public async Task<IEnumerable<User>> SearchAsync(string word="", int page=1)
         {
             var result = new List<User>();
+            if (String.IsNullOrEmpty(word))
+            {
+                result = await _context.Users.OrderBy(u => u.Name).ThenBy(u => u.Email)
+                                            .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                                            .Take(ModelsSettings.PAGE_SIZE)
+                                            .ToListAsync();
+            }
 
-            var usersByEmail = await _context.Users.Where(u => u.Email.Contains(word)).ToListAsync();
+            var usersByEmail = await _context.Users.Where(u => u.Email.Contains(word))
+                                                    .OrderBy(u => u.Name).ThenBy(u => u.Email)
+                                                    .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                                                    .Take(ModelsSettings.PAGE_SIZE)
+                                                    .ToListAsync();
             result.AddRange(usersByEmail);
 
-            var usersByName = await _context.Users.Where(u => u.Name.Contains(word)).ToListAsync();
+
+            var usersByName = await _context.Users.Where(u => u.Name.Contains(word))
+                                                    .OrderBy(u => u.Name).ThenBy(u => u.Email)
+                                                    .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                                                    .Take(ModelsSettings.PAGE_SIZE)
+                                                    .ToListAsync();
             result.AddRange(usersByName);
 
-            var usersByPhone = await _context.Users.Where(u => u.Phone.Contains(word)).ToListAsync();
+
+            var usersByPhone = await _context.Users.Where(u => u.Phone.Contains(word))
+                                                    .OrderBy(u => u.Name).ThenBy(u => u.Email)
+                                                    .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                                                    .Take(ModelsSettings.PAGE_SIZE).ToListAsync();
             result.AddRange(usersByPhone);
 
             return result;

@@ -836,11 +836,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.Controllers.UserController.Search(System.String)">
+        <member name="M:API.Controllers.UserController.Search(System.String,System.Int32)">
             <summary>
-            Ищет пользователей по электропочте, имени или номеру телефона
+            Ищет пользователей по электропочте, имени или номеру телефона.
             </summary>
-            <param name="word"></param>
+            <param name="word">Поисковое слово. Можно не передавать, тогда выдаст всех</param>
+            <param name="page">Номер страницы для постраничной навигации. По-умолчанию — 1</param>
             <returns></returns>
         </member>
         <member name="T:API.Controllers.VoiceController">

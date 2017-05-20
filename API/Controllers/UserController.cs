@@ -133,16 +133,18 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Ищет пользователей по электропочте, имени или номеру телефона
+        /// Ищет пользователей по электропочте, имени или номеру телефона.
         /// </summary>
-        /// <param name="word"></param>
+        /// <param name="word">Поисковое слово. Можно не передавать, тогда выдаст всех</param>
+        /// <param name="page">Номер страницы для постраничной навигации. По-умолчанию — 1</param>
         /// <returns></returns>
         [HttpGet]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         [ResponseType(typeof(IEnumerable<UserViewModelGet>))]
-        public async Task<IHttpActionResult> Search(string word)
+        [Route("search")]
+        public async Task<IHttpActionResult> Search(string word="", int page=1)
         {
-            var users = await _userOperations.SearchAsync(word);
+            var users = await _userOperations.SearchAsync(word, page);
             var result = new List<UserViewModelGet>();
 
             foreach (var user in users)
