@@ -53,7 +53,7 @@ namespace Tests.Operations
                 UserEmail = review.UserEmail,
             }).Result;
             Assert.AreEqual(rndString, result.Text);
-            Assert.AreEqual(date, result.DateCreated);
+            Assert.AreEqual(date, result.DateCreated.Date);
         }
 
         [TestMethod]
@@ -87,7 +87,7 @@ namespace Tests.Operations
                 UserEmail = user.Email
             }).Result;
             Assert.AreEqual(rndString, result.Text);
-            Assert.AreEqual(date, result.DateCreated);
+            Assert.AreEqual(date, result.DateCreated.Date);
         }
 
         [TestMethod]

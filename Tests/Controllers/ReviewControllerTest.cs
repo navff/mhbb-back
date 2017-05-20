@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using API.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using System.Data.Entity;
 
 namespace Tests.Controllers
 {
@@ -15,7 +16,7 @@ namespace Tests.Controllers
         [TestMethod]
         public void Get_Ok_Test()
         {
-            var review = _context.Reviews.First();
+            var review = _context.Reviews.Include(r => r.User).First();
             string url = $"/api/review/{review.Id}";
             var result = HttpGet<ReviewViewModelGet>(url);
             Assert.AreEqual(review.Id, result.Id);
@@ -47,7 +48,6 @@ namespace Tests.Controllers
             var rndString = Guid.NewGuid().ToString();
             var viewModel = new ReviewViewModelPost
             {
-                UserEmail = review.UserEmail,
                 ActivityId = review.ActivityId,
                 Text = rndString,
             };
@@ -60,18 +60,18 @@ namespace Tests.Controllers
         [TestMethod]
         public void Post_Ok_Test()
         {
-            var review = _context.Reviews.First();
+            var activity = _context.Activities.First();
+            var user = _context.Users.First();
             var rndString = Guid.NewGuid().ToString();
             var viewModel = new ReviewViewModelPost
             {
-                UserEmail = review.UserEmail,
-                ActivityId = review.ActivityId,
+                ActivityId = activity.Id,
                 Text = rndString,
             };
             string url = $"/api/review";
-            var result = HttpPost<ReviewViewModelGet>(url, viewModel, "ABRAKADABRA");
+            var result = HttpPost<ReviewViewModelGet>(url, viewModel, user.AuthToken);
             Assert.AreEqual(rndString, result.Text);
-            Assert.AreEqual(review.UserEmail, result.UserEmail);
+            Assert.AreEqual(user.Email, result.UserEmail);
         }
 
         [TestMethod]

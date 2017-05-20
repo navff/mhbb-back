@@ -30,6 +30,7 @@ namespace API
                 cfg.CreateMap<Activity, ActivityViewModelGet>();
                 cfg.CreateMap<Activity, ActivityViewModelShortGet>();
                 cfg.CreateMap<Reservation, ReservationViewModelGet>();
+                cfg.CreateMap<Review, ReviewViewModelGet>();
 
 
 
@@ -41,6 +42,7 @@ namespace API
                 cfg.CreateMap<TempFileViewModelPost, TempFile>();
                 cfg.CreateMap<ActivityViewModelPost, Activity>();
                 cfg.CreateMap<ReservationViewModelPost, Reservation>();
+                cfg.CreateMap<ReviewViewModelPost, Review>();
             });
         }
     }

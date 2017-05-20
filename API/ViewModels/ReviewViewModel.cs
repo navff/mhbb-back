@@ -28,8 +28,6 @@ namespace API.ViewModels
 
     public class ReviewViewModelPost
     {
-        public string UserEmail { get; set; }
-
         public int ActivityId { get; set; }
 
         public string Text { get; set; }

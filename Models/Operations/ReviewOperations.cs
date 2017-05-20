@@ -22,7 +22,7 @@ namespace Models.Operations
         {
             try
             {
-                return await _context.Reviews.FindAsync(id);
+                return await _context.Reviews.Include(r => r.User).FirstOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception ex)
             {
@@ -37,10 +37,8 @@ namespace Models.Operations
             {
                 var reviewInDb = await GetAsync(review.Id);
                 reviewInDb.ActivityId = review.ActivityId;
-                reviewInDb.DateCreated = review.DateCreated;
                 reviewInDb.IsChecked = review.IsChecked;
                 reviewInDb.Text = review.Text;
-                reviewInDb.UserEmail = review.UserEmail;
                 reviewInDb.ReplyToReviewId = review.ReplyToReviewId;
                 await _context.SaveChangesAsync();
                 return reviewInDb;
@@ -56,6 +54,7 @@ namespace Models.Operations
         {
             try
             {
+                review.DateCreated = DateTime.Now;
                 _context.Reviews.Add(review);
                 await _context.SaveChangesAsync();
                 return review;
