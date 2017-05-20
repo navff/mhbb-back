@@ -53,6 +53,13 @@ namespace Tests.Operations
         }
 
         [TestMethod]
+        public void GetAll_Ok_Test()
+        {
+            var result = _cityOperations.GetAllAsync().Result;
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
         public void Delete_Ok_Test()
         {
             var city = _context.Cities.ToList().Take(2).Last();

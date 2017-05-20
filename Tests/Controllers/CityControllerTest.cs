@@ -27,6 +27,14 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
+        public void GetAll_Ok_Test()
+        {
+            var result = HttpGet<IEnumerable<CityViewModelGet>>($"api/city");
+            Assert.IsTrue(result.Any());
+        }
+
+
+        [TestMethod]
         public void Get_Ok_Test()
         {
             var city = _context.Cities.First();
