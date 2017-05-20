@@ -50,7 +50,7 @@ namespace Tests.Controllers
         [TestMethod]
         public void Search_Pagination_Test()
         {
-            string url = $"api/activity/search?page=2";
+            string url = $"api/activity/search?page=1";
             var result = HttpGet<IEnumerable<ActivityViewModelGet>>(url);
             Assert.IsTrue(result.Any());
         }

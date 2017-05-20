@@ -56,7 +56,7 @@ namespace Tests.Operations
         [TestMethod]
         public void Search_Pagination_Test()
         {
-            var result = _activityOperations.SearchAsync(page: 2).Result;
+            var result = _activityOperations.SearchAsync(page: 1).Result;
             Assert.IsTrue(result.Any());
         }
 
@@ -81,11 +81,11 @@ namespace Tests.Operations
         {
             var activity = _context.Activities.Include(a => a.Organizer).First();
             var result = _activityOperations.SearchAsync(word: activity.Name.Substring(2),
-                                                         age:10, 
+                                                         age:activity.AgeFrom, 
                                                          interestId: activity.InterestId,
                                                          cityId: activity.Organizer.CityId,
-                                                         sobriety:true,
-                                                         free:true,
+                                                         sobriety:activity.Organizer.Sobriety,
+                                                         free:activity.Free,
                                                          page:1).Result;
             Assert.IsTrue(result.Any());
         }
