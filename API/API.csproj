@@ -225,6 +225,7 @@
     <Compile Include="Controllers\OrganizerController.cs" />
     <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\TempFileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VoiceController.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="ViewModels\OrganizerViewModel.cs" />
     <Compile Include="ViewModels\PictureViewModel.cs" />
     <Compile Include="ViewModels\ReservationViewModel.cs" />
+    <Compile Include="ViewModels\ReviewViewModel.cs" />
     <Compile Include="ViewModels\TempFileViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ActivityUserVoiceViewModel.cs" />

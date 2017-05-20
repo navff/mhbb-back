@@ -132,6 +132,7 @@
     <Compile Include="Operations\OrganizerOperationsTest.cs" />
     <Compile Include="Operations\PictureOperationsTest.cs" />
     <Compile Include="Operations\ReservationOperationsTest.cs" />
+    <Compile Include="Operations\ReviewOperationsTest.cs" />
     <Compile Include="Operations\TempFileOperationsTest.cs" />
     <Compile Include="Operations\UsersOperationsTest.cs" />
     <Compile Include="Operations\VoiceOperationsTest.cs" />

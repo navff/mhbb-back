@@ -1081,6 +1081,11 @@
             Коммент, который оставил записываемый
             </summary>
         </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.IsChecked">
+            <summary>
+            Отзыв проверен менеджером
+            </summary>
+        </member>
         <member name="P:API.ViewModels.TempFileViewModelGet.Id">
             <summary>
             ID файла
