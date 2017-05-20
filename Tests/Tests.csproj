@@ -122,6 +122,7 @@
     <Compile Include="Controllers\OrganizerControllerTest.cs" />
     <Compile Include="Controllers\PictureControllerTest.cs" />
     <Compile Include="Controllers\ReservationControllerTest.cs" />
+    <Compile Include="Controllers\ReviewControllerTest.cs" />
     <Compile Include="Controllers\TempFileControllerTest.cs" />
     <Compile Include="Controllers\VoiceControllerTEst.cs" />
     <Compile Include="Helpers\TestHelpers.cs" />
