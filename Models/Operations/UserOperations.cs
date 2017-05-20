@@ -36,6 +36,11 @@ namespace API.Operations
             return await _context.Users.FirstOrDefaultAsync(u => u.AuthToken == token);
         }
 
+        public User GetUserByToken(string token)
+        {
+            return _context.Users.FirstOrDefault(u => u.AuthToken == token);
+        }
+
         /// <summary>
         /// Получение пользователя по электронной почте
         /// </summary>
