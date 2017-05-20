@@ -33,6 +33,8 @@ namespace API.ViewModels
 
         public bool IsChecked { get; set; }
         public IEnumerable<PictureViewModelShortGet> Pictures { get; set; }
+
+        public int Voices { get; set; }
     }
 
     public class ActivityViewModelShortGet
@@ -61,6 +63,8 @@ namespace API.ViewModels
         public bool IsChecked { get; set; }
 
         public PictureViewModelShortGet MainPicture { get; set; }
+
+        public int Voices { get; set; }
     }
 
     public class ActivityViewModelPost

@@ -19,11 +19,13 @@ namespace API.Controllers
     {
         private ActivityOperations _activityOperations;
         private PictureOperations _pictureOperations;
+        private VoiceOperations _voiceOperations;
 
-        public ActivityController(ActivityOperations activityOperations, PictureOperations pictureOperations)
+        public ActivityController(ActivityOperations activityOperations, PictureOperations pictureOperations, VoiceOperations voiceOperations)
         {
             _activityOperations = activityOperations;
             _pictureOperations = pictureOperations;
+            _voiceOperations = voiceOperations;
         }
 
         /// <summary>
@@ -55,6 +57,7 @@ namespace API.Controllers
                 });
                 }
                 result.Pictures = picturesVirewModels;
+                result.Voices = await _voiceOperations.GetActivityVoices(result.Id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -101,6 +104,7 @@ namespace API.Controllers
                         pictureViewModel.Url = Url.Content($"~/api/picture/{picture.Id}");
                     }
                     viewModel.MainPicture = pictureViewModel;
+                    viewModel.Voices = await _voiceOperations.GetActivityVoices(viewModel.Id);
                 }
 
                 return Ok(result);
