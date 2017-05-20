@@ -36,5 +36,7 @@ namespace Models.Entities
 
         public bool IsChecked { get; set; }
 
+        public bool Free { get; set; }
+
     }
 }

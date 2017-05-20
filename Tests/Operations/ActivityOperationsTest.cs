@@ -39,7 +39,7 @@ namespace Tests.Operations
         [TestMethod]
         public void SearchNoParameters_Ok_Test()
         {
-            var result = _activityOperations.SearchAsync(null, null, null, null, null, null, null).Result;
+            var result = _activityOperations.SearchAsync(null, null, null, null, null, null, 1).Result;
             Assert.IsTrue(result.Any());
         }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Camps.Tools;
 using Models.Entities;
 using System.Data.Entity;
+using Models.Tools;
 
 namespace Models.Operations
 {
@@ -37,15 +38,58 @@ namespace Models.Operations
                                                              int? cityId = null, 
                                                              bool? sobriety = null, 
                                                              bool? free = null, 
-                                                             int? page = null)
+                                                             int page = 1)
         {
             try
             {
-                // TODO: сделать нормальный поиск
-                return _context.Activities
-                                .Include(a => a.Organizer)
-                                .Include(a => a.Interest)
-                                .ToList();
+                IQueryable<Activity> result;
+
+                if (!String.IsNullOrEmpty(word))
+                {
+                    result = _context.Activities
+                        .Include(a => a.Organizer)
+                        .Include(a => a.Interest)
+                        .Where(a => (a.Name.Contains(word))
+                                    || (a.Description.Contains(word))
+                                    || (a.Organizer.Name.Contains(word)));
+                    
+                }
+                else
+                {
+                    result = _context.Activities
+                        .Include(a => a.Organizer)
+                        .Include(a => a.Interest);
+                }
+
+                if (age != null)
+                {
+                    result = result.Intersect(result.Where(a => (a.AgeFrom <= age.Value) && (a.AgeTo >= age.Value)));
+                }
+
+                if (interestId != null)
+                {
+                    result = result.Intersect(result.Where(a => a.InterestId == interestId.Value));
+                }
+
+                if (cityId != null)
+                {
+                    result = result.Intersect(result.Where(a => a.Organizer.CityId == cityId.Value));
+                }
+
+                if (sobriety != null)
+                {
+                    result = result.Intersect(result.Where(a => a.Organizer.Sobriety == sobriety.Value));
+                }
+
+                if (free != null)
+                {
+                    result = result.Intersect(result.Where(a => a.Free == free.Value));
+                }
+
+                
+
+                return await result.OrderBy(a => a.Name).Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                                            .Take(ModelsSettings.PAGE_SIZE).ToListAsync();
             }
             catch (Exception ex)
             {

@@ -87,7 +87,7 @@ namespace API.Controllers
                                                              int? cityId = null,
                                                              bool? sobriety = null,
                                                              bool? free = null,
-                                                             int? page = null)
+                                                             int page = 1)
         {
             try
             {
