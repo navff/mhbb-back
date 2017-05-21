@@ -57,7 +57,6 @@ namespace API.Controllers
                 });
                 }
                 result.Pictures = picturesVirewModels;
-                result.Voices = await _voiceOperations.GetActivityVoices(result.Id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -104,7 +103,6 @@ namespace API.Controllers
                         pictureViewModel.Url = Url.Content($"~/api/picture/{picture.Id}");
                     }
                     viewModel.MainPicture = pictureViewModel;
-                    viewModel.Voices = await _voiceOperations.GetActivityVoices(viewModel.Id);
                 }
 
                 return Ok(result);

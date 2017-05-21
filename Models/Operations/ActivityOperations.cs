@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Camps.Tools;
 using Models.Entities;
 using System.Data.Entity;
+using DelegateDecompiler;
+using DelegateDecompiler.EntityFramework;
 using Models.Tools;
 
 namespace Models.Operations
@@ -23,7 +25,10 @@ namespace Models.Operations
         {
             try
             {
-                return await _context.Activities.Include(a => a.Organizer).FirstOrDefaultAsync(a => a.Id == id);
+                return _context.Activities.Include(a => a.Organizer)
+                    .Include(a => a.ActivityUserVoices)
+                    .Decompile()
+                    .FirstOrDefault(a => a.Id == id);
             }
             catch (Exception ex)
             {
@@ -43,12 +48,15 @@ namespace Models.Operations
             try
             {
                 IQueryable<Activity> result;
+                // _context.Activities.Include(a => a.ActivityUserVoices).Decompile().OrderByDescending(a => a.Voices).ToList();
 
                 if (!String.IsNullOrEmpty(word))
                 {
                     result = _context.Activities
                         .Include(a => a.Organizer)
                         .Include(a => a.Interest)
+                        .Include(a => a.ActivityUserVoices)
+                        .Decompile()
                         .Where(a => (a.Name.Contains(word))
                                     || (a.Description.Contains(word))
                                     || (a.Organizer.Name.Contains(word)));
@@ -58,7 +66,9 @@ namespace Models.Operations
                 {
                     result = _context.Activities
                         .Include(a => a.Organizer)
-                        .Include(a => a.Interest);
+                        .Include(a => a.Interest)
+                        .Include(a => a.ActivityUserVoices)
+                        .Decompile();
                 }
 
                 if (age != null)
@@ -86,10 +96,11 @@ namespace Models.Operations
                     result = result.Intersect(result.Where(a => a.Free == free.Value));
                 }
 
-                
-
-                return await result.OrderBy(a => a.Name).Skip((page - 1) * ModelsSettings.PAGE_SIZE)
-                                            .Take(ModelsSettings.PAGE_SIZE).ToListAsync();
+                return result.OrderBy(a => a.Voices < 0 ? 1 : 0)
+                             .ThenByDescending(a => a.Voices)
+                             .ThenBy(a => a.Name)
+                             .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                             .Take(ModelsSettings.PAGE_SIZE).ToList();
             }
             catch (Exception ex)
             {
@@ -161,6 +172,11 @@ namespace Models.Operations
                 ErrorLogger.Log("CANNOT DELETE ACTIVITY", ex);
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<Activity>> GetWithVoices()
+        {
+            return _context.Activities.Include(a => a.ActivityUserVoices).Decompile().OrderByDescending(a => a.Voices).ToList();
         }
 
 

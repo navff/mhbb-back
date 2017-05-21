@@ -46,7 +46,7 @@ namespace Models.Operations
             try
             {
                 return await _context.Reservations.Include(r => r.User)
-                                                  .Include(r => r.Activity)
+                                                  .Include(r => r.Activity.ActivityUserVoices)
                                                   .FirstOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception ex)

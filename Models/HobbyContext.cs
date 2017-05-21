@@ -79,7 +79,6 @@ namespace Models
                 .WithMany()
                 .HasForeignKey(u => u.CityId)
                 .WillCascadeOnDelete(false);
-
         }
     }
 }
