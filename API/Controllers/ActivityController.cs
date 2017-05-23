@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API.Common;
+using API.Models;
 using API.ViewModels;
 using AutoMapper;
 using Camps.Tools;
@@ -38,7 +39,7 @@ namespace API.Controllers
         {
             try
             {
-                var activity = await _activityOperations.GetAsync(id);
+                var activity = _activityOperations.Get(id);
                 if (activity == null)
                 {
                     return this.Result404("This activity is not found");
@@ -76,7 +77,6 @@ namespace API.Controllers
         /// <param name="sobriety">Трезвые преподаватели</param>
         /// <param name="free">Бесплатно</param>
         /// <param name="page">Страница пагинации</param>
-        /// <returns></returns>
         [HttpGet]
         [Route("search")]
         [ResponseType(typeof(IEnumerable<ActivityViewModelGet>))]
@@ -91,21 +91,8 @@ namespace API.Controllers
             try
             {
                 var activities = await _activityOperations.SearchAsync(word, age, interestId,
-                                                                       cityId, sobriety, free, page);
-                var result = Mapper.Map<IEnumerable<ActivityViewModelShortGet>>(activities).ToList();
-
-                foreach (var viewModel in result)
-                {
-                    var picture = (await _pictureOperations.GetMainByLinkedObject(LinkedObjectType.Activity, viewModel.Id));
-                    var pictureViewModel = Mapper.Map<PictureViewModelShortGet>(picture);
-                    if (pictureViewModel != null)
-                    {
-                        pictureViewModel.Url = Url.Content($"~/api/picture/{picture.Id}");
-                    }
-                    viewModel.MainPicture = pictureViewModel;
-                }
-
-                return Ok(result);
+                                                                       cityId, sobriety, free, true, page);
+                return Ok(await ViewModelsFromEntities(activities));
             }
             catch (Exception ex)
             {
@@ -113,6 +100,59 @@ namespace API.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Ищет непроверенные активности по параметрам
+        /// </summary>
+        /// <param name="word">Поисковое слово</param>
+        /// <param name="age">Возраст</param>
+        /// <param name="interestId">Интерес</param>
+        /// <param name="cityId">Город</param>
+        /// <param name="sobriety">Трезвые преподаватели</param>
+        /// <param name="free">Бесплатно</param>
+        /// <param name="page">Страница пагинации</param>
+        [HttpGet]
+        [Route("searchunchecked")]
+        [ResponseType(typeof(IEnumerable<ActivityViewModelGet>))]
+        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
+        public async Task<IHttpActionResult> SearchUnchecked(String word = null,
+                                                     int? age = null,
+                                                     int? interestId = null,
+                                                     int? cityId = null,
+                                                     bool? sobriety = null,
+                                                     bool? free = null,
+                                                     int page = 1)
+        {
+            try
+            {
+                var activities = await _activityOperations.SearchAsync(word, age, interestId,
+                                                                       cityId, sobriety, free, false, page);
+                return Ok(await ViewModelsFromEntities(activities));
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT SEARCH ACTIVITY", ex);
+                throw;
+            }
+        }
+
+        private async Task<List<ActivityViewModelShortGet>> ViewModelsFromEntities(IEnumerable<Activity> activities)
+        {
+            var result = Mapper.Map<IEnumerable<ActivityViewModelShortGet>>(activities).ToList();
+
+            foreach (var viewModel in result)
+            {
+                var picture = (await _pictureOperations.GetMainByLinkedObject(LinkedObjectType.Activity, viewModel.Id));
+                var pictureViewModel = Mapper.Map<PictureViewModelShortGet>(picture);
+                if (pictureViewModel != null)
+                {
+                    pictureViewModel.Url = Url.Content($"~/api/picture/{picture.Id}");
+                }
+                viewModel.MainPicture = pictureViewModel;
+            }
+            return result;
+        }
+
 
         /// <summary>
         /// Обновление активности

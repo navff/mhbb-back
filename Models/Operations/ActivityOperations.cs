@@ -21,7 +21,7 @@ namespace Models.Operations
             _context = context;
         }
 
-        public async Task<Activity> GetAsync(int id)
+        public Activity Get(int id)
         {
             try
             {
@@ -43,12 +43,12 @@ namespace Models.Operations
                                                              int? cityId = null, 
                                                              bool? sobriety = null, 
                                                              bool? free = null, 
+                                                             bool isChecked = true,
                                                              int page = 1)
         {
             try
             {
                 IQueryable<Activity> result;
-                // _context.Activities.Include(a => a.ActivityUserVoices).Decompile().OrderByDescending(a => a.Voices).ToList();
 
                 if (!String.IsNullOrEmpty(word))
                 {
@@ -72,7 +72,7 @@ namespace Models.Operations
                 }
 
                 // убираем неактивированные
-                result = result.Where(a => a.IsChecked);
+                result = result.Where(a => a.IsChecked == isChecked);
 
                 // проходим по фильтрам
                 if (age != null)

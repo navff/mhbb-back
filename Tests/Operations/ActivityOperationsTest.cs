@@ -25,28 +25,28 @@ namespace Tests.Operations
         public void Get_Ok_Test()
         {
             var activity = _context.Activities.First();
-            var result = _activityOperations.GetAsync(activity.Id).Result;
+            var result = _activityOperations.Get(activity.Id);
             Assert.AreEqual(activity.Name, result.Name);
         }
 
         [TestMethod]
         public void Get_WrongId_Test()
         {
-            var result = _activityOperations.GetAsync(9999).Result;
+            var result = _activityOperations.Get(9999);
             Assert.IsNull(result);
         }
 
         [TestMethod]
         public void SearchNoParameters_Ok_Test()
         {
-            var result = _activityOperations.SearchAsync(null, null, null, null, null, null, 1).Result;
+            var result = _activityOperations.SearchAsync(null, null, null, null, null, null, false, 1).Result;
             Assert.IsTrue(result.Any());
         }
 
         [TestMethod]
         public void SearchByWord_Ok_Test()
         {
-            var activity = _context.Activities.First();
+            var activity = _context.Activities.First(a => a.IsChecked);
             var result = _activityOperations.SearchAsync(word: activity.Name.Substring(2)).Result.ToList();
             Assert.IsTrue(result.Any());
             Assert.AreEqual(activity.Name, result.First().Name);
@@ -63,7 +63,7 @@ namespace Tests.Operations
         [TestMethod]
         public void SearchByInterest_Ok_Test()
         {
-            var activity = _context.Activities.First();
+            var activity = _context.Activities.First(a => a.IsChecked);
             var result = _activityOperations.SearchAsync(interestId: activity.InterestId).Result;
             Assert.IsTrue(result.Any());
 
@@ -79,7 +79,7 @@ namespace Tests.Operations
         [TestMethod]
         public void SearchByAllFields_Ok_Test()
         {
-            var activity = _context.Activities.Include(a => a.Organizer).First();
+            var activity = _context.Activities.Include(a => a.Organizer).First(a => a.IsChecked);
             var result = _activityOperations.SearchAsync(word: activity.Name.Substring(2),
                                                          age:activity.AgeFrom, 
                                                          interestId: activity.InterestId,

@@ -48,6 +48,14 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
+        public void SearchUnchecked_Ok_Test()
+        {
+            string url = $"api/activity/searchunchecked";
+            var result = HttpGet<IEnumerable<ActivityViewModelGet>>(url, "ABRAKADABRA");
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
         public void Search_Pagination_Test()
         {
             string url = $"api/activity/search?page=1";

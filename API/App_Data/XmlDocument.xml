@@ -584,7 +584,18 @@
             <param name="sobriety">Трезвые преподаватели</param>
             <param name="free">Бесплатно</param>
             <param name="page">Страница пагинации</param>
-            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ActivityController.SearchUnchecked(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Int32)">
+            <summary>
+            Ищет непроверенные активности по параметрам
+            </summary>
+            <param name="word">Поисковое слово</param>
+            <param name="age">Возраст</param>
+            <param name="interestId">Интерес</param>
+            <param name="cityId">Город</param>
+            <param name="sobriety">Трезвые преподаватели</param>
+            <param name="free">Бесплатно</param>
+            <param name="page">Страница пагинации</param>
         </member>
         <member name="M:API.Controllers.ActivityController.Put(System.Int32,API.ViewModels.ActivityViewModelPost)">
             <summary>
