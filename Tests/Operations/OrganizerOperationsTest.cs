@@ -30,6 +30,14 @@ namespace Tests.Operations
         }
 
         [TestMethod]
+        public void GetByCity_Ok_Test()
+        {
+            var org = _context.Organizers.First();
+            var result = _organizerOperations.GetByCityAsync(org.CityId).Result;
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
         public void Get_WrongId_Test()
         {
             var result = _organizerOperations.GetAsync(99999).Result;

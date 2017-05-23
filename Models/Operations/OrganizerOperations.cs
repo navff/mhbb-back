@@ -27,6 +27,19 @@ namespace Models.Operations
                                  .FirstOrDefaultAsync(o => o.Id == organizerId);
         }
 
+        public async Task<IEnumerable<Organizer>> GetByCityAsync(int cityId, int page=1)
+        {
+            Contracts.Assert(page >= 1);
+
+            var result = await _context.Organizers
+                                    .Where(o => o.CityId == cityId)
+                                    .OrderBy(o => o.Name)
+                                    .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                                    .Take(ModelsSettings.PAGE_SIZE)
+                                    .ToListAsync();
+            return result;
+        }
+
         public async Task<Organizer> AddAsync(Organizer organizer)
         {
             _context.Organizers.Add(organizer);

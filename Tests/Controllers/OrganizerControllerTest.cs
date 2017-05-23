@@ -146,5 +146,20 @@ namespace Tests.Controllers
             var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/getall?page=1000");
             Assert.IsFalse(result.Any());
         }
+
+        [TestMethod]
+        public void GetByCity_Ok_Test()
+        {
+            var org = _context.Organizers.First();
+            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/bycity/{org.CityId}?page=1");
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
+        public void GetByCity_NoResults_Test()
+        {
+            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/bycity/99999?page=1");
+            Assert.IsFalse(result.Any());
+        }
     }
 }

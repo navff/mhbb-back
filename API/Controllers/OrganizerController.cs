@@ -169,5 +169,24 @@ namespace API.Controllers
                 throw;
             }
         }
+
+
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
+        [Route("bycity/{cityId}")]
+        public async Task<IHttpActionResult> GetByCity(int cityId, int page=1)
+        {
+            try
+            {
+                var orgs = await _organizerOperations.GetByCityAsync(cityId, page);
+                var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT GETALL ORGANIZERS", ex);
+                throw;
+            }
+        }
     }
 }
