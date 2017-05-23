@@ -71,6 +71,10 @@ namespace Models.Operations
                         .Decompile();
                 }
 
+                // убираем неактивированные
+                result = result.Where(a => a.IsChecked);
+
+                // проходим по фильтрам
                 if (age != null)
                 {
                     result = result.Intersect(result.Where(a => (a.AgeFrom <= age.Value) && (a.AgeTo >= age.Value)));
@@ -173,12 +177,5 @@ namespace Models.Operations
                 throw;
             }
         }
-
-        public async Task<IEnumerable<Activity>> GetWithVoices()
-        {
-            return _context.Activities.Include(a => a.ActivityUserVoices).Decompile().OrderByDescending(a => a.Voices).ToList();
-        }
-
-
     }
 }
