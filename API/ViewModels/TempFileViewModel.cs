@@ -6,6 +6,9 @@ using System.Web;
 
 namespace API.ViewModels
 {
+    /// <summary>
+    /// Временный файл
+    /// </summary>
     public class TempFileViewModelGet
     {
         /// <summary>
@@ -24,11 +27,20 @@ namespace API.ViewModels
         [Required]
         public string Filename { get; set; }
 
+        /// <summary>
+        /// УРЛ, по которому можно скачать файл
+        /// </summary>
         public string Url { get; set; }
 
+        /// <summary>
+        /// Является главной картинкой для активности
+        /// </summary>
         public bool IsMain { get; set; }
     }
 
+    /// <summary>
+    /// Временный файл
+    /// </summary>
     public class TempFileViewModelPost
     {
         /// <summary>
@@ -48,6 +60,9 @@ namespace API.ViewModels
         [Required]
         public byte[] Data { get; set; }
 
+        /// <summary>
+        /// Является главной картинкой
+        /// </summary>
         public bool IsMain { get; set; }
     }
 }

@@ -6,6 +6,9 @@ using System.Web;
 
 namespace API.ViewModels
 {
+    /// <summary>
+    /// Заказ активности. Если пользователь хочет участвовать, — он отправляет заказ и этот заказ приходит к организатору. 
+    /// </summary>
     public class ReservationViewModelGet
     {
         /// <summary>

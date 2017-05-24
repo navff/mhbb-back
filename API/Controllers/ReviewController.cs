@@ -18,6 +18,9 @@ using Models.Operations;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Работа с отзывами
+    /// </summary>
     [RoutePrefix("api/review")]
     public class ReviewController : ApiController
     {
@@ -28,6 +31,11 @@ namespace API.Controllers
             _reviewOperations = reviewOperations;
         }
 
+        /// <summary>
+        /// Получение отзыва
+        /// </summary>
+        /// <param name="id">ID отзыва</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(ReviewViewModelGet))]
         public async Task<IHttpActionResult> Get(int id)
@@ -46,6 +54,11 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение списка отзывов, которые опубликовал пользователь
+        /// </summary>
+        /// <param name="email">Почта пользователя</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("byuser")]
         [ResponseType(typeof(IEnumerable<ReviewViewModelGet>))]
@@ -64,6 +77,11 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Получить отзывы по активности. 
+        /// </summary>
+        /// <param name="activityId">ID активности</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("byactivity")]
         [ResponseType(typeof(IEnumerable<ReviewViewModelGet>))]
@@ -82,6 +100,10 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Изменение отзыва
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [RESTAuthorize]
         [ResponseType(typeof(ReviewViewModelGet))]
@@ -106,6 +128,9 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Добавление отзыва
+        /// </summary>
         [HttpPost]
         [ResponseType(typeof(ReviewViewModelGet))]
         [RESTAuthorize]
@@ -126,6 +151,9 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление отзыва.
+        /// </summary>
         [HttpDelete]
         [RESTAuthorize]
         public async Task<IHttpActionResult> Delete(int id)
@@ -148,6 +176,12 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Установить признак проверки. Админ проверяет отзыв и устанавливает, что отзыв нормальный. 
+        /// </summary>
+        /// <param name="reviewId">ID отзыва</param>
+        /// <param name="isChecked">Результат проверки. True, если всё нормально</param>
+        /// <returns></returns>
         [HttpPut]
         [ResponseType(typeof(ReviewViewModelGet))]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
@@ -169,6 +203,11 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Проверка прав пользователя на отзыв
+        /// </summary>
+        /// <param name="review"></param>
+        /// <returns></returns>
         private IHttpActionResult CheckPermission(Review review)
         {
             if ((!User.IsInRole("PortalAdmin"))

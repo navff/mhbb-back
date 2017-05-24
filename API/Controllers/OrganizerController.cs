@@ -17,6 +17,9 @@ using Models.Operations;
 namespace API.Controllers
 {
 
+    /// <summary>
+    /// Работа с организаторами активностей. 
+    /// </summary>
     [RoutePrefix("api/organizer")]
     public class OrganizerController : ApiController
     {
@@ -134,6 +137,10 @@ namespace API.Controllers
         }
 
 
+        /// <summary>
+        /// ПОлучает всех организаторов.
+        /// </summary>
+        /// <param name="page">Номер страницы по 100 штук</param>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
         [Route("getall")]
@@ -152,6 +159,12 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Ищет организаторов по параметрам
+        /// </summary>
+        /// <param name="cityId">Город</param>
+        /// <param name="word">Поисковое слово</param>
+        /// <param name="page">Номер страницы по 100. По умолчанию выдаётся первая страница</param>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
         [Route("search")]

@@ -15,6 +15,9 @@ using Models.Operations;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Работа с активностями
+    /// </summary>
     [RoutePrefix("api/activity")]
     public class ActivityController : ApiController
     {

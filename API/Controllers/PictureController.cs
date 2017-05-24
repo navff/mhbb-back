@@ -18,6 +18,9 @@ using Models.Operations;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Работа с картинками
+    /// </summary>
     [RoutePrefix("api/picture")]
     public class PictureController : ApiController
     {

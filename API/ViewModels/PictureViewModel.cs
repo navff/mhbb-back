@@ -39,6 +39,9 @@ namespace API.ViewModels
         public string Url { get; set; }
     }
 
+    /// <summary>
+    /// Картинка
+    /// </summary>
     public class PictureViewModelShortGet
     {
         /// <summary>

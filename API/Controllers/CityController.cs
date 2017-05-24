@@ -30,6 +30,10 @@ namespace API.Controllers
             _cityOperations = cityOperations;
         }
 
+        /// <summary>
+        /// Получение всех городов
+        /// </summary>
+        /// <returns></returns>
         [ResponseType(typeof(IEnumerable<CityViewModelGet>))]
         public async Task<IHttpActionResult> GetAll()
         {

@@ -8,6 +8,9 @@ using Models.Entities;
 
 namespace API.ViewModels
 {
+    /// <summary>
+    /// Голос за активность
+    /// </summary>
     public class ActivityUserVoiceViewModel
     {
         public int Id { get; set; }

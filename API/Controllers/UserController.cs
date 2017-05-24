@@ -158,6 +158,10 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Выход пользователя со всех устройств. Убивает предыдущий токен и создаёт новый. 
+        /// Чтобы получить новый токен нужно вызвать метод Register
+        /// </summary>
         [HttpPut]
         [RESTAuthorize]
         [Route("logout")]
