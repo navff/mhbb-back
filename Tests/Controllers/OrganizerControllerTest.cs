@@ -122,7 +122,7 @@ namespace Tests.Controllers
         public void Search_Ok_Test()
         {
             var org = _context.Organizers.First();
-            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/search?word={org.Name.Substring(2)}");
+            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/search?word={org.Name.Substring(2)}&cityId={org.CityId}");
             Assert.AreEqual(org.Name, result.FirstOrDefault(o => o.Name == org.Name)?.Name);
         }
 
@@ -133,33 +133,5 @@ namespace Tests.Controllers
             Assert.IsFalse(result.Any());
         }
 
-        [TestMethod]
-        public void GetAll_Ok_Test()
-        {
-            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/getall?page=1");
-            Assert.IsTrue(result.Any());
-        }
-
-        [TestMethod]
-        public void GetAll_WrongPage_Test()
-        {
-            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/getall?page=1000");
-            Assert.IsFalse(result.Any());
-        }
-
-        [TestMethod]
-        public void GetByCity_Ok_Test()
-        {
-            var org = _context.Organizers.First();
-            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/bycity/{org.CityId}?page=1");
-            Assert.IsTrue(result.Any());
-        }
-
-        [TestMethod]
-        public void GetByCity_NoResults_Test()
-        {
-            var result = HttpGet<IEnumerable<OrganizerViewModelGet>>($"api/organizer/bycity/99999?page=1");
-            Assert.IsFalse(result.Any());
-        }
     }
 }

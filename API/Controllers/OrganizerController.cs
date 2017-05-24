@@ -133,24 +133,6 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
-        [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
-        [Route("search")]
-        public async Task<IHttpActionResult> Search(string word)
-        {
-            try
-            {
-                var orgs = await _organizerOperations.SearchAsync(word);
-                var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogger.Log("CANNOT SEARCH ORGANIZER", ex);
-                throw;
-            }
-
-        }
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
@@ -159,7 +141,7 @@ namespace API.Controllers
         {
             try
             {
-                var orgs = await _organizerOperations.GetAllAsync(page);
+                var orgs = await _organizerOperations.SearchAsync(null, null, page);
                 var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
                 return Ok(result);
             }
@@ -169,24 +151,24 @@ namespace API.Controllers
                 throw;
             }
         }
-
 
         [HttpGet]
         [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
-        [Route("bycity/{cityId}")]
-        public async Task<IHttpActionResult> GetByCity(int cityId, int page=1)
+        [Route("search")]
+        public async Task<IHttpActionResult> Search(int? cityId=null, String word = "", int page=1)
         {
             try
             {
-                var orgs = await _organizerOperations.GetByCityAsync(cityId, page);
+                var orgs = await _organizerOperations.SearchAsync(cityId, word, page);
                 var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                ErrorLogger.Log("CANNOT GETALL ORGANIZERS", ex);
+                ErrorLogger.Log("CANNOT SEARCH ORGANIZERS", ex);
                 throw;
             }
         }
+
     }
 }
