@@ -79,7 +79,7 @@ namespace API.Controllers
         /// <param name="page">Страница пагинации</param>
         [HttpGet]
         [Route("search")]
-        [ResponseType(typeof(IEnumerable<ActivityViewModelGet>))]
+        [ResponseType(typeof(IEnumerable<ActivityViewModelShortGet>))]
         public async Task<IHttpActionResult> Search(String word = null,
                                                              int? age = null,
                                                              int? interestId = null,
@@ -113,7 +113,7 @@ namespace API.Controllers
         /// <param name="page">Страница пагинации</param>
         [HttpGet]
         [Route("searchunchecked")]
-        [ResponseType(typeof(IEnumerable<ActivityViewModelGet>))]
+        [ResponseType(typeof(IEnumerable<ActivityViewModelShortGet>))]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         public async Task<IHttpActionResult> SearchUnchecked(String word = null,
                                                      int? age = null,

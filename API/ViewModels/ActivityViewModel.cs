@@ -51,6 +51,10 @@ namespace API.ViewModels
         public int Voices { get; set; }
 
         public bool Free { get; set; }
+
+        public int AgeFrom { get; set; }
+
+        public int AgeTo { get; set; }
     }
 
     public class ActivityViewModelPost
