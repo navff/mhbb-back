@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
@@ -143,40 +144,24 @@ namespace API.Operations
             return userInDb;
         }
 
-        public async Task<IEnumerable<User>> SearchAsync(string word="", int page=1)
+        public async Task<IEnumerable<User>> SearchAsync(List<Role> roles=null, string word="", int page=1)
         {
-            var result = new List<User>();
-            if (String.IsNullOrEmpty(word))
+            IQueryable<User> result = _context.Users.AsQueryable();
+
+            if (!String.IsNullOrEmpty(word))
             {
-                result = await _context.Users.OrderBy(u => u.Name).ThenBy(u => u.Email)
-                                            .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
-                                            .Take(ModelsSettings.PAGE_SIZE)
-                                            .ToListAsync();
+                result = result.Where(u => (u.Email.Contains(word)) 
+                                        || (u.Name.Contains(word))
+                                        || (u.Phone.Contains(word)));
+
             }
 
-            var usersByEmail = await _context.Users.Where(u => u.Email.Contains(word))
-                                                    .OrderBy(u => u.Name).ThenBy(u => u.Email)
-                                                    .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
-                                                    .Take(ModelsSettings.PAGE_SIZE)
-                                                    .ToListAsync();
-            result.AddRange(usersByEmail);
+            if (roles!=null &&  roles.Any())
+            {
+                result = result.Where(u => roles.Any(r => r == u.Role));
+            }
 
-
-            var usersByName = await _context.Users.Where(u => u.Name.Contains(word))
-                                                    .OrderBy(u => u.Name).ThenBy(u => u.Email)
-                                                    .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
-                                                    .Take(ModelsSettings.PAGE_SIZE)
-                                                    .ToListAsync();
-            result.AddRange(usersByName);
-
-
-            var usersByPhone = await _context.Users.Where(u => u.Phone.Contains(word))
-                                                    .OrderBy(u => u.Name).ThenBy(u => u.Email)
-                                                    .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
-                                                    .Take(ModelsSettings.PAGE_SIZE).ToListAsync();
-            result.AddRange(usersByPhone);
-
-            return result;
+            return await result.ToListAsync();
         }
 
         

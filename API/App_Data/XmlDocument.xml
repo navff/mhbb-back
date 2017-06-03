@@ -568,6 +568,11 @@
             Проверяет ошибки в ModelState и выдаёт их в response
             </summary>
         </member>
+        <member name="T:API.Controllers.ActivityController">
+            <summary>
+            Работа с активностями
+            </summary>
+        </member>
         <member name="M:API.Controllers.ActivityController.Get(System.Int32)">
             <summary>
             Ищет активность по ID
@@ -619,6 +624,12 @@
             <summary>
             Управление городами
             </summary>
+        </member>
+        <member name="M:API.Controllers.CityController.GetAll">
+            <summary>
+            Получение всех городов
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:API.Controllers.CityController.Get(System.Int32)">
             <summary>
@@ -673,6 +684,11 @@
             </summary>
             <param name="id">ID удаляемого объекта</param>
         </member>
+        <member name="T:API.Controllers.InterestController">
+            <summary>
+            Работа с интересами
+            </summary>
+        </member>
         <member name="M:API.Controllers.InterestController.Get(System.Int32)">
             <summary>
             Получает интерес по ID
@@ -698,6 +714,11 @@
             Получение всех возможных интересов
             </summary>
         </member>
+        <member name="T:API.Controllers.OrganizerController">
+            <summary>
+            Работа с организаторами активностей. 
+            </summary>
+        </member>
         <member name="M:API.Controllers.OrganizerController.Get(System.Int32)">
             <summary>
             Получат организатора
@@ -720,6 +741,25 @@
         <member name="M:API.Controllers.OrganizerController.Delete(System.Int32)">
             <summary>
             Удаление организатора
+            </summary>
+        </member>
+        <member name="M:API.Controllers.OrganizerController.GetAll(System.Int32)">
+            <summary>
+            ПОлучает всех организаторов.
+            </summary>
+            <param name="page">Номер страницы по 100 штук</param>
+        </member>
+        <member name="M:API.Controllers.OrganizerController.Search(System.Nullable{System.Int32},System.String,System.Int32)">
+            <summary>
+            Ищет организаторов по параметрам
+            </summary>
+            <param name="cityId">Город</param>
+            <param name="word">Поисковое слово</param>
+            <param name="page">Номер страницы по 100. По умолчанию выдаётся первая страница</param>
+        </member>
+        <member name="T:API.Controllers.PictureController">
+            <summary>
+            Работа с картинками
             </summary>
         </member>
         <member name="M:API.Controllers.PictureController.GetAsync(System.Int32)">
@@ -774,6 +814,63 @@
             <summary>
             Ищет по телефону, имени, email
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:API.Controllers.ReviewController">
+            <summary>
+            Работа с отзывами
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ReviewController.Get(System.Int32)">
+            <summary>
+            Получение отзыва
+            </summary>
+            <param name="id">ID отзыва</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ReviewController.GetByUser(System.String)">
+            <summary>
+            Получение списка отзывов, которые опубликовал пользователь
+            </summary>
+            <param name="email">Почта пользователя</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ReviewController.GetByActivity(System.Int32)">
+            <summary>
+            Получить отзывы по активности. 
+            </summary>
+            <param name="activityId">ID активности</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ReviewController.Put(System.Int32,API.ViewModels.ReviewViewModelPost)">
+            <summary>
+            Изменение отзыва
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ReviewController.Post(API.ViewModels.ReviewViewModelPost)">
+            <summary>
+            Добавление отзыва
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ReviewController.Delete(System.Int32)">
+            <summary>
+            Удаление отзыва.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ReviewController.SetChecked(System.Int32,System.Boolean)">
+            <summary>
+            Установить признак проверки. Админ проверяет отзыв и устанавливает, что отзыв нормальный. 
+            </summary>
+            <param name="reviewId">ID отзыва</param>
+            <param name="isChecked">Результат проверки. True, если всё нормально</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ReviewController.CheckPermission(Models.Entities.Review)">
+            <summary>
+            Проверка прав пользователя на отзыв
+            </summary>
+            <param name="review"></param>
             <returns></returns>
         </member>
         <member name="T:API.Controllers.TempFileController">
@@ -847,13 +944,20 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.Controllers.UserController.Search(System.String,System.Int32)">
+        <member name="M:API.Controllers.UserController.Search(System.Collections.Generic.List{API.Models.Role},System.String,System.Int32)">
             <summary>
             Ищет пользователей по электропочте, имени или номеру телефона.
             </summary>
+            <param name="roles">Роли списком. Например: roles=0&amp;roles=2</param>
             <param name="word">Поисковое слово. Можно не передавать, тогда выдаст всех</param>
             <param name="page">Номер страницы для постраничной навигации. По-умолчанию — 1</param>
             <returns></returns>
+        </member>
+        <member name="M:API.Controllers.UserController.Logout">
+            <summary>
+            Выход пользователя со всех устройств. Убивает предыдущий токен и создаёт новый. 
+            Чтобы получить новый токен нужно вызвать метод Register
+            </summary>
         </member>
         <member name="T:API.Controllers.VoiceController">
              <summary>
@@ -868,6 +972,141 @@
         <member name="M:API.Controllers.VoiceController.Negative(System.Int32)">
             <summary>
             Проголосовать негативно. Активность не понравилась
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.ActivityViewModelGet">
+            <summary>
+            Активность
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Organizer">
+            <summary>
+            Организатор
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.AgeFrom">
+            <summary>
+            От скольки лет можно участвовать в активности
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.AgeTo">
+            <summary>
+            До скольки лет можно участвовать
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Phones">
+            <summary>
+            Телефоны (простым текстом)
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Address">
+            <summary>
+            Адрес проведения
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Prices">
+            <summary>
+            Ценовая политика (простым текстом)
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Mentor">
+            <summary>
+            Ведущий
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Interest">
+            <summary>
+            Категория интересов
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.IsChecked">
+            <summary>
+            Проверена админом
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Pictures">
+            <summary>
+            Картинки
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Voices">
+            <summary>
+            Сумма голосов за активность
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelGet.Free">
+            <summary>
+            Бесплатная
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.ActivityViewModelShortGet">
+            <summary>
+            Активность
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.Organizer">
+            <summary>
+            Организатор
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.MainPicture">
+            <summary>
+            Главная картинка
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.Voices">
+            <summary>
+            Сумма голосов за активность
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.Free">
+            <summary>
+            Бесплатная
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.AgeFrom">
+            <summary>
+            Возраст, с которого можно участвовать
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelShortGet.AgeTo">
+            <summary>
+            Возраст, до которого можно участвовать
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.ActivityViewModelPost">
+            <summary>
+            Активность
             </summary>
         </member>
         <member name="P:API.ViewModels.ActivityViewModelPost.Name">
@@ -937,6 +1176,56 @@
             превратятся в Picture и привяжутся в данной активности.
             </summary>
         </member>
+        <member name="T:API.ViewModels.CityViewModelGet">
+            <summary>
+            Город
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.CityViewModelGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.CityViewModelGet.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.CityViewModelPost">
+            <summary>
+            Город
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.CityViewModelPost.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.InterestViewModelGet">
+            <summary>
+            Интерес. По сути, это категория активностей. Типа «Наука и техника», «рукоделие» и т.д.
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.InterestViewModelGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.InterestViewModelGet.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.InterestViewModelPost">
+            <summary>
+            Интерес. По сути, это категория активностей. Типа «Наука и техника», «рукоделие» и т.д.
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.InterestViewModelPost.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
         <member name="T:API.ViewModels.OrganizerViewModelGet">
             <summary>
             Организатор
@@ -984,7 +1273,7 @@
         </member>
         <member name="P:API.ViewModels.OrganizerViewModelPost.Sobriety">
             <summary>
-            Трезвость
+            Трезвость. Все преподаватели ведут трезвый образ жизни и не покажут отрицательный пример даже по праздникам.
             </summary>
         </member>
         <member name="T:API.ViewModels.PictureViewModelGet">
@@ -1017,6 +1306,11 @@
             Тип объекта
             </summary>
         </member>
+        <member name="T:API.ViewModels.PictureViewModelShortGet">
+            <summary>
+            Картинка
+            </summary>
+        </member>
         <member name="P:API.ViewModels.PictureViewModelShortGet.Id">
             <summary>
             ID
@@ -1030,6 +1324,11 @@
         <member name="P:API.ViewModels.PictureViewModelShortGet.IsMain">
             <summary>
             Картинка главная для объекта
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.ReservationViewModelGet">
+            <summary>
+            Заказ активности. Если пользователь хочет участвовать, — он отправляет заказ и этот заказ приходит к организатору. 
             </summary>
         </member>
         <member name="P:API.ViewModels.ReservationViewModelGet.Id">
@@ -1092,9 +1391,69 @@
             Коммент, который оставил записываемый
             </summary>
         </member>
+        <member name="T:API.ViewModels.ReviewViewModelGet">
+            <summary>
+            Отзыв об активности
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.UserEmail">
+            <summary>
+            Логин пользователя, оставившего отзыв
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.ActivityId">
+            <summary>
+            Id активности, на которую оставлен отзыв
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.Text">
+            <summary>
+            Текст отзыва
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.DateCreated">
+            <summary>
+            Дата создания
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.ReplyToReviewId">
+            <summary>
+            Родительский отзыв (если есть). Ответом на какой отзыв является текущий отзыв
+            </summary>
+        </member>
         <member name="P:API.ViewModels.ReviewViewModelGet.IsChecked">
             <summary>
             Отзыв проверен менеджером
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.ReviewViewModelPost">
+            <summary>
+            Отзыв
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelPost.ActivityId">
+            <summary>
+            ID активности, на которую пишется отзыв
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelPost.Text">
+            <summary>
+            Текст отзыва
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ReviewViewModelPost.ReplyToReviewId">
+            <summary>
+            Родительский отзыв (если есть). Ответом на какой отзыв является текущий отзыв
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.TempFileViewModelGet">
+            <summary>
+            Временный файл
             </summary>
         </member>
         <member name="P:API.ViewModels.TempFileViewModelGet.Id">
@@ -1112,6 +1471,21 @@
             Имя файла с расширением
             </summary>
         </member>
+        <member name="P:API.ViewModels.TempFileViewModelGet.Url">
+            <summary>
+            УРЛ, по которому можно скачать файл
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.TempFileViewModelGet.IsMain">
+            <summary>
+            Является главной картинкой для активности
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.TempFileViewModelPost">
+            <summary>
+            Временный файл
+            </summary>
+        </member>
         <member name="P:API.ViewModels.TempFileViewModelPost.FormId">
             <summary>
             Id формы, на которой закачали файл
@@ -1125,6 +1499,11 @@
         <member name="P:API.ViewModels.TempFileViewModelPost.Data">
             <summary>
             Двоичные данные файла
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.TempFileViewModelPost.IsMain">
+            <summary>
+            Является главной картинкой
             </summary>
         </member>
         <member name="T:API.ViewModels.UserViewModelGet">
@@ -1173,6 +1552,11 @@
             Название города
             </summary>
         </member>
+        <member name="T:API.ViewModels.UserViewModelPut">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
         <member name="P:API.ViewModels.UserViewModelPut.Email">
             <summary>
             Электропочта
@@ -1201,6 +1585,21 @@
         <member name="P:API.ViewModels.UserViewModelPut.CityId">
             <summary>
             Id города
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.UserRegisterViewModel">
+            <summary>
+            Регистрация или аутентификация
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.UserRegisterViewModel.Email">
+            <summary>
+            Почта пользователя
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.ActivityUserVoiceViewModel">
+            <summary>
+            Голос за активность
             </summary>
         </member>
         <member name="P:API.ViewModels.ActivityUserVoiceViewModel.UserEmail">

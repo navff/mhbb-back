@@ -118,7 +118,7 @@ namespace Tests.Operations
         [TestMethod]
         public void Search_ByEmail_Test()
         {
-            var result = _userOperations.SearchAsync("var@33kita.ru").Result;
+            var result = _userOperations.SearchAsync(word:"var@33kita.ru").Result;
             Assert.IsNotNull(result);
             Assert.AreEqual("var@33kita.ru", result.First().Email);
         }
@@ -126,7 +126,7 @@ namespace Tests.Operations
         [TestMethod]
         public void Search_ByWrongEmail_Test()
         {
-            var result = _userOperations.SearchAsync("fsdjhkkjsdfsdfjkhdfskjhjdfskr@33kita.ru").Result;
+            var result = _userOperations.SearchAsync(word: "fsdjhkkjsdfsdfjkhdfskjhjdfskr@33kita.ru").Result;
             Assert.IsTrue(!result.Any());
         }
 
@@ -134,7 +134,7 @@ namespace Tests.Operations
         public void Search_ByName_Test()
         {
             var user = _context.Users.First();
-            var result = _userOperations.SearchAsync(user.Name.Substring(2)).Result;
+            var result = _userOperations.SearchAsync(word: user.Name.Substring(2)).Result;
             Assert.IsNotNull(result);
             Assert.AreEqual(user.Email, result.First().Email);
         }
@@ -142,7 +142,7 @@ namespace Tests.Operations
         [TestMethod]
         public void Search_ByWrongName_Test()
         {
-            var result = _userOperations.SearchAsync("Моркккккккк!!!рол").Result;
+            var result = _userOperations.SearchAsync(word: "Моркккккккк!!!рол").Result;
             Assert.IsTrue(!result.Any());
         }
     }
