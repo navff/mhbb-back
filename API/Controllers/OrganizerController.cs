@@ -136,7 +136,7 @@ namespace API.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
         [Route("search")]
-        public async Task<IHttpActionResult> Search(string word)
+        public async Task<IHttpActionResult> Search(string word="")
         {
             try
             {
@@ -155,7 +155,7 @@ namespace API.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
         [Route("getall")]
-        public async Task<IHttpActionResult> GetAll(int page)
+        public async Task<IHttpActionResult> GetAll(int page=1)
         {
             try
             {
