@@ -743,7 +743,7 @@
             Удаление организатора
             </summary>
         </member>
-        <member name="M:API.Controllers.OrganizerController.GetAll(System.Int32)">
+        <member name="M:API.Controllers.OrganizerController.Search(System.String)">
             <summary>
             ПОлучает всех организаторов.
             </summary>
