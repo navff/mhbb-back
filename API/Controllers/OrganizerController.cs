@@ -148,7 +148,7 @@ namespace API.Controllers
         {
             try
             {
-                var orgs = await _organizerOperations.SearchAsync(null, null);
+                var orgs = await _organizerOperations.SearchAsync(null, word);
                 var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
                 return Ok(result);
             }
