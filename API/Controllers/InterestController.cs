@@ -14,6 +14,9 @@ using Models.Operations;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Работа с интересами
+    /// </summary>
     [RoutePrefix("api/interest")]
     public class InterestController : ApiController
     {

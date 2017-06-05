@@ -71,5 +71,9 @@ namespace Models.Operations
             return await _context.Cities.Where(c => c.Name.Contains(word)).ToListAsync();
         }
 
+        public async Task<IEnumerable<City>> GetAllAsync()
+        {
+            return await _context.Cities.ToListAsync();
+        }
     }
 }

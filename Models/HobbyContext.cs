@@ -52,6 +52,7 @@ namespace Models
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<TempFile> TempFiles { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -78,7 +79,6 @@ namespace Models
                 .WithMany()
                 .HasForeignKey(u => u.CityId)
                 .WillCascadeOnDelete(false);
-
         }
     }
 }

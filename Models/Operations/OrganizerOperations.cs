@@ -27,6 +27,7 @@ namespace Models.Operations
                                  .FirstOrDefaultAsync(o => o.Id == organizerId);
         }
 
+
         public async Task<Organizer> AddAsync(Organizer organizer)
         {
             _context.Organizers.Add(organizer);
@@ -55,24 +56,28 @@ namespace Models.Operations
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Organizer>> SearchAsync(string word)
+        public async Task<IEnumerable<Organizer>> SearchAsync(int? cityId, String word="", int page=1)
         {
-            var result = new List<Organizer>();
-            var orgsByName = await _context.Organizers.Where(o => o.Name.Contains(word)).ToListAsync();
-            result.AddRange(orgsByName);
-            return result;
-        }
 
-        public async Task<IEnumerable<Organizer>> GetAllAsync(int page=1)
-        {
-            Contracts.Assert(page>=1);
+            Contracts.Assert(page >= 1);
 
-            var result = await _context.Organizers
-                                    .OrderBy(o => o.Name)
-                                    .Skip((page-1)*ModelsSettings.PAGE_SIZE)
-                                    .Take(ModelsSettings.PAGE_SIZE)
-                                    .ToListAsync();
-            return result;
+            var result = _context.Organizers.Include(o => o.City);
+
+            if (!String.IsNullOrEmpty(word))
+            {
+                result = result.Where(o => o.Name.Contains(word));
+            }
+
+            if (cityId != null)
+            {
+                result = result.Where(o => o.CityId == cityId.Value);
+            }
+
+            result =  result.OrderBy(o => o.Name)
+                            .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                            .Take(ModelsSettings.PAGE_SIZE);
+
+            return await result.ToListAsync();
         }
 
     }

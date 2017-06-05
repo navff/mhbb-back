@@ -72,7 +72,7 @@ namespace API.Common
                 return;
             }
 
-            var user = _userOperations.GetUserByTokenAsync(token).Result;
+            var user = _userOperations.GetUserByToken(token);
 
             if (user==null) 
             {

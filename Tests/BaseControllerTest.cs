@@ -177,6 +177,10 @@ namespace Tests
                 //Assert.IsNotNull(response.Content);
                 if (response.IsSuccessStatusCode)
                 {
+                    if (response.Content.Headers.ContentType.MediaType.Contains("image"))
+                    {
+                        return default(T);
+                    }
                     return response.Content.ReadAsAsync<T>().Result;
                 }
                 else
@@ -213,6 +217,10 @@ namespace Tests
                 }
             }
             else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                message = $"Status code: {response.StatusCode}.";
+            }
+            else if (response.StatusCode == HttpStatusCode.Gone)
             {
                 message = $"Status code: {response.StatusCode}.";
             }

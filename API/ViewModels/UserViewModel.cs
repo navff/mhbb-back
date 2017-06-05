@@ -55,6 +55,9 @@ namespace API.ViewModels
         public string CityName { get; set; }
     }
 
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class UserViewModelPut
     {
         /// <summary>
@@ -88,8 +91,14 @@ namespace API.ViewModels
         public int? CityId { get; set; }
     }
 
+    /// <summary>
+    /// Регистрация или аутентификация
+    /// </summary>
     public class UserRegisterViewModel
     {
+        /// <summary>
+        /// Почта пользователя
+        /// </summary>
         [Required(AllowEmptyStrings = false)]
         public string Email { get; set; }
     }

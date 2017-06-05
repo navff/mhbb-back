@@ -50,6 +50,7 @@ namespace API.Controllers
                 var result = Mapper.Map<UserViewModelGet>(entity);
                 result.CityName = entity.City?.Name;
                 result.RoleName = entity.Role.ToString();
+                result.AuthToken = "";
                 return Ok(result);
             }
             catch (Exception e)
@@ -114,16 +115,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Register(UserRegisterViewModel viewModel)
         {
-            var existingUser = await _userOperations.GetAsync(viewModel.Email);
+            var user = await _userOperations.RegisterAsync(viewModel.Email);
 
-            if (existingUser == null)
-            {
-                return Ok(await _userOperations.RegisterAsync(viewModel.Email));
-            }
-            else
-            {
-                return Ok(existingUser);
-            }
+            return await Get(user.Email);
         }
 
         /// <summary>
@@ -139,16 +133,19 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Ищет пользователей по электропочте, имени или номеру телефона
+        /// Ищет пользователей по электропочте, имени или номеру телефона.
         /// </summary>
-        /// <param name="word"></param>
+        /// <param name="roles">Роли списком. Например: roles=0&amp;roles=2</param>
+        /// <param name="word">Поисковое слово. Можно не передавать, тогда выдаст всех</param>
+        /// <param name="page">Номер страницы для постраничной навигации. По-умолчанию — 1</param>
         /// <returns></returns>
         [HttpGet]
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         [ResponseType(typeof(IEnumerable<UserViewModelGet>))]
-        public async Task<IHttpActionResult> Search(string word)
+        [Route("search")]
+        public async Task<IHttpActionResult> Search([FromUri]List<Role> roles, string word="", int page=1)
         {
-            var users = await _userOperations.SearchAsync(word);
+            var users = await _userOperations.SearchAsync(roles, word, page);
             var result = new List<UserViewModelGet>();
 
             foreach (var user in users)
@@ -162,6 +159,10 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Выход пользователя со всех устройств. Убивает предыдущий токен и создаёт новый. 
+        /// Чтобы получить новый токен нужно вызвать метод Register
+        /// </summary>
         [HttpPut]
         [RESTAuthorize]
         [Route("logout")]

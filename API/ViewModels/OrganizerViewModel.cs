@@ -52,7 +52,7 @@ namespace API.ViewModels
         public int CityId { get; set; }
 
         /// <summary>
-        /// Трезвость
+        /// Трезвость. Все преподаватели ведут трезвый образ жизни и не покажут отрицательный пример даже по праздникам.
         /// </summary>
         public bool Sobriety { get; set; }
     }

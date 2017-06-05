@@ -31,7 +31,12 @@ namespace Models.Entities
         /// <summary>
         /// Значение голоса: или -1, или +1
         /// </summary>
-        [Range(-1,1)]
-        public int VoiceValue { get; set; }
+        public VoiceValue VoiceValue { get; set; }
+    }
+
+    public enum VoiceValue
+    {
+        Positive = 1,
+        Negative = -1
     }
 }

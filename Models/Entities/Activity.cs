@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.Linq;
+using DelegateDecompiler;
 
 namespace Models.Entities
 {
@@ -35,6 +37,15 @@ namespace Models.Entities
         public virtual Interest Interest { get; set; }
 
         public bool IsChecked { get; set; }
+
+        public bool Free { get; set; }
+
+        public virtual ICollection<ActivityUserVoice> ActivityUserVoices { get; set; }
+
+        [Computed]
+        public int Voices {
+            get { return ActivityUserVoices.Sum(v => (int)v.VoiceValue); }
+        }
 
     }
 }

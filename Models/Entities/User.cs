@@ -10,13 +10,23 @@ namespace API.Models
     public class User
     {
         [Key]
+        [StringLength(maximumLength:255, MinimumLength = 1)]
         public string Email { get; set; }
 
+        [Index]
         [Required]
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(255)]
         public string AuthToken { get; set; }
 
+        [Index]
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(255)]
         public string Name { get; set; }
 
+        [Index]
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(255)]
         public string Phone { get; set; }
 
         [ForeignKey("Picture")]

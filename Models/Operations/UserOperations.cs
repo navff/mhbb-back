@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
@@ -34,6 +35,11 @@ namespace API.Operations
         public async Task<User> GetUserByTokenAsync(string token)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.AuthToken == token);
+        }
+
+        public User GetUserByToken(string token)
+        {
+            return _context.Users.FirstOrDefault(u => u.AuthToken == token);
         }
 
         /// <summary>
@@ -138,20 +144,24 @@ namespace API.Operations
             return userInDb;
         }
 
-        public async Task<IEnumerable<User>> SearchAsync(string word)
+        public async Task<IEnumerable<User>> SearchAsync(List<Role> roles=null, string word="", int page=1)
         {
-            var result = new List<User>();
+            IQueryable<User> result = _context.Users.AsQueryable();
 
-            var usersByEmail = await _context.Users.Where(u => u.Email.Contains(word)).ToListAsync();
-            result.AddRange(usersByEmail);
+            if (!String.IsNullOrEmpty(word))
+            {
+                result = result.Where(u => (u.Email.Contains(word)) 
+                                        || (u.Name.Contains(word))
+                                        || (u.Phone.Contains(word)));
 
-            var usersByName = await _context.Users.Where(u => u.Name.Contains(word)).ToListAsync();
-            result.AddRange(usersByName);
+            }
 
-            var usersByPhone = await _context.Users.Where(u => u.Phone.Contains(word)).ToListAsync();
-            result.AddRange(usersByPhone);
+            if (roles!=null &&  roles.Any())
+            {
+                result = result.Where(u => roles.Any(r => r == u.Role));
+            }
 
-            return result;
+            return await result.ToListAsync();
         }
 
         
@@ -163,7 +173,7 @@ namespace API.Operations
         {
             var dto = new EmailMessage()
             {
-                From = "Моё хобби <site@orientirum.ru>",
+                From = "Моё хобби <site@mhbb.ru>",
                 To = to,
                 Body = GenerateEmailBody(token),
                 EmailSubject = UserMessages.SubjectConfirmEmail

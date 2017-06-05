@@ -17,6 +17,9 @@ using Models.Operations;
 namespace API.Controllers
 {
 
+    /// <summary>
+    /// Работа с организаторами активностей. 
+    /// </summary>
     [RoutePrefix("api/organizer")]
     public class OrganizerController : ApiController
     {
@@ -133,33 +136,19 @@ namespace API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// ПОлучает всех организаторов.
+        /// </summary>
+        /// <param name="page">Номер страницы по 100 штук</param>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
         [Route("search")]
-        public async Task<IHttpActionResult> Search(string word="")
+        public async Task<IHttpActionResult> Search(string word)
         {
             try
             {
-                var orgs = await _organizerOperations.SearchAsync(word);
-                var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogger.Log("CANNOT SEARCH ORGANIZER", ex);
-                throw;
-            }
-
-        }
-
-        [HttpGet]
-        [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
-        [Route("getall")]
-        public async Task<IHttpActionResult> GetAll(int page=1)
-        {
-            try
-            {
-                var orgs = await _organizerOperations.GetAllAsync(page);
+                var orgs = await _organizerOperations.SearchAsync(null, null, page);
                 var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
                 return Ok(result);
             }
@@ -169,5 +158,30 @@ namespace API.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Ищет организаторов по параметрам
+        /// </summary>
+        /// <param name="cityId">Город</param>
+        /// <param name="word">Поисковое слово</param>
+        /// <param name="page">Номер страницы по 100. По умолчанию выдаётся первая страница</param>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
+        [Route("search")]
+        public async Task<IHttpActionResult> Search(int? cityId=null, String word = "", int page=1)
+        {
+            try
+            {
+                var orgs = await _organizerOperations.SearchAsync(cityId, word, page);
+                var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT SEARCH ORGANIZERS", ex);
+                throw;
+            }
+        }
+
     }
 }

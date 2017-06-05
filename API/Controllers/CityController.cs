@@ -31,6 +31,27 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Получение всех городов
+        /// </summary>
+        /// <returns></returns>
+        [ResponseType(typeof(IEnumerable<CityViewModelGet>))]
+        public async Task<IHttpActionResult> GetAll()
+        {
+            try
+            {
+                IEnumerable<City> cities = await _cityOperations.GetAllAsync();
+                var result = Mapper.Map<IEnumerable<CityViewModelGet>>(cities);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT GETALL CITIES", ex);
+                throw;
+            }
+        }
+
+
+        /// <summary>
         /// Получает город по его Id
         /// </summary>
         /// <param name="id">Id города</param>

@@ -130,28 +130,36 @@ namespace Tests.Operations
         public void Search_Ok_Test()
         {
             var orgInDb = _context.Organizers.First();
-            var result = _organizerOperations.SearchAsync(orgInDb.Name.Substring(2)).Result;
+            var result = _organizerOperations.SearchAsync(null, orgInDb.Name.Substring(2)).Result;
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
+        public void SearchByCity_Ok_Test()
+        {
+            var orgInDb = _context.Organizers.First();
+            var result = _organizerOperations.SearchAsync(orgInDb.CityId, orgInDb.Name.Substring(2)).Result;
             Assert.IsTrue(result.Any());
         }
 
         [TestMethod]
         public void Search_NoResults_Test()
         {
-            var result = _organizerOperations.SearchAsync("8ebew8eb3b38b4bmnsds9323nakjadhdf0").Result;
+            var result = _organizerOperations.SearchAsync(null, "8ebew8eb3b38b4bmnsds9323nakjadhdf0").Result;
             Assert.IsFalse(result.Any());
         }
 
         [TestMethod]
         public void GetAll_Ok_Test()
         {
-            var result = _organizerOperations.GetAllAsync().Result;
+            var result = _organizerOperations.SearchAsync(null, null).Result;
             Assert.IsTrue(result.Any());
         }
 
         [TestMethod]
         public void GetAll_SecondPage_Test()
         {
-            var result = _organizerOperations.GetAllAsync(2).Result;
+            var result = _organizerOperations.SearchAsync(null, null, 2).Result;
             Assert.IsTrue(result.Any());
         }
 
