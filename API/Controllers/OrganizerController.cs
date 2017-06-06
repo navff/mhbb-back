@@ -137,27 +137,6 @@ namespace API.Controllers
         }
 
 
-        /// <summary>
-        /// ПОлучает всех организаторов.
-        /// </summary>
-        /// <param name="page">Номер страницы по 100 штук</param>
-        [HttpGet]
-        [ResponseType(typeof(IEnumerable<OrganizerViewModelGet>))]
-        [Route("search")]
-        public async Task<IHttpActionResult> Search(string word)
-        {
-            try
-            {
-                var orgs = await _organizerOperations.SearchAsync(null, word);
-                var result = Mapper.Map<List<OrganizerViewModelGet>>(orgs);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                ErrorLogger.Log("CANNOT GETALL ORGANIZERS", ex);
-                throw;
-            }
-        }
 
         /// <summary>
         /// Ищет организаторов по параметрам
