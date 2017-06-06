@@ -79,6 +79,24 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
+        public void HTTP_SearchByCity_OK_Test()
+        {
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            var result = HttpGet<IEnumerable<UserViewModelGet>>($"api/user/search?cityId={user.CityId}", user.AuthToken);
+            Assert.AreEqual(user.CityId, result.First().CityId);
+        }
+
+
+        [TestMethod]
+        public void HTTP_SearchByCity_WrongId_Test()
+        {
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            var result = HttpGet<IEnumerable<UserViewModelGet>>($"api/user/search?cityId=99999", user.AuthToken);
+            Assert.IsFalse(result.Any());
+        }
+
+
+        [TestMethod]
         public void HTTP_Delete_OK_Test()
         {
             var user = _context.Users.First(u => u.Role == Role.PortalAdmin);

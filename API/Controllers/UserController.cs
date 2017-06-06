@@ -136,6 +136,7 @@ namespace API.Controllers
         /// Ищет пользователей по электропочте, имени или номеру телефона.
         /// </summary>
         /// <param name="roles">Роли списком. Например: roles=0&amp;roles=2</param>
+        /// <param name="cityId">Id города</param>
         /// <param name="word">Поисковое слово. Можно не передавать, тогда выдаст всех</param>
         /// <param name="page">Номер страницы для постраничной навигации. По-умолчанию — 1</param>
         /// <returns></returns>
@@ -143,9 +144,9 @@ namespace API.Controllers
         [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         [ResponseType(typeof(IEnumerable<UserViewModelGet>))]
         [Route("search")]
-        public async Task<IHttpActionResult> Search([FromUri]List<Role> roles, string word="", int page=1)
+        public async Task<IHttpActionResult> Search([FromUri]List<Role> roles, int? cityId=null, string word="", int page=1)
         {
-            var users = await _userOperations.SearchAsync(roles, word, page);
+            var users = await _userOperations.SearchAsync(roles, cityId, word, page);
             var result = new List<UserViewModelGet>();
 
             foreach (var user in users)

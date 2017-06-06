@@ -144,7 +144,7 @@ namespace API.Operations
             return userInDb;
         }
 
-        public async Task<IEnumerable<User>> SearchAsync(List<Role> roles=null, string word="", int page=1)
+        public async Task<IEnumerable<User>> SearchAsync(List<Role> roles=null, int? cityId = null, string word="", int page=1)
         {
             IQueryable<User> result = _context.Users.AsQueryable();
 
@@ -159,6 +159,11 @@ namespace API.Operations
             if (roles!=null &&  roles.Any())
             {
                 result = result.Where(u => roles.Any(r => r == u.Role));
+            }
+
+            if (cityId != null)
+            {
+                result = result.Where(u => u.CityId == cityId);
             }
 
             return await result.ToListAsync();

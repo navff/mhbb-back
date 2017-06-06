@@ -944,11 +944,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.Controllers.UserController.Search(System.Collections.Generic.List{API.Models.Role},System.String,System.Int32)">
+        <member name="M:API.Controllers.UserController.Search(System.Collections.Generic.List{API.Models.Role},System.Nullable{System.Int32},System.String,System.Int32)">
             <summary>
             Ищет пользователей по электропочте, имени или номеру телефона.
             </summary>
             <param name="roles">Роли списком. Например: roles=0&amp;roles=2</param>
+            <param name="cityId">Id города</param>
             <param name="word">Поисковое слово. Можно не передавать, тогда выдаст всех</param>
             <param name="page">Номер страницы для постраничной навигации. По-умолчанию — 1</param>
             <returns></returns>
