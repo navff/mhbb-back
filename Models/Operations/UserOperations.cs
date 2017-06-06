@@ -166,7 +166,10 @@ namespace API.Operations
                 result = result.Where(u => u.CityId == cityId);
             }
 
-            return await result.ToListAsync();
+            return await result.OrderBy(u => u.Name).ThenBy(u => u.Email)
+                               .Skip(ModelsSettings.PAGE_SIZE*(page-1))
+                               .Take(ModelsSettings.PAGE_SIZE) 
+                               .ToListAsync();
         }
 
         
