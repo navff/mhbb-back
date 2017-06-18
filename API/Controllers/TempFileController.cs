@@ -78,7 +78,7 @@ namespace API.Controllers
         /// Добавление временного файла
         /// </summary>
         [HttpPost]
-        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
+        // [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         public async  Task<IHttpActionResult> Post(TempFileViewModelPost postViewModel)
         {
             var tempFile = Mapper.Map<TempFile>(postViewModel);
@@ -90,7 +90,7 @@ namespace API.Controllers
         /// Удаление
         /// </summary>
         [HttpDelete]
-        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
+        //[RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
         [Route("{id}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
