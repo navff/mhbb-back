@@ -152,5 +152,21 @@ namespace Tests.Operations
             var result = _reviewOperations.GetByActivityAsync(999999).Result;
             Assert.IsFalse(result.Any());
         }
+
+        [TestMethod]
+        public void GetUnckecked_ByWord_Ok_Test()
+        {
+            var review = _context.Reviews.Include(r => r.User).First(r => r.IsChecked == false);
+            var result = _reviewOperations.GetUncheckedAsync(null, review.User.Name).Result;
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
+        public void GetUnckecked_ByCityId_Ok_Test()
+        {
+            var review = _context.Reviews.Include(r => r.User).First(r => r.IsChecked == false);
+            var result = _reviewOperations.GetUncheckedAsync(review.User.CityId, review.User.Name).Result;
+            Assert.IsTrue(result.Any());
+        }
     }
 }

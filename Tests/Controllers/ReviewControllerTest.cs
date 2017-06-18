@@ -42,6 +42,15 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
+        public void GetUnchecked_Ok_Test()
+        {
+            var review = _context.Reviews.Include(r => r.User).First(r => r.IsChecked == false);
+            string url = $"/api/review/unchecked?cityId={review.User.CityId}";
+            var result = HttpGet<IEnumerable<ReviewViewModelGet>>(url, "ABRAKADABRA");
+            Assert.IsTrue(result.Any());
+        }
+
+        [TestMethod]
         public void Put_Ok_Test()
         {
             var review = _context.Reviews.First();

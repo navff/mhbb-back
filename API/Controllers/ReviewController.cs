@@ -100,6 +100,33 @@ namespace API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Выдаёт непроверенные отзывы
+        /// </summary>
+        /// <param name="cityId">Город пользователя или активности</param>
+        /// <param name="word">Поисковое слово. Ищет по имени пользователя или тексту отзыва</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("unchecked")]
+        [ResponseType(typeof(IEnumerable<ReviewViewModelGet>))]
+        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
+        public async Task<IHttpActionResult> GetUnckecked(int? cityId=null, string word="")
+        {
+            try
+            {
+                var reviews = await _reviewOperations.GetUncheckedAsync(cityId, word);
+                var result = Mapper.Map<IEnumerable<ReviewViewModelGet>>(reviews);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT GET REVIEWS", ex);
+                throw;
+            }
+        }
+
+
         /// <summary>
         /// Изменение отзыва
         /// </summary>

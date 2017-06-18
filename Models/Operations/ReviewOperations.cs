@@ -104,5 +104,32 @@ namespace Models.Operations
                 throw;
             }
         }
+
+        public async Task<IEnumerable<Review>> GetUncheckedAsync(int? cityId, string word="")
+        {
+            try
+            {
+                var result = _context.Reviews.Include(r => r.User.Picture).Where( r => r.IsChecked == false);
+                if (cityId != null)
+                {
+                    result = result.Where(r => (r.User.CityId == cityId.Value) 
+                                            || (r.Activity.Organizer.CityId == cityId.Value));
+                }
+
+                if (!String.IsNullOrEmpty(word))
+                {
+                    result =  result.Where(r => (r.Text.Contains(word)) 
+                                             || (r.User.Name.Contains(word)) 
+                                             || (r.User.Email.Contains(word)));
+                }
+
+                return await result.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT GET REVIEWS", ex);
+                throw;
+            }
+        }
     }
 }

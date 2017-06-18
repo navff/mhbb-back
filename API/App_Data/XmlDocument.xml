@@ -836,6 +836,14 @@
             <param name="activityId">ID активности</param>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.ReviewController.GetUnckecked(System.Nullable{System.Int32},System.String)">
+            <summary>
+            Выдаёт непроверенные отзывы
+            </summary>
+            <param name="cityId">Город пользователя или активности</param>
+            <param name="word">Поисковое слово. Ищет по имени пользователя или тексту отзыва</param>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.ReviewController.Put(System.Int32,API.ViewModels.ReviewViewModelPost)">
             <summary>
             Изменение отзыва
