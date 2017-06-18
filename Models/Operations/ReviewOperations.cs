@@ -84,14 +84,14 @@ namespace Models.Operations
 
         public async Task<IEnumerable<Review>> GetByUserEmailAsync(string userEmail)
         {
-            return await _context.Reviews.Where(r => r.User.Email == userEmail).ToListAsync();
+            return await _context.Reviews.Include(r => r.User.Picture).Where(r => r.User.Email == userEmail).ToListAsync();
         }
 
         public async Task<IEnumerable<Review>> GetByActivityAsync(int activityId)
         {
             try
             {
-                return await _context.Reviews.Where(r => r.ActivityId == activityId).ToListAsync();
+                return await _context.Reviews.Include(r => r.User.Picture).Where(r => r.ActivityId == activityId).ToListAsync();
             }
             catch (Exception ex)
             {

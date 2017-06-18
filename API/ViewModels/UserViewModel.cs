@@ -19,12 +19,6 @@ namespace API.ViewModels
         public string Email { get; set; }
 
         /// <summary>
-        /// Токен для аффтаризации. Кладётся в заголовок «Authorization»
-        /// со значением «Token [tokenValue]»
-        /// </summary>
-        public string AuthToken { get; set; }
-
-        /// <summary>
         /// Человеческое имя
         /// </summary>
         public string Name { get; set; }

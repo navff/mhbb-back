@@ -50,7 +50,6 @@ namespace API.Controllers
                 var result = Mapper.Map<UserViewModelGet>(entity);
                 result.CityName = entity.City?.Name;
                 result.RoleName = entity.Role.ToString();
-                result.AuthToken = "";
                 return Ok(result);
             }
             catch (Exception e)

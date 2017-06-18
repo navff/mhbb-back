@@ -1517,12 +1517,6 @@
             Электропочта
             </summary>
         </member>
-        <member name="P:API.ViewModels.UserViewModelGet.AuthToken">
-            <summary>
-            Токен для аффтаризации. Кладётся в заголовок «Authorization»
-            со значением «Token [tokenValue]»
-            </summary>
-        </member>
         <member name="P:API.ViewModels.UserViewModelGet.Name">
             <summary>
             Человеческое имя
