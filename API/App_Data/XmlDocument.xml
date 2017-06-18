@@ -743,12 +743,6 @@
             Удаление организатора
             </summary>
         </member>
-        <member name="M:API.Controllers.OrganizerController.Search(System.String)">
-            <summary>
-            ПОлучает всех организаторов.
-            </summary>
-            <param name="page">Номер страницы по 100 штук</param>
-        </member>
         <member name="M:API.Controllers.OrganizerController.Search(System.Nullable{System.Int32},System.String,System.Int32)">
             <summary>
             Ищет организаторов по параметрам
