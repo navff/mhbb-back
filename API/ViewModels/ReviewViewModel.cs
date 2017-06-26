@@ -27,6 +27,11 @@ namespace API.ViewModels
         public int ActivityId { get; set; }
 
         /// <summary>
+        /// Название активности, на которую оставлен отзыв
+        /// </summary>
+        public string ActivityName { get; set; }
+
+        /// <summary>
         /// Текст отзыва
         /// </summary>
         public string Text { get; set; }

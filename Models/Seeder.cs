@@ -327,7 +327,7 @@ namespace Models
                     ActivityId = activityId,
                     UserEmail = "var@33kita.ru",
                     DateCreated = DateTime.Now,
-                    IsChecked = false,
+                    IsChecked = true,
                     Text = "Спасибо!",
                     ReplyToReviewId = review1.Id
                 });

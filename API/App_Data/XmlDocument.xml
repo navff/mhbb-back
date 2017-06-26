@@ -1414,6 +1414,11 @@
             Id активности, на которую оставлен отзыв
             </summary>
         </member>
+        <member name="P:API.ViewModels.ReviewViewModelGet.ActivityName">
+            <summary>
+            Название активности, на которую оставлен отзыв
+            </summary>
+        </member>
         <member name="P:API.ViewModels.ReviewViewModelGet.Text">
             <summary>
             Текст отзыва

@@ -85,6 +85,7 @@ namespace Models.Operations
         public async Task<IEnumerable<Review>> GetByUserEmailAsync(string userEmail)
         {
             return await _context.Reviews.Include(r => r.User.Picture)
+                                 .Include(r => r.Activity)
                                  .Where(r => (r.User.Email == userEmail) && (r.IsChecked))
                                  .ToListAsync();
         }
@@ -95,6 +96,7 @@ namespace Models.Operations
             {
                 
                 return await _context.Reviews.Include(r => r.User.Picture)
+                                     .Include(r => r.Activity)
                                      .Where(r => (r.ActivityId == activityId) && (r.IsChecked))
                                      .ToListAsync();
             }
@@ -109,18 +111,22 @@ namespace Models.Operations
         {
             try
             {
-                var result = _context.Reviews.Include(r => r.User.Picture).Where( r => r.IsChecked == false);
+                var result = _context.Reviews.Include(r => r.User.Picture)
+                                             .Include(r => r.Activity)
+                                             .Where( r => r.IsChecked == false);
                 if (cityId != null)
                 {
                     result = result.Where(r => (r.User.CityId == cityId.Value) 
-                                            || (r.Activity.Organizer.CityId == cityId.Value));
+                                            || (r.Activity.Organizer.CityId == cityId.Value))
+                                            .Include(r => r.Activity);
                 }
 
                 if (!String.IsNullOrEmpty(word))
                 {
                     result =  result.Where(r => (r.Text.Contains(word)) 
                                              || (r.User.Name.Contains(word)) 
-                                             || (r.User.Email.Contains(word)));
+                                             || (r.User.Email.Contains(word)))
+                                             .Include(r => r.Activity);
                 }
 
                 return await result.ToListAsync();

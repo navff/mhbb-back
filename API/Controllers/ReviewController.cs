@@ -67,7 +67,13 @@ namespace API.Controllers
             try
             {
                 var reviews = await _reviewOperations.GetByUserEmailAsync(email);
-                var result = Mapper.Map<IEnumerable<ReviewViewModelGet>>(reviews);
+                var result = new List<ReviewViewModelGet>();
+                foreach (var review in reviews)
+                {
+                    var viewModel = Mapper.Map<ReviewViewModelGet>(review);
+                    viewModel.ActivityName = review.Activity.Name;
+                    result.Add(viewModel);
+                }
                 return Ok(result);
             }
             catch (Exception ex)
@@ -90,7 +96,13 @@ namespace API.Controllers
             try
             {
                 var reviews = await _reviewOperations.GetByActivityAsync(activityId);
-                var result = Mapper.Map<IEnumerable<ReviewViewModelGet>>(reviews);
+                var result = new List<ReviewViewModelGet>();
+                foreach (var review in reviews)
+                {
+                    var viewModel = Mapper.Map<ReviewViewModelGet>(review);
+                    viewModel.ActivityName = review.Activity.Name;
+                    result.Add(viewModel);
+                }
                 return Ok(result);
             }
             catch (Exception ex)
@@ -116,7 +128,14 @@ namespace API.Controllers
             try
             {
                 var reviews = await _reviewOperations.GetUncheckedAsync(cityId, word);
-                var result = Mapper.Map<IEnumerable<ReviewViewModelGet>>(reviews);
+                var result = new List<ReviewViewModelGet>();
+                foreach (var review in reviews)
+                {
+                    var viewModel = Mapper.Map<ReviewViewModelGet>(review);
+                    viewModel.ActivityName = review.Activity.Name;
+                    result.Add(viewModel);
+                }
+
                 return Ok(result);
             }
             catch (Exception ex)
