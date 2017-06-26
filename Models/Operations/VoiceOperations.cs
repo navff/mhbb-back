@@ -49,5 +49,19 @@ namespace Models.Operations
             }
             return result;
         }
+
+        public async Task<IEnumerable<ActivityUserVoice>> GetUserVoices(string userEmail)
+        {
+            return await _context.ActivityUserVoices
+                                 .Where(v => v.UserEmail == userEmail)
+                                 .ToListAsync();
+
+        }
+
+        public async Task DeleteVoiceAsync(int id)
+        {
+            var voice = await _context.ActivityUserVoices.FirstAsync( v => v.Id == id);
+            _context.ActivityUserVoices.Remove(voice);
+        }
     }
 }

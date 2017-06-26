@@ -20,11 +20,13 @@ namespace API.Operations
     {
         private HobbyContext _context;
         private ReviewOperations _reviewsOperations;
+        private VoiceOperations _voiceOperations;
 
         public UserOperations(HobbyContext context)
         {
             _context = context;
             _reviewsOperations = new ReviewOperations(_context);
+            _voiceOperations = new VoiceOperations(_context);
         }
 
         /// <summary>
@@ -95,6 +97,11 @@ namespace API.Operations
             foreach (var review in reviews)
             {
                 await _reviewsOperations.DeleteAsync(review.Id);
+            }
+            var userVoices = await _voiceOperations.GetUserVoices(email);
+            foreach (var userVoice in userVoices)
+            {
+                await _voiceOperations.DeleteVoiceAsync(userVoice.Id);
             }
 
             _context.Users.Remove(user);
