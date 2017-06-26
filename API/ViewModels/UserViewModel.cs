@@ -72,7 +72,7 @@ namespace API.ViewModels
         /// <summary>
         /// Аватарка
         /// </summary>
-        public virtual PictureViewModelGet Picture { get; set; }
+        public int? PictureId { get; set; }
 
         /// <summary>
         /// Роль

@@ -49,7 +49,10 @@ namespace API.Operations
         /// <returns></returns>
         public async Task<User> GetAsync(string email)
         {
-            return await _context.Users.Include(u => u.City).FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users
+                                 .Include(u => u.City)
+                                 .Include(u => u.Picture)
+                                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         /// <summary>

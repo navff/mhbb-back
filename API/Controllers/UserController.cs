@@ -70,6 +70,7 @@ namespace API.Controllers
         [RESTAuthorize]
         public async Task<IHttpActionResult> Put([FromUri] string email, [FromBody] UserViewModelPut putViewModel)
         {
+            putViewModel.Email = email;
             if ((!User.IsInRole("PortalAdmin"))  
                   && (User.Identity.Name!=email))
             {
