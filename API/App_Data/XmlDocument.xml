@@ -602,7 +602,7 @@
             <param name="free">Бесплатно</param>
             <param name="page">Страница пагинации</param>
         </member>
-        <member name="M:API.Controllers.ActivityController.Put(System.Int32,API.ViewModels.ActivityViewModelPost)">
+        <member name="M:API.Controllers.ActivityController.Put(System.Int32,API.ViewModels.ActivityViewModelPut)">
             <summary>
             Обновление активности
             </summary>
@@ -1173,6 +1173,78 @@
             </summary>
         </member>
         <member name="P:API.ViewModels.ActivityViewModelPost.FormId">
+            <summary>
+            ID формы. По этому идентификатору связываются временные файлы
+            с активностями. После сохранения активности, все TempFile с указанным FormId
+            превратятся в Picture и привяжутся в данной активности.
+            </summary>
+        </member>
+        <member name="T:API.ViewModels.ActivityViewModelPut">
+            <summary>
+            Активность
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.OrganizerId">
+            <summary>
+            Организатор
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.AgeFrom">
+            <summary>
+            С какого возраста
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.AgeTo">
+            <summary>
+            До какого возраста
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.Phones">
+            <summary>
+            Телефоны
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.Address">
+            <summary>
+            Адрес проведения
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.Prices">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.Mentor">
+            <summary>
+            Ведущий, преподаватель
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.Description">
+            <summary>
+            Текстовое описание
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.InterestId">
+            <summary>
+            ID сферы интересов
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.IsChecked">
+            <summary>
+            Проверено менеджером
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.Free">
+            <summary>
+            Бесплатно
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.ActivityViewModelPut.FormId">
             <summary>
             ID формы. По этому идентификатору связываются временные файлы
             с активностями. После сохранения активности, все TempFile с указанным FormId

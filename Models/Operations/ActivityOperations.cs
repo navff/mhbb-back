@@ -27,6 +27,7 @@ namespace Models.Operations
             {
                 return _context.Activities.Include(a => a.Organizer)
                     .Include(a => a.ActivityUserVoices)
+                    .Include(a => a.Interest)
                     .Decompile()
                     .FirstOrDefault(a => a.Id == id);
             }
@@ -148,6 +149,7 @@ namespace Models.Operations
                 activityInDb.OrganizerId = activity.OrganizerId;
                 activityInDb.Phones = activity.Phones;
                 activityInDb.Prices = activity.Prices;
+                activityInDb.Free = activity.Free;
 
                 await _context.SaveChangesAsync();
                 return activityInDb;

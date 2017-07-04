@@ -71,7 +71,7 @@ namespace Tests.Controllers
             string url = $"api/activity/{activity.Id}";
             var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
 
-            var viewModel = new ActivityViewModelPost
+            var viewModel = new ActivityViewModelPut
             {
                 Name = rndString,
                 Address = rndString,

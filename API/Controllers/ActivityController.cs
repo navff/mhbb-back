@@ -164,13 +164,14 @@ namespace API.Controllers
         [HttpPut]
         [Route("{id}")]
         [ResponseType(typeof(ActivityViewModelGet))]
-        public async Task<IHttpActionResult> Put(int id, ActivityViewModelPost putViewModel)
+        public async Task<IHttpActionResult> Put(int id, ActivityViewModelPut putViewModel)
         {
             try
             {
                 var activity = Mapper.Map<Activity>(putViewModel);
                 activity.Id = id;
                 await _activityOperations.UpdateAsync(activity);
+                await _pictureOperations.SaveByFormIdAsync(putViewModel.FormId, id, LinkedObjectType.Activity);
                 return await Get(id);
             }
             catch (Exception ex)

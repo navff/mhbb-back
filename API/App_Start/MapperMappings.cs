@@ -41,6 +41,7 @@ namespace API
                 cfg.CreateMap<InterestViewModelPost, Interest>();
                 cfg.CreateMap<TempFileViewModelPost, TempFile>();
                 cfg.CreateMap<ActivityViewModelPost, Activity>();
+                cfg.CreateMap<ActivityViewModelPut, Activity>();
                 cfg.CreateMap<ReservationViewModelPost, Reservation>();
                 cfg.CreateMap<ReviewViewModelPost, Review>();
             });
