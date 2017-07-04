@@ -138,12 +138,13 @@ namespace Tests
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 json = js.Serialize(objectForSend);
-                Console.WriteLine(json);
             }
 
             request.Content = new StringContent(json);
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             request.RequestUri = new Uri(baseAddress + url);
+            Console.WriteLine(request.RequestUri);
+            Console.WriteLine(json);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             request.Headers.Add("Authorization", "Token " + token);
             request.Method = method;
@@ -157,6 +158,7 @@ namespace Tests
 
             HttpRequestMessage request = new HttpRequestMessage();
             request.RequestUri = new Uri(baseAddress + url);
+            Console.WriteLine(request.RequestUri);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             request.Headers.Add("Authorization", "Token " + token);
             request.Method = method;

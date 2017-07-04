@@ -94,6 +94,17 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
+        public void SetChecked_Ok_Test()
+        {
+            var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
+            bool rndBool = DateTime.Now.Second % 2 == 0;
+            var activity = _context.Activities.First();
+            string url = $"api/activity/setchecked?activityId={activity.Id}&isChecked={rndBool}";
+            var result = HttpPut<ActivityViewModelGet>(url, null, user.AuthToken);
+            Assert.AreEqual(rndBool, result.IsChecked);
+        }
+
+        [TestMethod]
         public void Post_Ok_Test()
         {
             var rndString = Guid.NewGuid().ToString();

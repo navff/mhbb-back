@@ -159,6 +159,14 @@ namespace Models.Operations
             }
         }
 
+        public async Task<Activity> SetChecked(int activityId, bool isChecked)
+        {
+            var activity = Get(activityId);
+            activity.IsChecked = isChecked;
+            await UpdateAsync(activity);
+            return Get(activityId);
+        }
+
         public async Task DeleteAsync(int activityId)
         {
             try

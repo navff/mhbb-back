@@ -180,6 +180,24 @@ namespace API.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("setchecked")]
+        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
+        public async Task<IHttpActionResult> SetChecked(int activityId, bool isChecked)
+        {
+            try
+            {
+                await _activityOperations.SetChecked(activityId, isChecked);
+                return await Get(activityId);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT ACTIVATE ACTIVITY", ex);
+                throw;
+            }
+        }
+
+
         /// <summary>
         /// Добавление активности
         /// </summary>
