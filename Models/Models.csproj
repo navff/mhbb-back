@@ -129,6 +129,10 @@
     <Compile Include="Migrations\201705130330112_add_indexes_to_model.Designer.cs">
       <DependentUpon>201705130330112_add_indexes_to_model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707051458204_id_for_user.cs" />
+    <Compile Include="Migrations\201707051458204_id_for_user.Designer.cs">
+      <DependentUpon>201707051458204_id_for_user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\ActivityOperations.cs" />
     <Compile Include="Operations\CityOperations.cs" />
@@ -187,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705130330112_add_indexes_to_model.resx">
       <DependentUpon>201705130330112_add_indexes_to_model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707051458204_id_for_user.resx">
+      <DependentUpon>201707051458204_id_for_user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

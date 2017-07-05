@@ -19,6 +19,7 @@ using API.Models;
 using API.Operations;
 using API.ViewModels;
 using Models;
+using Models.Operations;
 using Ninject.Web.Common;
 using NLog;
 using Tests.Helpers;
@@ -33,7 +34,8 @@ namespace Tests.Controllers
         public UserControllerTest()
         {
             UserOperations userOperations = new UserOperations(_context);
-            _controller = new UserController(userOperations);
+            PictureOperations pictureOperations = new PictureOperations(_context);
+            _controller = new UserController(userOperations, pictureOperations);
             MapperMappings.Map();
         }
 

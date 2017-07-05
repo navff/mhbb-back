@@ -29,6 +29,7 @@ namespace Models.Entities
     public enum LinkedObjectType
     {
         Activity = 1,
-        Organizer = 2
+        Organizer = 2,
+        User = 3
     }
 }

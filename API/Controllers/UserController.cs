@@ -15,6 +15,8 @@ using API.ViewModels;
 using AutoMapper;
 using Camps.Tools;
 using Models;
+using Models.Entities;
+using Models.Operations;
 
 namespace API.Controllers
 {
@@ -25,10 +27,12 @@ namespace API.Controllers
     public class UserController : ApiController
     {
         private readonly UserOperations _userOperations;
+        private readonly PictureOperations _pictureOperations;
 
-        public UserController(UserOperations userOperations)
+        public UserController(UserOperations userOperations, PictureOperations pictureOperations)
         {
             _userOperations = userOperations;
+            _pictureOperations = pictureOperations;
         }
 
         /// <summary>
@@ -79,9 +83,10 @@ namespace API.Controllers
                 });
 
             }
-            var userEntity = Mapper.Map<Models.User>(putViewModel);
+            var userEntity = Mapper.Map<User>(putViewModel);
             userEntity.Email = email;
             await _userOperations.UpdateAsync(userEntity);
+            await _pictureOperations.SaveByFormIdAsync(putViewModel.FormId, userEntity.Id, LinkedObjectType.User);
             return await Get(email);
         }
 

@@ -78,6 +78,13 @@ namespace API.ViewModels
         /// Id города
         /// </summary>
         public int? CityId { get; set; }
+
+        /// <summary>
+        /// ID формы. По этому идентификатору связываются временные файлы
+        /// с активностями. После сохранения активности, все TempFile с указанным FormId
+        /// превратятся в Picture и привяжутся в данной активности.
+        /// </summary>
+        public string FormId { get; set; }
     }
 
     /// <summary>
