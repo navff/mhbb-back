@@ -120,7 +120,7 @@ namespace Tests.Controllers
         public void HTTP_Delete_AnotherUserToken_Test()
         {
             var userForDelete = _context.Users.Take(100).ToList().Last();
-            var anotherUser = _context.Users.Where(u => u.Role == Role.RegisteredUser).Take(2).ToList().Last();
+            var anotherUser = _context.Users.First(u => (u.Role == Role.RegisteredUser) && (u.Id != userForDelete.Id));
             HttpDelete<string>($"api/user/delete?email={userForDelete.Email}", anotherUser.AuthToken);
         }
 
