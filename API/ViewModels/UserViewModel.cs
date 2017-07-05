@@ -55,11 +55,6 @@ namespace API.ViewModels
     public class UserViewModelPut
     {
         /// <summary>
-        /// Электропочта
-        /// </summary>
-        public string Email { get; set; }
-
-        /// <summary>
         /// Человеческое имя
         /// </summary>
         public string Name { get; set; }

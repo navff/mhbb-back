@@ -129,7 +129,6 @@ namespace Tests.Controllers
 
             var viewModel = new UserViewModelPut
             {
-                Email = user.Email,
                 Name = rndString,
                 Phone = rndString,
                 CityId = user.CityId,
@@ -154,7 +153,6 @@ namespace Tests.Controllers
 
             var viewModel = new UserViewModelPut
             {
-                Email = user.Email,
                 Name = rndString,
                 Phone = rndString,
                 CityId = user.CityId,

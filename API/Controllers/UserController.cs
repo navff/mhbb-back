@@ -70,7 +70,6 @@ namespace API.Controllers
         [RESTAuthorize]
         public async Task<IHttpActionResult> Put([FromUri] string email, [FromBody] UserViewModelPut putViewModel)
         {
-            putViewModel.Email = email;
             if ((!User.IsInRole("PortalAdmin"))  
                   && (User.Identity.Name!=email))
             {
@@ -81,6 +80,7 @@ namespace API.Controllers
 
             }
             var userEntity = Mapper.Map<Models.User>(putViewModel);
+            userEntity.Email = email;
             await _userOperations.UpdateAsync(userEntity);
             return await Get(email);
         }

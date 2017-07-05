@@ -1631,11 +1631,6 @@
             Пользователь
             </summary>
         </member>
-        <member name="P:API.ViewModels.UserViewModelPut.Email">
-            <summary>
-            Электропочта
-            </summary>
-        </member>
         <member name="P:API.ViewModels.UserViewModelPut.Name">
             <summary>
             Человеческое имя

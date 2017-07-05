@@ -71,6 +71,7 @@ namespace API.Operations
             userInDb.CityId = user.CityId;
             userInDb.Phone = user.Phone;
             userInDb.PictureId = user.PictureId;
+            userInDb.Role = user.Role;
 
             await _context.SaveChangesAsync();
             return userInDb;
