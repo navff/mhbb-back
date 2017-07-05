@@ -10,14 +10,12 @@ namespace API.Models
     public class User
     {
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Key]
         public int Id { get; set; }
 
-        [Key]
         [StringLength(maximumLength:255, MinimumLength = 1)]
+        [Index(IsUnique = true)]
         public string Email { get; set; }
-
-        
 
         [Index]
         [Required]

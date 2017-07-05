@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
 using Models.Entities;
 using Models.Operations;
+using System.Data.Entity;
 
 namespace Tests.Operations
 {
@@ -30,7 +31,7 @@ namespace Tests.Operations
                 ActivityId = activity.Id,
                 Comment = rndString,
                 Phone = rndString,
-                UserEmail = user.Email
+                UserId = user.Id
             }).Result;
 
             Assert.AreEqual(rndString, result.Name);
@@ -45,13 +46,14 @@ namespace Tests.Operations
             var rndString = Guid.NewGuid().ToString();
             var activity = _context.Activities.First();
             var email = rndString + "@mhbb.ru";
+            var user = _context.Users.First();
             var result = _reservationOperations.AddAsync(new Reservation
             {
                 Name = rndString,
                 ActivityId = activity.Id,
                 Comment = rndString,
                 Phone = rndString,
-                UserEmail = email
+                UserId = user.Id
             }).Result;
 
             Assert.AreEqual(rndString, result.Name);
@@ -69,7 +71,7 @@ namespace Tests.Operations
                 Name = "",
                 Comment = "",
                 Phone = "",
-                UserEmail = ""
+                UserId = 0
             }).Wait();
         }
 
@@ -98,7 +100,7 @@ namespace Tests.Operations
             {
                 Name = rndString,
                 Id = reservation.Id,
-                UserEmail = reservation.UserEmail,
+                UserId = reservation.UserId,
                 ActivityId = reservation.ActivityId,
                 Comment = rndString,
                 Phone = rndString
@@ -118,7 +120,7 @@ namespace Tests.Operations
             {
                 Name = "",
                 Id = reservation.Id,
-                UserEmail = null,
+                UserId = 0,
                 ActivityId = reservation.ActivityId,
                 Comment = "",
                 Phone = ""
@@ -163,8 +165,8 @@ namespace Tests.Operations
         [TestMethod]
         public void Search_Email_Test()
         {
-            var reservation = _context.Reservations.First();
-            var result = _reservationOperations.SearchAsync(reservation.UserEmail.Substring(2)).Result;
+            var reservation = _context.Reservations.Include(r => r.User).First();
+            var result = _reservationOperations.SearchAsync(reservation.User.Email.Substring(2)).Result;
             Assert.IsTrue(result.Any(r => r.Id == reservation.Id));
         }
     }

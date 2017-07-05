@@ -32,59 +32,74 @@ namespace Models
 
             #region USERS
 
-
-            context.Users.AddOrUpdate(new User()
+            if (!context.Users.Any())
             {
-                AuthToken = "ABRAKADABRA",
-                Email = "var@33kita.ru",
-                Role = Role.PortalAdmin,
-                CityId = city.Id,
-                DateRegistered = DateTime.Now,
-                Name = "Вова Петросян",
-                Phone = "+79062990044"
-                
-            });
+                context.Users.AddOrUpdate(new User()
+                {
+                    AuthToken = "HREN",
+                    Email = "hren@33kita.ru",
+                    Role = Role.PortalAdmin,
+                    CityId = city.Id,
+                    DateRegistered = DateTime.Now,
+                    Name = "Вова Хрен",
+                    Phone = "+79062990099"
 
-            context.Users.AddOrUpdate(new User()
-            {
-                AuthToken = "test",
-                Email = "test@33kita.ru",
-                Role = Role.PortalAdmin,
-                CityId = city.Id,
-                DateRegistered = DateTime.Now,
-                Phone = "+79062990077",
-                Name = "Морковка"
-            });
+                });
 
-            context.Users.AddOrUpdate(new User()
-            {
-                AuthToken = "registered_user_token1",
-                Email = "registered_user1@33kita.ru",
-                Role = Role.RegisteredUser,
-                CityId = city.Id,
-                DateRegistered = DateTime.Now,
-                Name = "Зарегистрированный пользователь1"
-            });
+                context.Users.AddOrUpdate(new User()
+                {
+                    AuthToken = "ABRAKADABRA",
+                    Email = "var@33kita.ru",
+                    Role = Role.PortalAdmin,
+                    CityId = city.Id,
+                    DateRegistered = DateTime.Now,
+                    Name = "Вова Петросян",
+                    Phone = "+79062990044"
 
-            context.Users.AddOrUpdate(new User()
-            {
-                AuthToken = "registered_user_token2",
-                Email = "registered_user2@33kita.ru",
-                Role = Role.RegisteredUser,
-                CityId = city.Id,
-                DateRegistered = DateTime.Now,
-                Name = "Зарегистрированный пользователь2"
-            });
+                });
 
-            context.Users.AddOrUpdate(new User()
-            {
-                AuthToken = "registered_user_token3",
-                Email = "registered_user3@33kita.ru",
-                Role = Role.RegisteredUser,
-                CityId = city.Id,
-                DateRegistered = DateTime.Now,
-                Name = "Зарегистрированный пользователь3"
-            });
+                context.Users.AddOrUpdate(new User()
+                {
+                    AuthToken = "test",
+                    Email = "test@33kita.ru",
+                    Role = Role.PortalAdmin,
+                    CityId = city.Id,
+                    DateRegistered = DateTime.Now,
+                    Phone = "+79062990077",
+                    Name = "Морковка"
+                });
+
+                context.Users.AddOrUpdate(new User()
+                {
+                    AuthToken = "registered_user_token1",
+                    Email = "registered_user1@33kita.ru",
+                    Role = Role.RegisteredUser,
+                    CityId = city.Id,
+                    DateRegistered = DateTime.Now,
+                    Name = "Зарегистрированный пользователь1"
+                });
+
+                context.Users.AddOrUpdate(new User()
+                {
+                    AuthToken = "registered_user_token2",
+                    Email = "registered_user2@33kita.ru",
+                    Role = Role.RegisteredUser,
+                    CityId = city.Id,
+                    DateRegistered = DateTime.Now,
+                    Name = "Зарегистрированный пользователь2"
+                });
+
+                context.Users.AddOrUpdate(new User()
+                {
+                    AuthToken = "registered_user_token3",
+                    Email = "registered_user3@33kita.ru",
+                    Role = Role.RegisteredUser,
+                    CityId = city.Id,
+                    DateRegistered = DateTime.Now,
+                    Name = "Зарегистрированный пользователь3"
+                });
+            }
+            
 
             context.SaveChanges();
 
@@ -282,23 +297,26 @@ namespace Models
             if (!context.Reservations.Any())
             {
                 var activityId = context.Activities.First().Id;
+                var user = context.Users.First();
 
                 context.Reservations.Add(new Reservation
                 {
                     ActivityId = activityId,
                     Comment = "Комментарий к заказу",
-                    UserEmail = "var@33kita.ru",
+                    UserId = user.Id,
                     Name = "Вова",
                     Phone = "+79062990044",
+                    Created = DateTime.Now
                 });
 
                 context.Reservations.Add(new Reservation
                 {
                     ActivityId = activityId,
                     Comment = "Комментарий к заказу",
-                    UserEmail = "test@33kita.ru",
+                    UserId = user.Id,
                     Name = "Тест",
                     Phone = "+7-982-666-2323",
+                    Created = DateTime.Now
                 });
 
                 context.SaveChanges();
@@ -311,11 +329,12 @@ namespace Models
             if (!context.Reviews.Any())
             {
                 var activityId = context.Activities.First().Id;
+                var user = context.Users.First();
 
                 var review1 = context.Reviews.Add(new Review
                 {
                     ActivityId = activityId,
-                    UserEmail = "test@33kita.ru",
+                    UserId = user.Id,
                     DateCreated = DateTime.Now,
                     IsChecked = false,
                     Text = "Всё хорошо!"
@@ -325,12 +344,34 @@ namespace Models
                 context.Reviews.Add(new Review
                 {
                     ActivityId = activityId,
-                    UserEmail = "var@33kita.ru",
+                    UserId = user.Id,
                     DateCreated = DateTime.Now,
                     IsChecked = true,
                     Text = "Спасибо!",
                     ReplyToReviewId = review1.Id
                 });
+
+                context.Reviews.Add(new Review
+                {
+                    ActivityId = activityId,
+                    UserId = user.Id,
+                    DateCreated = DateTime.Now,
+                    IsChecked = false,
+                    Text = "Круто",
+                    ReplyToReviewId = review1.Id
+                });
+
+                context.Reviews.Add(new Review
+                {
+                    ActivityId = activityId,
+                    UserId = user.Id,
+                    DateCreated = DateTime.Now,
+                    IsChecked = false,
+                    Text = "Не круто",
+                    ReplyToReviewId = review1.Id
+                });
+
+
                 context.SaveChanges();
             }
 

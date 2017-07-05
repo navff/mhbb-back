@@ -17,15 +17,15 @@ namespace Models.Operations
             _context = context;
         }
 
-        public async Task<int> AddVoice(string email, VoiceValue voiceValue, int activityId)
+        public async Task<int> AddVoice(int userId, VoiceValue voiceValue, int activityId)
         {
             var voice = _context.ActivityUserVoices
                             .FirstOrDefault(v => (v.ActivityId == activityId)
-                                                 && (v.UserEmail == email)) 
+                                                 && (v.UserId == userId)) 
                         ?? new ActivityUserVoice
                         {
                             ActivityId = activityId,
-                            UserEmail = email,
+                            UserId = userId,
                         };
             voice.VoiceValue = voiceValue;
             if (voice.Id == 0)
@@ -50,10 +50,10 @@ namespace Models.Operations
             return result;
         }
 
-        public async Task<IEnumerable<ActivityUserVoice>> GetUserVoices(string userEmail)
+        public async Task<IEnumerable<ActivityUserVoice>> GetUserVoices(int userId)
         {
             return await _context.ActivityUserVoices
-                                 .Where(v => v.UserEmail == userEmail)
+                                 .Where(v => v.UserId == userId)
                                  .ToListAsync();
 
         }

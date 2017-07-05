@@ -60,7 +60,7 @@ namespace API.ViewModels
         /// Почта записываемого
         /// </summary>
         [Required]
-        public string UserEmail { get; set; }
+        public int  UserId { get; set; }
 
         /// <summary>
         /// Имя записываемого

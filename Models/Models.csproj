@@ -85,53 +85,9 @@
     <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\Review.cs" />
     <Compile Include="Entities\Reservation.cs" />
-    <Compile Include="Migrations\201704020512557_user-reservations-reference.cs" />
-    <Compile Include="Migrations\201704020512557_user-reservations-reference.Designer.cs">
-      <DependentUpon>201704020512557_user-reservations-reference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704020514273_user-review-reference.cs" />
-    <Compile Include="Migrations\201704020514273_user-review-reference.Designer.cs">
-      <DependentUpon>201704020514273_user-review-reference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704020654383_made-token-required-field.cs" />
-    <Compile Include="Migrations\201704020654383_made-token-required-field.Designer.cs">
-      <DependentUpon>201704020654383_made-token-required-field.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704020659230_add_registered_date_to_user.cs" />
-    <Compile Include="Migrations\201704020659230_add_registered_date_to_user.Designer.cs">
-      <DependentUpon>201704020659230_add_registered_date_to_user.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704160549261_add_index_to_organizer.cs" />
-    <Compile Include="Migrations\201704160549261_add_index_to_organizer.Designer.cs">
-      <DependentUpon>201704160549261_add_index_to_organizer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704160555535_add_required_to_organizer.cs" />
-    <Compile Include="Migrations\201704160555535_add_required_to_organizer.Designer.cs">
-      <DependentUpon>201704160555535_add_required_to_organizer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704201124249_required_name_for_interest.cs" />
-    <Compile Include="Migrations\201704201124249_required_name_for_interest.Designer.cs">
-      <DependentUpon>201704201124249_required_name_for_interest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704201340251_add_temp_files.cs" />
-    <Compile Include="Migrations\201704201340251_add_temp_files.Designer.cs">
-      <DependentUpon>201704201340251_add_temp_files.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704251356247_remove_session_id_from_tempFile.cs" />
-    <Compile Include="Migrations\201704251356247_remove_session_id_from_tempFile.Designer.cs">
-      <DependentUpon>201704251356247_remove_session_id_from_tempFile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705010534554_made_linked_object_required_for_picture.cs" />
-    <Compile Include="Migrations\201705010534554_made_linked_object_required_for_picture.Designer.cs">
-      <DependentUpon>201705010534554_made_linked_object_required_for_picture.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705130330112_add_indexes_to_model.cs" />
-    <Compile Include="Migrations\201705130330112_add_indexes_to_model.Designer.cs">
-      <DependentUpon>201705130330112_add_indexes_to_model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707051458204_id_for_user.cs" />
-    <Compile Include="Migrations\201707051458204_id_for_user.Designer.cs">
-      <DependentUpon>201707051458204_id_for_user.cs</DependentUpon>
+    <Compile Include="Migrations\201707051837098_init.cs" />
+    <Compile Include="Migrations\201707051837098_init.Designer.cs">
+      <DependentUpon>201707051837098_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\ActivityOperations.cs" />
@@ -159,41 +115,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704020512557_user-reservations-reference.resx">
-      <DependentUpon>201704020512557_user-reservations-reference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704020514273_user-review-reference.resx">
-      <DependentUpon>201704020514273_user-review-reference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704020654383_made-token-required-field.resx">
-      <DependentUpon>201704020654383_made-token-required-field.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704020659230_add_registered_date_to_user.resx">
-      <DependentUpon>201704020659230_add_registered_date_to_user.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704160549261_add_index_to_organizer.resx">
-      <DependentUpon>201704160549261_add_index_to_organizer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704160555535_add_required_to_organizer.resx">
-      <DependentUpon>201704160555535_add_required_to_organizer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704201124249_required_name_for_interest.resx">
-      <DependentUpon>201704201124249_required_name_for_interest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704201340251_add_temp_files.resx">
-      <DependentUpon>201704201340251_add_temp_files.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704251356247_remove_session_id_from_tempFile.resx">
-      <DependentUpon>201704251356247_remove_session_id_from_tempFile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705010534554_made_linked_object_required_for_picture.resx">
-      <DependentUpon>201705010534554_made_linked_object_required_for_picture.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705130330112_add_indexes_to_model.resx">
-      <DependentUpon>201705130330112_add_indexes_to_model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707051458204_id_for_user.resx">
-      <DependentUpon>201707051458204_id_for_user.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707051837098_init.resx">
+      <DependentUpon>201707051837098_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

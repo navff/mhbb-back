@@ -97,7 +97,7 @@ namespace Tests.Operations
             var user = _context.Users.Where(u => u.Role == Role.RegisteredUser).ToList().Last();
             _userOperations.DeleteAsync(user.Email).Wait();
 
-            var deletedUser = _context.Users.Find(user.Email);
+            var deletedUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
             Assert.IsNull(deletedUser);
         }
 
@@ -118,9 +118,10 @@ namespace Tests.Operations
         [TestMethod]
         public void Search_ByEmail_Test()
         {
-            var result = _userOperations.SearchAsync(word:"var@33kita.ru").Result;
+            var user = _context.Users.First();
+            var result = _userOperations.SearchAsync(word: user.Email).Result;
             Assert.IsNotNull(result);
-            Assert.AreEqual("var@33kita.ru", result.First().Email);
+            Assert.AreEqual(user.Email, result.First().Email);
         }
 
         [TestMethod]

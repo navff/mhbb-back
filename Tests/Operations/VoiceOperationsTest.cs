@@ -21,7 +21,7 @@ namespace Tests.Operations
         {
             var user = _context.Users.First();
             var activity = _context.Activities.First();
-            _voiceOperations.AddVoice(user.Email, VoiceValue.Positive, activity.Id).Wait();
+            _voiceOperations.AddVoice(user.Id, VoiceValue.Positive, activity.Id).Wait();
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace Tests.Operations
         {
             var user = _context.Users.First();
             var activity = _context.Activities.First();
-            _voiceOperations.AddVoice(user.Email, VoiceValue.Negative, activity.Id).Wait();
+            _voiceOperations.AddVoice(user.Id, VoiceValue.Negative, activity.Id).Wait();
         }
 
         

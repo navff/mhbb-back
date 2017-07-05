@@ -101,9 +101,10 @@ namespace Tests.Controllers
         [TestMethod]
         public void HTTP_Delete_OK_Test()
         {
+            var userForDelete = _context.Users.Take(100).ToList().Last();
             var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
-            var result = HttpDelete<string>($"api/user/delete?email={user.Email}", user.AuthToken);
-            Assert.AreEqual("Deleted "+user.Email, result);
+            var result = HttpDelete<string>($"api/user/delete?email={userForDelete.Email}", user.AuthToken);
+            Assert.AreEqual("Deleted "+ userForDelete.Email, result);
         }
 
         [TestMethod]
@@ -118,9 +119,9 @@ namespace Tests.Controllers
         [ExpectedException(typeof(WebException))]
         public void HTTP_Delete_AnotherUserToken_Test()
         {
-            var user = _context.Users.First();
+            var userForDelete = _context.Users.Take(100).ToList().Last();
             var anotherUser = _context.Users.Where(u => u.Role == Role.RegisteredUser).Take(2).ToList().Last();
-            HttpDelete<string>($"api/user/delete?email={user.Email}", anotherUser.AuthToken);
+            HttpDelete<string>($"api/user/delete?email={userForDelete.Email}", anotherUser.AuthToken);
         }
 
         [TestMethod]

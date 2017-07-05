@@ -23,10 +23,10 @@ namespace Models.Operations
             try
             {
                 UserOperations userOperations = new UserOperations(_context);
-                var user = await userOperations.GetAsync(reservation.UserEmail);
+                var user = await userOperations.GetAsync(reservation.UserId);
                 if (user == null)
                 {
-                    await userOperations.RegisterAsync(reservation.UserEmail);
+                    await userOperations.RegisterAsync(reservation.User.Email);
                 }
 
                 reservation.Created = DateTime.Now;
@@ -68,7 +68,7 @@ namespace Models.Operations
                 dbEntity.ActivityId = reservation.ActivityId;
                 dbEntity.Comment = reservation.Comment;
                 dbEntity.Phone = reservation.Phone;
-                dbEntity.UserEmail = reservation.UserEmail;
+                dbEntity.UserId = reservation.UserId;
 
                 await _context.SaveChangesAsync();
                 return dbEntity;
@@ -105,7 +105,7 @@ namespace Models.Operations
         {
             try
             {
-                return await _context.Reservations.Where(r => (r.UserEmail.Contains(word))
+                return await _context.Reservations.Where(r => (r.User.Email.Contains(word))
                                                                   ||(r.User.Name.Contains(word))
                                                                   ||(r.Phone.Contains(word))
                                                                   ||(r.Name.Contains(word))).ToListAsync();
