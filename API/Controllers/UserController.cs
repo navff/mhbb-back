@@ -54,6 +54,8 @@ namespace API.Controllers
                 var result = Mapper.Map<UserViewModelGet>(entity);
                 result.CityName = entity.City?.Name;
                 result.RoleName = entity.Role.ToString();
+                var pic = (await _pictureOperations.GetByLinkedObject(LinkedObjectType.User, entity.Id)).FirstOrDefault();
+                result.Picture = Mapper.Map<PictureViewModelGet>(pic);
                 return Ok(result);
             }
             catch (Exception e)
