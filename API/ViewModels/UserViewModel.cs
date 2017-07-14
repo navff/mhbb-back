@@ -65,11 +65,6 @@ namespace API.ViewModels
         public string Phone { get; set; }
 
         /// <summary>
-        /// Аватарка
-        /// </summary>
-        public int? PictureId { get; set; }
-
-        /// <summary>
         /// Роль
         /// </summary>
         public Role Role { get; set; }

@@ -1641,11 +1641,6 @@
             Номер телефона
             </summary>
         </member>
-        <member name="P:API.ViewModels.UserViewModelPut.PictureId">
-            <summary>
-            Аватарка
-            </summary>
-        </member>
         <member name="P:API.ViewModels.UserViewModelPut.Role">
             <summary>
             Роль
