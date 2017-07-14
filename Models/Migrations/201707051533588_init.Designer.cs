@@ -7,13 +7,13 @@ namespace Models.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class made_linked_object_required_for_picture : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(made_linked_object_required_for_picture));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705010534554_made_linked_object_required_for_picture"; }
+            get { return "201707051533588_init"; }
         }
         
         string IMigrationMetadata.Source
