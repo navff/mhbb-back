@@ -34,6 +34,17 @@ namespace API.ViewModels
         /// Трезвость (преподаватели вообще не пьют и не курят)
         /// </summary>
         public bool Sobriety { get; set; }
+
+        /// <summary>
+        /// Почта для уведомлений организатора
+        /// </summary>
+        public string Email { get; set; }
+
+
+        /// <summary>
+        /// Телефон для уведомлений организатора
+        /// </summary>
+        public string Phone { get; set; }
     }
 
     /// <summary>
@@ -55,5 +66,16 @@ namespace API.ViewModels
         /// Трезвость. Все преподаватели ведут трезвый образ жизни и не покажут отрицательный пример даже по праздникам.
         /// </summary>
         public bool Sobriety { get; set; }
+
+        /// <summary>
+        /// Почта для уведомлений организатора
+        /// </summary>
+        public string Email { get; set; }
+
+
+        /// <summary>
+        /// Телефон для уведомлений организатора
+        /// </summary>
+        public string Phone { get; set; }
     }
 }

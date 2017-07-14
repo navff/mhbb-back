@@ -23,5 +23,9 @@ namespace Models.Entities
         public virtual City City { get; set; }
 
         public bool Sobriety { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
     }
 }

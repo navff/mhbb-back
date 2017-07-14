@@ -1331,6 +1331,16 @@
             Трезвость (преподаватели вообще не пьют и не курят)
             </summary>
         </member>
+        <member name="P:API.ViewModels.OrganizerViewModelGet.Email">
+            <summary>
+            Почта для уведомлений организатора
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelGet.Phone">
+            <summary>
+            Телефон для уведомлений организатора
+            </summary>
+        </member>
         <member name="T:API.ViewModels.OrganizerViewModelPost">
             <summary>
             Организатор
@@ -1349,6 +1359,16 @@
         <member name="P:API.ViewModels.OrganizerViewModelPost.Sobriety">
             <summary>
             Трезвость. Все преподаватели ведут трезвый образ жизни и не покажут отрицательный пример даже по праздникам.
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelPost.Email">
+            <summary>
+            Почта для уведомлений организатора
+            </summary>
+        </member>
+        <member name="P:API.ViewModels.OrganizerViewModelPost.Phone">
+            <summary>
+            Телефон для уведомлений организатора
             </summary>
         </member>
         <member name="T:API.ViewModels.PictureViewModelGet">

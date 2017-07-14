@@ -44,6 +44,8 @@ namespace Models.Operations
             orgInDb.Name = organizer.Name;
             orgInDb.CityId = organizer.CityId;
             orgInDb.Sobriety = organizer.Sobriety;
+            orgInDb.Email = organizer.Email;
+            orgInDb.Phone = organizer.Phone;
 
             await _context.SaveChangesAsync();
             return orgInDb;

@@ -78,6 +78,8 @@ namespace API.Controllers
                 org.CityId = putViewModel.CityId;
                 org.Name = putViewModel.Name;
                 org.Sobriety = putViewModel.Sobriety;
+                org.Phone = putViewModel.Phone;
+                org.Email = putViewModel.Email;
 
                 await _organizerOperations.UpdateAsync(org);
                 return await Get(id);
