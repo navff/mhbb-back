@@ -1446,7 +1446,7 @@
             ID активности, на которую чел  записывается
             </summary>
         </member>
-        <member name="P:API.ViewModels.ReservationViewModelPost.UserEmail">
+        <member name="P:API.ViewModels.ReservationViewModelPost.UserId">
             <summary>
             Почта записываемого
             </summary>

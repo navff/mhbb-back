@@ -40,7 +40,7 @@ namespace Tests.Controllers
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserEmail = reservation.UserEmail,
+                UserId = reservation.UserId,
                 Phone = rndString,
                 ActivityId = reservation.ActivityId,
                 Comment = rndString
@@ -58,10 +58,11 @@ namespace Tests.Controllers
         public void Put_WrongId_Test()
         {
             var rndString = Guid.NewGuid().ToString();
+            var user = _context.Users.First();
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserEmail = rndString,
+                UserId = user.Id,
                 Phone = rndString,
                 ActivityId = 1,
                 Comment = rndString
@@ -79,7 +80,7 @@ namespace Tests.Controllers
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserEmail = rndString,
+                UserId = 999999,
                 Phone = rndString,
                 ActivityId = 1,
                 Comment = rndString
@@ -93,11 +94,12 @@ namespace Tests.Controllers
         {
             var rndString = Guid.NewGuid().ToString();
             var activity = _context.Activities.First();
+            var user = _context.Users.First();
 
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserEmail = rndString+"@mhbb.ru",
+                UserId = user.Id,
                 Phone = rndString,
                 Comment = rndString,
                 ActivityId = activity.Id
@@ -119,7 +121,7 @@ namespace Tests.Controllers
             var viewModel = new ReservationViewModelPost
             {
                 Name = null,
-                UserEmail = null,
+                UserId = 0,
                 Phone = null,
                 Comment = null,
                 ActivityId = 9999
@@ -157,8 +159,8 @@ namespace Tests.Controllers
         [TestMethod]
         public void Search_ByEmail_Test()
         {
-            var reservation = _context.Reservations.Take(10).ToList().Last();
-            string url = $"api/reservation/search?word={reservation.UserEmail.Substring(2)}";
+            var reservation = _context.Reservations.Include(r => r.User).Take(10).ToList().Last();
+            string url = $"api/reservation/search?word={reservation.User.Email.Substring(2)}";
             var result = HttpGet<IEnumerable<ReservationViewModelGet>>(url);
             Assert.IsTrue(result.Any());
         }

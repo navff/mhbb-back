@@ -10,6 +10,7 @@ using System.Web.Http.Description;
 using System.Web.Http.Results;
 using API.Common;
 using API.Models;
+using API.Operations;
 using API.ViewModels;
 using AutoMapper;
 using Camps.Tools;
@@ -25,10 +26,13 @@ namespace API.Controllers
     public class ReviewController : ApiController
     {
         private ReviewOperations _reviewOperations;
+        private UserOperations _userOperations;
 
-        public ReviewController(ReviewOperations reviewOperations)
+        public ReviewController(ReviewOperations reviewOperations, 
+                                UserOperations userOperations)
         {
             _reviewOperations = reviewOperations;
+            _userOperations = userOperations;
         }
 
         /// <summary>
@@ -185,7 +189,8 @@ namespace API.Controllers
             try
             {
                 var review = Mapper.Map<Review>(postViewModel);
-                review.UserEmail = User.Identity.Name;
+                var user = await _userOperations.GetAsync(User.Identity.Name);
+                review.UserId = user.Id;
                 var result = await _reviewOperations.AddAsync(review);
                 return await Get(result.Id);
 
@@ -258,7 +263,7 @@ namespace API.Controllers
         {
             if ((!User.IsInRole("PortalAdmin"))
                 && (!User.IsInRole("PortalManager"))
-                && (User.Identity.Name != review.UserEmail))
+                && (User.Identity.Name != review.User.Email))
             {
                 return new ResponseMessageResult(
                     new HttpResponseMessage(HttpStatusCode.Forbidden)

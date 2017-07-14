@@ -50,7 +50,7 @@ namespace Tests.Operations
                 DateCreated = date,
                 IsChecked = review.IsChecked,
                 Text = rndString,
-                UserEmail = review.UserEmail,
+                UserId = review.UserId,
             }).Result;
             Assert.AreEqual(rndString, result.Text);
             Assert.AreEqual(review.DateCreated.Date, result.DateCreated.Date);
@@ -67,7 +67,7 @@ namespace Tests.Operations
                 DateCreated = DateTime.Now,
                 IsChecked = false,
                 Text = null,
-                UserEmail = null,
+                UserId = 0
             }).Wait();
         }
 
@@ -84,7 +84,7 @@ namespace Tests.Operations
                 DateCreated = date,
                 IsChecked = false,
                 Text = rndString,
-                UserEmail = user.Email
+                UserId = user.Id
             }).Result;
             Assert.AreEqual(rndString, result.Text);
             Assert.AreEqual(date, result.DateCreated.Date);
@@ -100,7 +100,7 @@ namespace Tests.Operations
                 DateCreated = DateTime.Now,
                 IsChecked = false,
                 Text = null,
-                UserEmail = null
+                UserId = 0
             }).Wait();
         }
 
@@ -126,8 +126,8 @@ namespace Tests.Operations
         [TestMethod]
         public void GetByUserEmail_Ok_Test()
         {
-            var review = _context.Reviews.First();
-            var result = _reviewOperations.GetByUserEmailAsync(review.UserEmail).Result;
+            var review = _context.Reviews.Include(r => r.User).First();
+            var result = _reviewOperations.GetByUserEmailAsync(review.User.Email).Result;
             Assert.IsTrue(result.Any());
         }
 

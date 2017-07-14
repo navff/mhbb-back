@@ -85,9 +85,9 @@
     <Compile Include="Entities\Picture.cs" />
     <Compile Include="Entities\Review.cs" />
     <Compile Include="Entities\Reservation.cs" />
-    <Compile Include="Migrations\201707051533588_init.cs" />
-    <Compile Include="Migrations\201707051533588_init.Designer.cs">
-      <DependentUpon>201707051533588_init.cs</DependentUpon>
+    <Compile Include="Migrations\201707051837098_init.cs" />
+    <Compile Include="Migrations\201707051837098_init.Designer.cs">
+      <DependentUpon>201707051837098_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Operations\ActivityOperations.cs" />
@@ -115,8 +115,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707051533588_init.resx">
-      <DependentUpon>201707051533588_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707051837098_init.resx">
+      <DependentUpon>201707051837098_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

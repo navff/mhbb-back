@@ -57,17 +57,6 @@ namespace Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Reservation>()
-                .HasRequired(r => r.User)
-                .WithMany()
-                .HasForeignKey(r => r.UserEmail)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<Review>()
-                .HasRequired(r => r.User)
-                .WithMany()
-                .HasForeignKey(r => r.UserEmail)
-                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Review>()
                 .HasOptional(r => r.ReplyTo)

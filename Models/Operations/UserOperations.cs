@@ -57,6 +57,14 @@ namespace API.Operations
                                  .FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public async Task<User> GetAsync(int id)
+        {
+            return await _context.Users
+                                 .Include(u => u.City)
+                                 .Include(u => u.Picture)
+                                 .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         /// <summary>
         /// Обновление пользователя
         /// </summary>
@@ -64,7 +72,7 @@ namespace API.Operations
         /// <returns></returns>
         public async Task<User> UpdateAsync(User user)
         {
-            var userInDb = await _context.Users.FindAsync(user.Email);
+            var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             Contracts.Assert(userInDb!=null);
 
             userInDb.Name = user.Name;
@@ -91,7 +99,7 @@ namespace API.Operations
 
         public async Task DeleteAsync(string email)
         {
-            var user = _context.Users.Find(email);
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
             Contracts.Assert(user!=null);
 
             var reviews = await _reviewsOperations.GetByUserEmailAsync(user.Email);
@@ -99,7 +107,7 @@ namespace API.Operations
             {
                 await _reviewsOperations.DeleteAsync(review.Id);
             }
-            var userVoices = await _voiceOperations.GetUserVoices(email);
+            var userVoices = await _voiceOperations.GetUserVoices(user.Id);
             foreach (var userVoice in userVoices)
             {
                 await _voiceOperations.DeleteVoiceAsync(userVoice.Id);
@@ -146,7 +154,7 @@ namespace API.Operations
 
         public async Task<User> ResetTokenAsync(string userEmail)
         {
-            var userInDb = await _context.Users.FindAsync(userEmail);
+            var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
             Contracts.Assert(userInDb != null);
 
             userInDb.AuthToken = GenerateToken();
