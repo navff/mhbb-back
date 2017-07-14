@@ -56,6 +56,10 @@ namespace API.Controllers
                 result.RoleName = entity.Role.ToString();
                 var pic = (await _pictureOperations.GetByLinkedObject(LinkedObjectType.User, entity.Id)).FirstOrDefault();
                 result.Picture = Mapper.Map<PictureViewModelGet>(pic);
+                if (result.Picture != null)
+                {
+                    result.Picture.Url = Url.Content($"~/api/picture/{result.Picture.Id}");
+                }
                 return Ok(result);
             }
             catch (Exception e)
