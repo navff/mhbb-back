@@ -82,6 +82,8 @@ namespace API.ViewModels
         /// превратятся в Picture и привяжутся в данной активности.
         /// </summary>
         public string FormId { get; set; }
+
+        public string Email { get; set; }
     }
 
     /// <summary>

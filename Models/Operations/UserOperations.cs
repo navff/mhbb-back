@@ -72,7 +72,7 @@ namespace API.Operations
         /// <returns></returns>
         public async Task<User> UpdateAsync(User user)
         {
-            var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+            var userInDb = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
             Contracts.Assert(userInDb!=null);
 
             userInDb.Name = user.Name;
@@ -80,6 +80,7 @@ namespace API.Operations
             userInDb.Phone = user.Phone;
             userInDb.PictureId = user.PictureId;
             userInDb.Role = user.Role;
+            userInDb.Email = user.Email;
 
             await _context.SaveChangesAsync();
             return userInDb;

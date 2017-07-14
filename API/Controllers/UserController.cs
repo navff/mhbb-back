@@ -90,10 +90,16 @@ namespace API.Controllers
 
             }
             var userEntity = Mapper.Map<User>(putViewModel);
-            userEntity.Email = email;
+            var userId = (await _userOperations.GetAsync(email))?.Id;
+            if (!userId.HasValue)
+            {
+                return this.Result404("User is not found");
+            }
+
+            userEntity.Id = userId.Value;
             userEntity = await _userOperations.UpdateAsync(userEntity);
             await _pictureOperations.SaveByFormIdAsync(putViewModel.FormId, userEntity.Id, LinkedObjectType.User);
-            return await Get(email);
+            return await Get(userEntity.Email);
         }
 
 
