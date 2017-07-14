@@ -87,7 +87,7 @@ namespace API.Controllers
             }
             var userEntity = Mapper.Map<User>(putViewModel);
             userEntity.Email = email;
-            await _userOperations.UpdateAsync(userEntity);
+            userEntity = await _userOperations.UpdateAsync(userEntity);
             await _pictureOperations.SaveByFormIdAsync(putViewModel.FormId, userEntity.Id, LinkedObjectType.User);
             return await Get(email);
         }
