@@ -13,6 +13,8 @@ namespace API.ViewModels
     /// </summary>
     public class UserViewModelGet
     {
+
+        public int Id { get; set; }
         /// <summary>
         /// Электропочта
         /// </summary>

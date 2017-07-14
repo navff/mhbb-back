@@ -27,12 +27,14 @@ namespace API.Controllers
     {
         private ReviewOperations _reviewOperations;
         private UserOperations _userOperations;
+        private PictureOperations _pictureOperations;
 
         public ReviewController(ReviewOperations reviewOperations, 
-                                UserOperations userOperations)
+                                UserOperations userOperations, PictureOperations pictureOperations)
         {
             _reviewOperations = reviewOperations;
             _userOperations = userOperations;
+            _pictureOperations = pictureOperations;
         }
 
         /// <summary>
@@ -49,6 +51,15 @@ namespace API.Controllers
                 var review = await _reviewOperations.GetAsync(id);
                 if (review == null) return this.Result404("This review is not found");
                 var result = Mapper.Map<ReviewViewModelGet>(review);
+
+                var picture = (await _pictureOperations.GetByLinkedObject(LinkedObjectType.User, review.User.Id)).FirstOrDefault();
+                var pictureViewModel = Mapper.Map<PictureViewModelGet>(picture);
+                if (pictureViewModel != null)
+                {
+                    pictureViewModel.Url = Url.Content($"~/api/picture/{pictureViewModel.Id}");
+                    result.User.Picture = pictureViewModel;
+                }
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -76,6 +87,15 @@ namespace API.Controllers
                 {
                     var viewModel = Mapper.Map<ReviewViewModelGet>(review);
                     viewModel.ActivityName = review.Activity.Name;
+
+                    var picture = (await _pictureOperations.GetByLinkedObject(LinkedObjectType.User, viewModel.User.Id)).FirstOrDefault();
+                    var pictureViewModel = Mapper.Map<PictureViewModelGet>(picture);
+                    if (pictureViewModel != null)
+                    {
+                        pictureViewModel.Url = Url.Content($"~/api/picture/{pictureViewModel.Id}");
+                        viewModel.User.Picture = pictureViewModel;
+                    }
+
                     result.Add(viewModel);
                 }
                 return Ok(result);
@@ -105,6 +125,14 @@ namespace API.Controllers
                 {
                     var viewModel = Mapper.Map<ReviewViewModelGet>(review);
                     viewModel.ActivityName = review.Activity.Name;
+                    var picture = (await _pictureOperations.GetByLinkedObject(LinkedObjectType.User, viewModel.User.Id)).FirstOrDefault();
+                    var pictureViewModel = Mapper.Map<PictureViewModelGet>(picture);
+                    if (pictureViewModel != null)
+                    {
+                        pictureViewModel.Url = Url.Content($"~/api/picture/{pictureViewModel.Id}");
+                        viewModel.User.Picture = pictureViewModel;
+                    }
+
                     result.Add(viewModel);
                 }
                 return Ok(result);
@@ -137,6 +165,15 @@ namespace API.Controllers
                 {
                     var viewModel = Mapper.Map<ReviewViewModelGet>(review);
                     viewModel.ActivityName = review.Activity.Name;
+
+                    var picture = (await _pictureOperations.GetByLinkedObject(LinkedObjectType.User, viewModel.User.Id)).FirstOrDefault();
+                    var pictureViewModel = Mapper.Map<PictureViewModelGet>(picture);
+                    if (pictureViewModel != null)
+                    {
+                        pictureViewModel.Url = Url.Content($"~/api/picture/{pictureViewModel.Id}");
+                        viewModel.User.Picture = pictureViewModel;
+                    }
+
                     result.Add(viewModel);
                 }
 

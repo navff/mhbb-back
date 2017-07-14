@@ -79,7 +79,7 @@ namespace Tests.Controllers
         [ExpectedException(typeof(WebException))]
         public void Put_NoAdmin_Test()
         {
-            var user = _context.Users.First(u => u.Role != Role.PortalAdmin);
+            var user = _context.Users.First(u => (u.Role != Role.PortalAdmin) && (u.Role != Role.PortalManager));
             var city = _context.Cities.First();
             var rndString = Guid.NewGuid().ToString();
             var viewModel = new CityViewModelPost
@@ -107,7 +107,7 @@ namespace Tests.Controllers
         [ExpectedException(typeof(WebException))]
         public void Post_NoAdmin_Test()
         {
-            var user = _context.Users.First(u => u.Role != Role.PortalAdmin);
+            var user = _context.Users.First(u => (u.Role != Role.PortalAdmin) && (u.Role != Role.PortalManager));
             var rndString = Guid.NewGuid().ToString();
             var viewModel = new CityViewModelPost
             {
@@ -142,7 +142,7 @@ namespace Tests.Controllers
         [ExpectedException(typeof(WebException))]
         public void Delete_NoAdmin_Test()
         {
-            var user = _context.Users.First(u => u.Role != Role.PortalAdmin);
+            var user = _context.Users.First(u => (u.Role != Role.PortalAdmin) && (u.Role != Role.PortalManager));
             var city = _context.Cities.Take(2).ToList().Last();
             HttpDelete<string>($"api/city/{city.Id}", user.AuthToken);
 
