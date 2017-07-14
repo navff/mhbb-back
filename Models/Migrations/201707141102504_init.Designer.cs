@@ -13,7 +13,7 @@ namespace Models.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201704020514273_user-review-reference"; }
+            get { return "201707141102504_init"; }
         }
         
         string IMigrationMetadata.Source
