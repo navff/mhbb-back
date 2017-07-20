@@ -136,6 +136,7 @@ namespace Tests.Controllers
                 Phone = rndString,
                 CityId = user.CityId,
                 Role = user.Role,
+                Email = user.Email
             };
 
             var result = HttpPut<UserViewModelGet>($"api/user?email={user.Email}", viewModel, user.AuthToken);
