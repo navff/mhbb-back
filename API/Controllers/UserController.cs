@@ -80,7 +80,7 @@ namespace API.Controllers
         [RESTAuthorize]
         public async Task<IHttpActionResult> Put([FromUri] string email, [FromBody] UserViewModelPut putViewModel)
         {
-            if ((!User.IsInRole("PortalAdmin"))  
+            if ((!User.IsInRole("PortalAdmin")) && ((!User.IsInRole("PortalManager")))  
                   && (User.Identity.Name!=email))
             {
                 return new ResponseMessageResult(new HttpResponseMessage(HttpStatusCode.Unauthorized)
