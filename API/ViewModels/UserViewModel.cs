@@ -83,6 +83,7 @@ namespace API.ViewModels
         /// </summary>
         public string FormId { get; set; }
 
+        [Required]
         public string Email { get; set; }
     }
 
