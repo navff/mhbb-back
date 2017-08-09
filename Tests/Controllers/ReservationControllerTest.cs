@@ -35,12 +35,12 @@ namespace Tests.Controllers
         [TestMethod]
         public void Put_Ok_Test()
         {
-            var reservation = _context.Reservations.Include(r => r.Activity).First();
+            var reservation = _context.Reservations.Include(r => r.Activity).Include(r => r.User).First();
             var rndString = Guid.NewGuid().ToString();
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserId = reservation.UserId,
+                UserEmail = reservation.User.Email,
                 Phone = rndString,
                 ActivityId = reservation.ActivityId,
                 Comment = rndString
@@ -62,7 +62,7 @@ namespace Tests.Controllers
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserId = user.Id,
+                UserEmail = user.Email,
                 Phone = rndString,
                 ActivityId = 1,
                 Comment = rndString
@@ -80,9 +80,9 @@ namespace Tests.Controllers
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserId = 999999,
+                UserEmail = "999999@333l.ru",
                 Phone = rndString,
-                ActivityId = 1,
+                ActivityId = 0,
                 Comment = rndString
             };
             string url = $"api/reservation/{reservation.Id}";
@@ -99,7 +99,7 @@ namespace Tests.Controllers
             var viewModel = new ReservationViewModelPost
             {
                 Name = rndString,
-                UserId = user.Id,
+                UserEmail = user.Email,
                 Phone = rndString,
                 Comment = rndString,
                 ActivityId = activity.Id
@@ -121,7 +121,7 @@ namespace Tests.Controllers
             var viewModel = new ReservationViewModelPost
             {
                 Name = null,
-                UserId = 0,
+                UserEmail = "0",
                 Phone = null,
                 Comment = null,
                 ActivityId = 9999

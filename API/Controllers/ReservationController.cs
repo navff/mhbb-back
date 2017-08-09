@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using API.Common;
 using API.Models;
+using API.Operations;
 using API.ViewModels;
 using AutoMapper;
 using Camps.Tools;
@@ -23,10 +24,12 @@ namespace API.Controllers
     public class ReservationController : ApiController
     {
         private readonly ReservationOperations _reservationOperations;
+        private readonly UserOperations _userOperations;
 
-        public ReservationController(ReservationOperations reservationOperations)
+        public ReservationController(ReservationOperations reservationOperations, UserOperations userOperations)
         {
             _reservationOperations = reservationOperations;
+            _userOperations = userOperations;
         }
 
         /// <summary>
@@ -67,6 +70,12 @@ namespace API.Controllers
 
                 var reservation = Mapper.Map<Reservation>(viewModel);
                 reservation.Id = id;
+                var user = await _userOperations.GetAsync(viewModel.UserEmail) ??
+                           await _userOperations.RegisterAsync(viewModel.UserEmail);
+
+                reservation.User = user;
+                reservation.UserId = user.Id;
+
                 await _reservationOperations.UpdateAsync(reservation);
                 return await Get(id);
             }
@@ -88,6 +97,15 @@ namespace API.Controllers
             try
             {
                 var reservation = Mapper.Map<Reservation>(viewModel);
+                var user = await _userOperations.GetAsync(viewModel.UserEmail);
+                if (user == null)
+                {
+                    user = await _userOperations.RegisterAsync(viewModel.UserEmail);
+                }
+                
+                reservation.User = user;
+                reservation.UserId = user.Id;
+
                 var result = await _reservationOperations.AddAsync(reservation);
                 return await Get(result.Id);
             }
