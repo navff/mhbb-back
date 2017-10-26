@@ -188,6 +188,13 @@ namespace API.Controllers
         {
             try
             {
+                var activity = _activityOperations.Get(activityId);
+                var organizer = activity.Organizer;
+                if ((String.IsNullOrEmpty(organizer.Email)) || (String.IsNullOrEmpty(organizer.Phone)))
+                {
+                    return this.BadRequest("Cannot confirm activity without organizer's contacts. Fill phone end email.");
+                }
+
                 await _activityOperations.SetChecked(activityId, isChecked);
                 return await Get(activityId);
             }

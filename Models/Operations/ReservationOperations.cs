@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using API.Operations;
 using Camps.Tools;
 using Models.Entities;
+using Models.Tools;
 
 namespace Models.Operations
 {
@@ -32,7 +33,9 @@ namespace Models.Operations
                 reservation.Created = DateTime.Now;
                 _context.Reservations.Add(reservation);
                 await _context.SaveChangesAsync();
-                return await GetAsync(reservation.Id);
+                var newReservation = await this.GetAsync(reservation.Id);
+                SendEmail(newReservation);
+                return newReservation;
             }
             catch (Exception ex)
             {
@@ -41,12 +44,39 @@ namespace Models.Operations
             }
         }
 
+        private static bool SendEmail(Reservation reservation)
+        {
+            var dto = new EmailMessage()
+            {
+                From = "Моё хобби <site@mhbb.ru>",
+                To = reservation.Activity.Organizer.Email,
+                Body = GenerateNotificationEmailBody(reservation),
+                EmailSubject = UserMessages.SubjectReservationCreated + $" [{reservation.Id}]"
+            };
+            return EmailService.SendEmail(dto);
+        }
+
+        private static string GenerateNotificationEmailBody(Reservation reservation)
+        {
+            var s = new StringBuilder();
+            s.Append("Здравствуйте!<br/>");
+            s.Append($"На сайте «Моё хобби» к вашему мероприятию «{reservation.Activity.Name}» проявили интерес. <br/><br/>");
+            s.Append($"Время: {reservation.Created.ToString("G")} <br/>");
+            s.Append($"Имя: {reservation.Name} <br/>");
+            s.Append($"Телефон: {reservation.Phone} <br/>");
+            s.Append($"Почта: {reservation.User.Email} <br/><br/>");
+            s.Append($"Комментарий:<br/>");
+            s.Append($"{reservation.Comment} <br/>");
+            return s.ToString();
+        }
+
         public async Task<Reservation> GetAsync(int id)
         {
             try
             {
                 return await _context.Reservations.Include(r => r.User)
                                                   .Include(r => r.Activity.ActivityUserVoices)
+                                                  .Include(r => r.Activity.Organizer)
                                                   .FirstOrDefaultAsync(r => r.Id == id);
             }
             catch (Exception ex)
