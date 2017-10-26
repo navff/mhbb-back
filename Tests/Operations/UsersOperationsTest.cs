@@ -78,7 +78,7 @@ namespace Tests.Operations
             {
                 Name = randomString,
                 Phone = randomString,
-                Email = randomString + "@33kita.ru",
+                Email = randomString + "@mhbb.ru",
                 AuthToken = randomString,
                 CityId =  city.Id,
                 PictureId = picture.Id,
@@ -111,7 +111,7 @@ namespace Tests.Operations
         //[TestMethod]
         public void Register_New_Test()
         {
-            var result = _userOperations.RegisterAsync(Guid.NewGuid()+"@33kita.ru").Result;
+            var result = _userOperations.RegisterAsync(Guid.NewGuid()+"@mhbb.ru").Result;
             Assert.IsTrue(!String.IsNullOrEmpty(result.AuthToken));
         }
 
