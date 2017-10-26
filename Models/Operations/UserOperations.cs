@@ -217,7 +217,7 @@ namespace API.Operations
             var s = new StringBuilder();
             s.Append("Здравствуйте!<br/>");
             s.AppendFormat("Для подтверждения регистрарции в «Моём Хобби», пожалуйста перейдите по " +
-                           "<a href='https://test.mhbb.ru/#/validate-token?token={0}'>ссылке</a>.<br/>Token= {0}", token);
+                           "<a href='http://test.mhbb.ru/#/validate-token?token={0}'>ссылке</a>.<br/>Token= {0}", token);
             return s.ToString();
         }
 
