@@ -60,8 +60,8 @@ namespace Tests.Controllers
         public void HTTP_Search_OK_Test()
         {
             var user = _context.Users.First(u => u.Role == Role.PortalAdmin);
-            var result = HttpGet<IEnumerable<UserViewModelGet>>("api/user/search?word=var@33kita.ru", user.AuthToken);
-            Assert.AreEqual("var@33kita.ru", result.First().Email);
+            var result = HttpGet<IEnumerable<UserViewModelGet>>($"api/user/search?word={user.Email}", user.AuthToken);
+            Assert.AreEqual(user.Email, result.First().Email);
         }
 
         [TestMethod]
