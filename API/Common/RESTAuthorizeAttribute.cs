@@ -20,8 +20,7 @@ namespace API.Common
     public class RESTAuthorizeAttribute : AuthorizationFilterAttribute, IDisposable
     {
         private string[] _roles;
-        private HobbyContext _context = new HobbyContext();
-        private UserOperations _userOperations;
+
 
         /// <summary>
         /// Позволяет заходить всем зарегистрированным пользователям
@@ -37,7 +36,7 @@ namespace API.Common
         public RESTAuthorizeAttribute(params  string[] roles)
         {
             this._roles = roles;
-            _userOperations = new UserOperations(_context);
+            
         }
 
         /// <summary>
@@ -52,7 +51,6 @@ namespace API.Common
                 rolesList.Add(role.ToString());
             }
             this._roles = rolesList.ToArray();
-            _userOperations = new UserOperations(_context);
         }
 
 
@@ -71,40 +69,40 @@ namespace API.Common
                 };
                 return;
             }
-
-            var user = _userOperations.GetUserByToken(token);
-
-            if (user==null) 
+            using (var context = new HobbyContext())
             {
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
-                {
-                    Content = new StringContent("User with this token is not found")
-                };
-                return;
-            }
+                var userOperations = new UserOperations(context);
+                var user = userOperations.GetUserByToken(token);
 
-            if (_roles != null)
-            {
-                if (!_roles.Contains(user.Role.ToString()))
+                if (user == null)
                 {
-                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
                     {
-                        Content = new StringContent("Your role is too small")
+                        Content = new StringContent("User with this token is not found")
                     };
                     return;
                 }
-            }
 
-            var identity = new Identity {Name = user.Email, IsAuthenticated = true};
-            actionContext.RequestContext.Principal = new GenericPrincipal(identity, new[] { user.Role.ToString()});
+                if (_roles != null)
+                {
+                    if (!_roles.Contains(user.Role.ToString()))
+                    {
+                        actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                        {
+                            Content = new StringContent("Your role is too small")
+                        };
+                        return;
+                    }
+                }
+
+                var identity = new Identity { Name = user.Email, IsAuthenticated = true };
+                actionContext.RequestContext.Principal = new GenericPrincipal(identity, new[] { user.Role.ToString() });
+            }
+            
         }
 
-        /// <summary>
-        /// Убивает связанные ресурсы
-        /// </summary>
         public void Dispose()
         {
-            _context.Dispose();
         }
     }
 }

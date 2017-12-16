@@ -552,11 +552,6 @@
             </summary>
             <param name="actionContext"></param>
         </member>
-        <member name="M:API.Common.RESTAuthorizeAttribute.Dispose">
-            <summary>
-            Убивает связанные ресурсы
-            </summary>
-        </member>
         <member name="M:API.Common.Security.GenerateToken">
             <summary>
             Генерит случайный токен по алгоритму SHA256
