@@ -26,10 +26,10 @@ namespace Models.Tools
                 //Добавляем текстовое и html представление для разных клиентов
                 msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message.Body, null, MediaTypeNames.Text.Plain));
                 msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message.Body, null, MediaTypeNames.Text.Html));
-                var smtpClient = new SmtpClient("smtp-pulse.com", Convert.ToInt32(2525));
-                var credentials = new NetworkCredential("var@33kita.ru", "J9FnHkWjK8H3br");
+                var smtpClient = new SmtpClient("smtp.yandex.ru", Convert.ToInt32(25));
+                var credentials = new NetworkCredential("site@mhbb.ru", "84b4hebds7892");
                 smtpClient.Credentials = credentials;
-                smtpClient.EnableSsl = false;
+                smtpClient.EnableSsl = true;
                 smtpClient.Send(msg);
                 smtpClient.Dispose();
                 return true;
@@ -54,5 +54,6 @@ namespace Models.Tools
     {
         public static readonly string SubjectConfirmEmail = "Пожалуйста подтвердите Ваш E-mail";
         public static readonly string SubjectConfirmLogin = "Подтвердите вход на сайт «Моё хобби»";
+        public static readonly string SubjectReservationCreated = "Резервирование на сайте «Моё хобби»";
     }
 }

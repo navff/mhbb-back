@@ -129,10 +129,10 @@ namespace Models
 
             #region ORGANIZERS
 
-            Organizer orgMN = new Organizer {CityId = city.Id, Name = "Мастера науки", Sobriety = false};
-            Organizer orgDM = new Organizer {CityId = city.Id, Name = "Дворец Металлургов", Sobriety = false};
-            Organizer orgOD = new Organizer {CityId = city.Id, Name = "Общее дело", Sobriety = true};
-            Organizer orgBz = new Organizer {CityId = city.Id, Name = "Артель «Буза»", Sobriety = true};
+            Organizer orgMN = new Organizer {CityId = city.Id, Name = "Мастера науки", Sobriety = false, Email = "nauka@mhbb.ru", Phone = "777"};
+            Organizer orgDM = new Organizer {CityId = city.Id, Name = "Дворец Металлургов", Sobriety = false, Email = "dvorecmet@mhbb.ru", Phone = "777" };
+            Organizer orgOD = new Organizer {CityId = city.Id, Name = "Общее дело", Sobriety = true, Email = "od@mhbb.ru", Phone = "777" };
+            Organizer orgBz = new Organizer {CityId = city.Id, Name = "Артель «Буза»", Sobriety = true, Email = "buza@mhbb.ru", Phone = "777" };
 
             if (!context.Organizers.Any())
             {

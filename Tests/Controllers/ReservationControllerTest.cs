@@ -93,7 +93,7 @@ namespace Tests.Controllers
         public void Post_Ok_Test()
         {
             var rndString = Guid.NewGuid().ToString();
-            var activity = _context.Activities.First();
+            var activity = _context.Activities.Include(a => a.Organizer).First();
             var user = _context.Users.First();
 
             var viewModel = new ReservationViewModelPost
@@ -102,7 +102,7 @@ namespace Tests.Controllers
                 UserEmail = user.Email,
                 Phone = rndString,
                 Comment = rndString,
-                ActivityId = activity.Id
+                ActivityId = activity.Id,
             };
 
             string url = $"api/reservation";

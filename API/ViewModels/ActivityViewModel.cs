@@ -153,7 +153,7 @@ namespace API.ViewModels
         /// <summary>
         /// Организатор
         /// </summary>
-        public int OrganizerId { get; set; }
+        public int? OrganizerId { get; set; }
         public virtual OrganizerViewModelPost Organizer { get; set; }
 
         /// <summary>

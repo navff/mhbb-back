@@ -22,7 +22,7 @@ namespace Tests.Operations
         public void Add_Ok_Test()
         {
             var rndString = Guid.NewGuid().ToString();
-            var activity = _context.Activities.First();
+            var activity = _context.Activities.Include(a => a.Organizer).First();
             var user = _context.Users.First();
 
             var result = _reservationOperations.AddAsync(new Reservation
@@ -31,7 +31,8 @@ namespace Tests.Operations
                 ActivityId = activity.Id,
                 Comment = rndString,
                 Phone = rndString,
-                UserId = user.Id
+                UserId = user.Id,
+                Activity =activity,
             }).Result;
 
             Assert.AreEqual(rndString, result.Name);
@@ -44,7 +45,7 @@ namespace Tests.Operations
         public void AddEndRegister_Ok_Test()
         {
             var rndString = Guid.NewGuid().ToString();
-            var activity = _context.Activities.First();
+            var activity = _context.Activities.Include(a => a.Organizer).First();
             var email = rndString + "@mhbb.ru";
             var user = _context.Users.First();
             var result = _reservationOperations.AddAsync(new Reservation

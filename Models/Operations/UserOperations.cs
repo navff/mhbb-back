@@ -204,7 +204,7 @@ namespace API.Operations
                 From = "Моё хобби <site@mhbb.ru>",
                 To = to,
                 Body = GenerateEmailBody(token),
-                EmailSubject = UserMessages.SubjectConfirmEmail
+                EmailSubject = UserMessages.SubjectConfirmLogin
             };
             return EmailService.SendEmail(dto);
         }
@@ -216,8 +216,8 @@ namespace API.Operations
         {
             var s = new StringBuilder();
             s.Append("Здравствуйте!<br/>");
-            s.AppendFormat("Для подтверждения регистрарции в «Моём Хобби», пожалуйста перейдите по " +
-                           "<a href='https://test.mhbb.ru/#/validate-token?token={0}'>ссылке</a>.<br/>Token= {0}", token);
+            s.AppendFormat("Для подтверждения входа в «Моё Хобби», пожалуйста перейдите по " +
+                           "<a href='http://test.mhbb.ru/#/validate-token?token={0}'>ссылке</a>.<br/>Token= {0}", token);
             return s.ToString();
         }
 

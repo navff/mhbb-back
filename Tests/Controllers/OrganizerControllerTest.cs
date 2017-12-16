@@ -43,7 +43,9 @@ namespace Tests.Controllers
             {
                 Name = rndString,
                 CityId = city.Id,
-                Sobriety = true
+                Sobriety = true,
+                Email = "test@mhbb.ru",
+                Phone = "77777"
             };
 
             var result = HttpPost<OrganizerViewModelGet>("api/organizer", viewModel, _admin_token);
@@ -52,7 +54,7 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(WebException))]
         public void Post_InvalidModel_Test()
         {
             var city = _context.Cities.First();
@@ -75,7 +77,9 @@ namespace Tests.Controllers
             {
                 Name = rndString,
                 CityId = org.CityId,
-                Sobriety = true
+                Sobriety = true,
+                Email = "test@mhbb.ru",
+                Phone = "77777"
             };
 
             var result = HttpPut<OrganizerViewModelGet>($"api/organizer/{org.Id}", viewModel, _admin_token);

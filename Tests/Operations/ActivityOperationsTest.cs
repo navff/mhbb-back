@@ -110,7 +110,9 @@ namespace Tests.Operations
                 {
                     Name = rndString,
                     CityId = city.Id,
-                    Sobriety = true
+                    Sobriety = true,
+                    Email = "test.mhbb.ru",
+                    Phone = "77777"
                 },
                 Phones = rndString,
                 Prices = rndString

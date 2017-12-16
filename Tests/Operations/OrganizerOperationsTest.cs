@@ -45,7 +45,9 @@ namespace Tests.Operations
             var org = new Organizer
             {
                 Name = rndString,
-                CityId = city.Id
+                CityId = city.Id,
+                Email = "email@mhbb.ru",
+                Phone = "7777"
             };
 
             var result = _organizerOperations.AddAsync(org).Result;
@@ -79,7 +81,9 @@ namespace Tests.Operations
             {
                 Id = orgInDb.Id,
                 Name = rndString,
-                CityId = orgInDb.CityId
+                CityId = orgInDb.CityId,
+                Email = orgInDb.Email,
+                Phone = orgInDb.Phone
             };
 
             var result = _organizerOperations.UpdateAsync(org).Result;
@@ -157,9 +161,9 @@ namespace Tests.Operations
         }
 
         [TestMethod]
-        public void GetAll_SecondPage_Test()
+        public void GetAll_FirstPage_Test()
         {
-            var result = _organizerOperations.SearchAsync(null, null, 2).Result;
+            var result = _organizerOperations.SearchAsync(null, null, 1).Result;
             Assert.IsTrue(result.Any());
         }
 
