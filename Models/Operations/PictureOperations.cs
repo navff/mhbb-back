@@ -141,5 +141,12 @@ namespace Models.Operations
             }
             await tempFileOperations.RemoveAllByFormIdAsync(formId);
         }
+
+        public async Task<bool> CheckPermission(string userEmail, int pictureId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == userEmail.ToLower());
+            var picture = await _context.Pictures.FirstOrDefaultAsync(p => p.Id == pictureId);
+            return user?.Id == picture?.LinkedObjectId;
+        }
     }
 }
