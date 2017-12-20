@@ -111,7 +111,7 @@ namespace Tests.Operations
                     Name = rndString,
                     CityId = city.Id,
                     Sobriety = true,
-                    Email = "test.mhbb.ru",
+                    Email = "test@mhbb.ru",
                     Phone = "77777"
                 },
                 Phones = rndString,
