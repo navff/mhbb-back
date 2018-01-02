@@ -101,11 +101,21 @@ namespace Models.Operations
                     result = result.Intersect(result.Where(a => a.Free == free.Value));
                 }
 
-                return result.OrderBy(a => a.Voices < 0 ? 1 : 0)
-                             .ThenByDescending(a => a.Voices)
-                             .ThenBy(a => a.Name)
-                             .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
-                             .Take(ModelsSettings.PAGE_SIZE).ToList();
+                result = result.OrderBy(a => a.Voices < 0 ? 1 : 0)
+                    .ThenByDescending(a => a.Voices)
+                    .ThenBy(a => a.Name);
+
+                if (page != -1)
+                {
+                    return result.Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                        .Take(ModelsSettings.PAGE_SIZE).ToList();
+                }
+                else
+                {
+                    return result.ToList();
+                }
+                
+
             }
             catch (Exception ex)
             {
