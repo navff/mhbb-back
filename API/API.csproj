@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -217,6 +218,7 @@
     <Compile Include="Common\NinjectDependencyScope.cs" />
     <Compile Include="Common\RESTAuthorizeAttribute.cs" />
     <Compile Include="Common\Security.cs" />
+    <Compile Include="Common\SitemapXmlWriter.cs" />
     <Compile Include="Common\ValidateModelAttribute.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\CityController.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\TempFileController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VoiceController.cs" />
     <Compile Include="Global.asax.cs">
