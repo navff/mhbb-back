@@ -12,12 +12,13 @@ using Models.Operations;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Инструменты для управления сайтом
+    /// </summary>
     [RoutePrefix("api/tools")]
     public class ToolsController : ApiController
     {
-
-
-        private string _baseUrl = "http://mhbb.ru";
+        private string _baseUrl;
         private ActivityOperations _activityOperations;
         public ToolsController(ActivityOperations activityOperations)
         {
@@ -25,6 +26,11 @@ namespace API.Controllers
             _baseUrl = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
         }
 
+
+        /// <summary>
+        /// Отдаёт sitemap.xml
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("sitemap")]
         public async Task<HttpResponseMessage> Sitemap()
