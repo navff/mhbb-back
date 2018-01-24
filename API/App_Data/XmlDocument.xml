@@ -905,6 +905,17 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="T:API.Controllers.ToolsController">
+            <summary>
+            Инструменты для управления сайтом
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ToolsController.Sitemap">
+            <summary>
+            Отдаёт sitemap.xml
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:API.Controllers.UserController">
             <summary>
             Управление пользователями

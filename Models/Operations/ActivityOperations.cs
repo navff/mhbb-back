@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Camps.Tools;
 using Models.Entities;
 using System.Data.Entity;
+using System.Diagnostics;
 using DelegateDecompiler;
 using DelegateDecompiler.EntityFramework;
 using Models.Tools;
@@ -49,6 +50,8 @@ namespace Models.Operations
         {
             try
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 IQueryable<Activity> result;
 
                 if (!String.IsNullOrEmpty(word))
@@ -107,12 +110,16 @@ namespace Models.Operations
 
                 if (page != -1)
                 {
-                    return result.Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                    var list =  result.Skip((page - 1) * ModelsSettings.PAGE_SIZE)
                         .Take(ModelsSettings.PAGE_SIZE).ToList();
+                    Debug.WriteLine("SEARCH: " + stopwatch.Elapsed.TotalMilliseconds);
+                    return list;
                 }
                 else
                 {
-                    return result.ToList();
+                    var list = result.ToList();
+                    Debug.WriteLine("SEARCH: " + stopwatch.Elapsed.TotalMilliseconds);
+                    return list;
                 }
                 
 
