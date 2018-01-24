@@ -2,6 +2,7 @@
 using API.Models;
 using API.ViewModels;
 using AutoMapper;
+using Models.DTO;
 using Models.Entities;
 
 namespace API
@@ -23,6 +24,7 @@ namespace API
                 cfg.CreateMap<User, UserViewModelGet>();
                 cfg.CreateMap<Picture, PictureViewModelGet>();
                 cfg.CreateMap<Picture, PictureViewModelShortGet>();
+                cfg.CreateMap<PictureShortDTO, PictureViewModelShortGet>();
                 cfg.CreateMap<City, CityViewModelGet>();
                 cfg.CreateMap<Organizer, OrganizerViewModelGet>();
                 cfg.CreateMap<Interest, InterestViewModelGet>();
