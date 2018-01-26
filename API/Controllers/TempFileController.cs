@@ -51,7 +51,7 @@ namespace API.Controllers
                 result = Request.CreateResponse(HttpStatusCode.OK);
                 Stream stream = new MemoryStream(tempFile.Data);
                 result.Content = new StreamContent(stream);
-                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
             }
 
             return new ResponseMessageResult(result);

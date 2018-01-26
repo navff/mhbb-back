@@ -101,6 +101,7 @@
     <Compile Include="Operations\PictureOperations.cs" />
     <Compile Include="Operations\ReservationOperations.cs" />
     <Compile Include="Operations\ReviewOperations.cs" />
+    <Compile Include="Operations\SystemToolsOperations.cs" />
     <Compile Include="Operations\TempFileOperations.cs" />
     <Compile Include="Operations\UserOperations.cs" />
     <Compile Include="Operations\VoiceOperations.cs" />
