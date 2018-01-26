@@ -54,7 +54,8 @@ namespace Tests.Operations
                 ActivityId = activity.Id,
                 Comment = rndString,
                 Phone = rndString,
-                UserId = user.Id
+                UserId = user.Id,
+                
             }).Result;
 
             Assert.AreEqual(rndString, result.Name);

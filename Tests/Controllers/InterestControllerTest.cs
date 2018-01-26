@@ -65,19 +65,6 @@ namespace Tests.Controllers
         }
 
         [TestMethod]
-        public void Delete_OK_Test()
-        {
-            var interest = _context.Interests.Take(10).ToList().Last();
-            HttpDelete<string>($"api/interest/{interest.Id}", _admin_token);
-
-            using (var cntx = new HobbyContext())
-            {
-                Assert.IsNull(cntx.Interests.FirstOrDefault(i => i.Id == interest.Id));
-            }
-
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(Exception))]
         public void Delete_WrongId_Test()
         {

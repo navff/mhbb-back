@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Camps.Tools;
+using Models.DTO;
 using Models.Entities;
 
 namespace Models.Operations
@@ -120,12 +121,28 @@ namespace Models.Operations
             }
         }
 
-        public async Task<Picture> GetMainByLinkedObject(LinkedObjectType type, int linkedObjectId)
+        public async Task<PictureShortDTO> GetMainByLinkedObject(LinkedObjectType type, int linkedObjectId)
         {
             try
             {
-                var pictures = (await GetByLinkedObject(type, linkedObjectId)).ToList();
-                return pictures.FirstOrDefault(p => p.IsMain) ?? pictures.FirstOrDefault();
+                var query = _context.Pictures.Where(p => (p.LinkedObjectId == linkedObjectId)
+                                                               && (p.LinkedObjectType == type)
+                                                               && (p.IsMain == true));
+                if (!query.Any())
+                {
+                    query = _context.Pictures.Where(p => (p.LinkedObjectId == linkedObjectId)
+                                                         && (p.LinkedObjectType == type));
+                }
+
+                return await query.Select(pic => new PictureShortDTO
+                    {
+                        Id = pic.Id,
+                        IsMain = pic.IsMain,
+                        Filename = pic.Filename,
+                        LinkedObjectId = pic.LinkedObjectId,
+                        LinkedObjectType = pic.LinkedObjectType
+                    }).FirstOrDefaultAsync();
+
             }
             catch (Exception ex)
             {
@@ -161,6 +178,13 @@ namespace Models.Operations
                 await AddAsync(tempfile.Id, tempfile.IsMain, linkedObjectId, type);
             }
             await tempFileOperations.RemoveAllByFormIdAsync(formId);
+        }
+
+        public async Task<bool> CheckPermission(string userEmail, int pictureId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == userEmail.ToLower());
+            var picture = await _context.Pictures.FirstOrDefaultAsync(p => p.Id == pictureId);
+            return user?.Id == picture?.LinkedObjectId;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -93,9 +94,12 @@ namespace API.Controllers
         {
             try
             {
+                
                 var activities = await _activityOperations.SearchAsync(word, age, interestId,
                                                                        cityId, sobriety, free, true, page);
-                return Ok(await ViewModelsFromEntities(activities));
+                
+                var result = await ViewModelsFromEntities(activities);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -141,11 +145,18 @@ namespace API.Controllers
 
         private async Task<List<ActivityViewModelShortGet>> ViewModelsFromEntities(IEnumerable<Activity> activities)
         {
+            
             var result = Mapper.Map<IEnumerable<ActivityViewModelShortGet>>(activities).ToList();
-
+            
+            Stopwatch stopwatch = new Stopwatch();
+            
             foreach (var viewModel in result)
             {
+                stopwatch.Reset();
+                stopwatch.Start();
                 var picture = (await _pictureOperations.GetMainByLinkedObject(LinkedObjectType.Activity, viewModel.Id));
+                Debug.WriteLine("_pictureOperations.GetMainByLinkedObject: " + stopwatch.Elapsed.TotalMilliseconds);
+
                 var pictureViewModel = Mapper.Map<PictureViewModelShortGet>(picture);
                 if (pictureViewModel != null)
                 {
@@ -153,6 +164,7 @@ namespace API.Controllers
                 }
                 viewModel.MainPicture = pictureViewModel;
             }
+            Debug.WriteLine("FOREACH: " + stopwatch.Elapsed.TotalMilliseconds);
             return result;
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,10 @@ namespace Models.Entities
 
         public bool IsMain { get; set; }
        
+        [Index]
         public int LinkedObjectId { get; set; }
 
+        [Index]
         public LinkedObjectType LinkedObjectType { get; set; }
 
         [Required]

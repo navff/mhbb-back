@@ -84,18 +84,5 @@ namespace Tests.Operations
             interest.Name = null;
             _interestOperations.UpdateAsync(interest).Wait();
         }
-
-        [TestMethod]
-        public void Delete_Ok_Test()
-        {
-            var interest = _context.Interests.Take(10).ToList().Last();
-            _interestOperations.DeleteAsync(interest.Id).Wait();
-
-            using (var cnx = new HobbyContext())
-            {
-                Assert.IsNull(cnx.Interests.FirstOrDefault(i => i.Id == interest.Id));
-            }
-        }
-
     }
 }

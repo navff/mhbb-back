@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Camps.Tools;
 using Models.Entities;
 using System.Data.Entity;
+using System.Diagnostics;
 using DelegateDecompiler;
 using DelegateDecompiler.EntityFramework;
 using Models.Tools;
@@ -49,6 +50,8 @@ namespace Models.Operations
         {
             try
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 IQueryable<Activity> result;
 
                 if (!String.IsNullOrEmpty(word))
@@ -101,11 +104,25 @@ namespace Models.Operations
                     result = result.Intersect(result.Where(a => a.Free == free.Value));
                 }
 
-                return result.OrderBy(a => a.Voices < 0 ? 1 : 0)
-                             .ThenByDescending(a => a.Voices)
-                             .ThenBy(a => a.Name)
-                             .Skip((page - 1) * ModelsSettings.PAGE_SIZE)
-                             .Take(ModelsSettings.PAGE_SIZE).ToList();
+                result = result.OrderBy(a => a.Voices < 0 ? 1 : 0)
+                    .ThenByDescending(a => a.Voices)
+                    .ThenBy(a => a.Name);
+
+                if (page != -1)
+                {
+                    var list =  result.Skip((page - 1) * ModelsSettings.PAGE_SIZE)
+                        .Take(ModelsSettings.PAGE_SIZE).ToList();
+                    Debug.WriteLine("SEARCH: " + stopwatch.Elapsed.TotalMilliseconds);
+                    return list;
+                }
+                else
+                {
+                    var list = result.ToList();
+                    Debug.WriteLine("SEARCH: " + stopwatch.Elapsed.TotalMilliseconds);
+                    return list;
+                }
+                
+
             }
             catch (Exception ex)
             {

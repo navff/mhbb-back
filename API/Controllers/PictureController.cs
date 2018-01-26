@@ -76,9 +76,15 @@ namespace API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager)]
+        [RESTAuthorize(Role.PortalAdmin, Role.PortalManager, Role.RegisteredUser)]
         public async Task<IHttpActionResult> DeleteAsync(int id)
         {
+            if (User.IsInRole("RegisteredUser"))
+            {
+                var canDelete = await _pictureOperations.CheckPermission(User.Identity.Name, id);
+                if (!canDelete) return this.Result403("Вы не можете удалять чужие аватарки");
+            }
+
             await _pictureOperations.DeleteAsync(id);
             return Ok("Deleted");
         }

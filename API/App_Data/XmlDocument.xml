@@ -552,11 +552,6 @@
             </summary>
             <param name="actionContext"></param>
         </member>
-        <member name="M:API.Common.RESTAuthorizeAttribute.Dispose">
-            <summary>
-            Убивает связанные ресурсы
-            </summary>
-        </member>
         <member name="M:API.Common.Security.GenerateToken">
             <summary>
             Генерит случайный токен по алгоритму SHA256
@@ -908,6 +903,17 @@
             Получение всех временных файлов по FormId
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API.Controllers.ToolsController">
+            <summary>
+            Инструменты для управления сайтом
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ToolsController.Sitemap">
+            <summary>
+            Отдаёт sitemap.xml
+            </summary>
             <returns></returns>
         </member>
         <member name="T:API.Controllers.UserController">
