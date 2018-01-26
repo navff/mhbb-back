@@ -62,6 +62,27 @@ namespace Models.Operations
 
         }
 
+        public async Task<Picture> UpdateAsync(Picture picture)
+        {
+            try
+            {
+                var picInDb = _context.Pictures.First(tf => tf.Id == picture.Id);
+                picInDb.Filename = picture.Filename;
+                picInDb.IsMain = picture.IsMain;
+                picInDb.Data = picture.Data;
+                picInDb.LinkedObjectId = picture.LinkedObjectId;
+                picInDb.LinkedObjectType = picture.LinkedObjectType;
+
+                await _context.SaveChangesAsync();
+                return picInDb;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Log("CANNOT UPDATE TEMP_FILE", ex);
+                throw;
+            }
+        }
+
         public async Task DeleteAsync(int id)
         {
             try

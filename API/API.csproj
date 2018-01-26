@@ -228,6 +228,7 @@
     <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="Controllers\SystemToolsController.cs" />
     <Compile Include="Controllers\TempFileController.cs" />
     <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
